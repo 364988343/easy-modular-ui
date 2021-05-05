@@ -1,0 +1,83 @@
+.em-main-sidebar {
+  position: relative;
+  @include flex-column();
+  width: 220px;
+  height: 100%;
+  background-color: #222d32;
+
+  &.collapse {
+    width: 65px;
+
+    /*logo*/
+    .em-logo {
+      &-text {
+        display: none;
+      }
+    }
+  }
+  &-toggle-btn {
+    flex-shrink: 0;
+    background-color: #ebf1f6;
+    box-sizing: border-box;
+    margin:0 2px;
+
+    a {
+      padding: 0 6px;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      font-size: 22px;
+      text-align: center;
+      background-color: #fff;
+      color: #909090;
+      cursor: pointer;
+      text-decoration: none;
+      box-sizing: border-box;
+      border: 1px solid #dcdfe6;
+
+      &:hover {
+        color: #444;
+      }
+    }
+  }
+
+  .el-scrollbar__view {
+    padding: 0 !important;
+  }
+  .el-menu {
+    background-color: #222d32;
+  }
+  .el-submenu {
+    border-radius: 0 !important;
+   
+  }
+  .el-menu--inline {
+    background: #293338 !important;
+  }
+  .el-submenu__title {
+    color: #fff !important;
+    border-radius: 2px !important;
+    &:hover {
+      background: #1d2529 !important;
+    }
+  }
+  .el-menu-item {
+    color: #fff !important;
+    border-radius: 0 !important;
+    &:hover {
+      color: #2969ab !important;
+      background: none  !important;
+    }
+  }
+  .el-menu-item.is-active {
+    background: none  !important;
+    @include color_important();
+    border-right: 10px solid #2299dd;
+    font-weight: 700;
+  }
+  .em-icon {
+    font-size: 20px !important;
+    margin-right: 4px;
+    margin-bottom: 2px;
+  }
+}

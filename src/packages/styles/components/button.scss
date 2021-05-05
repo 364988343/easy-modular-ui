@@ -1,0 +1,11 @@
+.em-button {
+  .em-icon {
+    transform: scale(1.4);
+  }
+
+  .em-icon + &-text {
+    margin-left: 5px;
+  }
+}
+
+

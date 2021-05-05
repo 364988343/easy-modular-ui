@@ -1,0 +1,25 @@
+.theme-list {
+  @include flex-row();
+  justify-content: center;
+
+  &-item {
+    width: 50px;
+    height: 50px;
+    margin-right: 16px;
+    border-radius: 50%;
+    border: 2px solid #DCDFE6;
+    &:hover,
+    &.active {
+        box-shadow: 0 0 9px $background-color-theme;
+        transform: scale(1.2);
+    }
+  }
+}
+
+
+.fontsize-list
+{
+    @include flex-row();
+    justify-content: center;
+}
+

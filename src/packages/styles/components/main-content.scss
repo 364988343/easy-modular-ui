@@ -1,0 +1,24 @@
+.em-main-content {
+  position: relative;
+  @include flex-column();
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+
+  &-top {
+    position: relative;
+    @include flex-row();
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+
+  }
+  &-body {
+    position: relative;
+    flex-grow: 1;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+}
+
+

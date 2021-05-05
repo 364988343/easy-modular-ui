@@ -1,0 +1,202 @@
+.em-panel {
+  box-shadow: $panel-shadow;
+  @include flex-column();
+  box-sizing: border-box;
+  border: 1px solid $border-color2;
+  overflow: hidden;
+
+  &-header {
+    @include flex-row();
+    @include vertical-center(46px);
+    background-color: #f8f8f8;
+    border-bottom: 1px solid $border-color2;
+    box-sizing: border-box;
+
+    &-icon {
+      padding: 0 4px 0 3px;
+      font-size: 2rem;
+      text-align: center;
+      flex-shrink: 0;
+
+      .em-icon {
+        margin-top: 6px;
+        font-size: 20px;
+        padding: 7px;
+        @include color();
+      }
+    }
+
+    &-title {
+      flex-grow: 1;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    &-toolbar-before {
+      flex-grow: 1;
+    }
+
+    &-toolbar {
+      position: relative;
+      flex-shrink: 0;
+
+      .em-button {
+        margin-left: 0;
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 10px 7px;
+        color: $text-color3;
+        user-select: none;
+        outline: none;
+        transition: all 0.2s ease-in-out;
+        font-size: 16px;
+        width: 30px;
+        height: 30px;
+
+        &:hover {
+          color: $text-color1;
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  &-dialog {
+    position: relative;
+    @include flex-column();
+    flex-grow: 1;
+    background: #fff;
+
+    > .em-panel-content {
+      position: relative;
+      padding: 10px;
+      flex-grow: 1;
+      box-sizing: border-box;
+    }
+
+    > .em-panel-footer {
+      position: relative;
+      padding: 4px 10px;
+      @include flex-row();
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px solid $border-color3;
+      box-sizing: border-box;
+
+      &.left {
+        text-align: left;
+      }
+
+      &.center {
+        text-align: center;
+      }
+
+      &.right {
+        text-align: right;
+      }
+      .el-button--success {
+        color: #fff;
+        @include btn_success_bg();
+        border-color: #dcdfe6 !important;
+      }
+    }
+  }
+
+  &.has-height {
+    > .em-panel-dialog {
+      > .em-panel-content {
+        position: absolute;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        height: 100%;
+
+        .em-panel-wrapper {
+          height: 100%;
+
+          > &-scrollbar {
+            > .el-scrollbar__wrap {
+              padding-left: 10px;
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.fullscreen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: $z-index-panel-fullscreen;
+  }
+
+  &.page {
+    height: 100%;
+
+    > .em-panel-dialog {
+      padding: 0;
+
+      > .em-panel-content {
+        padding: 0;
+
+        > .em-panel-wrapper {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+
+          .el-scrollbar__view {
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &.no-padding {
+    > .em-panel-dialog {
+      > .em-panel-content {
+        > .em-panel-wrapper {
+          .el-scrollbar__view {
+            padding: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  &.border {
+    border-top-width: 2px;
+
+    &.success {
+      border-top-color: $color-success;
+    }
+
+    &.info {
+      border-top-color: $color-info;
+    }
+
+    &.primary {
+      border-top-color: $color-primary;
+    }
+
+    &.warning {
+      border-top-color: $color-warning;
+    }
+
+    &.danger {
+      border-top-color: $color-danger;
+    }
+  }
+
+  &.title-bold {
+    .em-panel-header-title {
+      font-weight: 600;
+    }
+  }
+}

@@ -1,0 +1,93 @@
+/***************************背景颜色 Start*********************/
+$background-color-theme: #2969ab; //背景主题颜色默认
+$background-color-theme1: #00A29A; //背景主题颜色1
+$background-color-theme2: #EB7347; //背景主题颜色2
+$background-color-theme3: #84AF9B ; //背景主题颜色3
+$background-color-theme4: #20b7dd ; //背景主题颜色4
+$background-color-themesec: #D0D0D0; //背景次要主题颜色
+/***************************背景颜色 End*********************/
+
+/***************************颜色 Start*********************/
+$color: #333;
+$color-info: #909399;
+$color-primary: #409eff;
+$color-success: #67c23a;
+$color-warning: #e6a23c;
+$color-danger: #f56c6c;
+/***************************颜色 End*********************/
+
+/***************************文本颜色 Start*********************/
+$text-color1: #303133;
+$text-color2: #606266;
+$text-color3: #909399;
+$text-color4: #c0c4cc;
+/***************************边框颜色 End*********************/
+
+/***************************边框颜色 Start*********************/
+$border-color1: #dcdfe6;
+$border-color2: #e4e7ed;
+$border-color3: #ebeef5;
+$border-color4: #f2f6fc;
+/***************************边框颜色 End*********************/
+
+/***************************z-index*************************/
+/*盒子全屏时坐标*/
+$z-index-panel-fullscreen: 1800;
+
+/*抽屉坐标*/
+$z-index-drawer-modal: 1802;
+$z-index-drawer-dialog: 1804;
+
+/*列表页坐标*/
+$z-index-query-panel: 1806;
+$z-index-query-advanced: 1808;
+$z-index-query-fullscreen: 1810;
+
+/*阴影*/
+$panel-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+/*进度条*/
+$nprogress-bar-background-color: $color-warning;
+$nprogress-peg-panel-shadow: 0 0 10px $color-warning, 0 0 5px $color-warning;
+
+/**************************组件*************************/
+
+/*面板 panel*/
+$panel-border-color: $border-color2;
+$panel-header-background-color: #f8f8f8;
+$panel-content-background-color: #fff;
+
+/*对话框 dialog*/
+$dialog-header-background-color: #f8f8f8;
+$panel-dialog-background-color: $panel-header-background-color;
+
+/*抽屉 drawer*/
+$drawer-header-background-color: $dialog-header-background-color;
+
+/*列表页 list*/
+$list-header-background-color: $dialog-header-background-color;
+$list-table-header-color: rgb(3, 2, 2);
+
+/*分割窗口 split*/
+$split-trigger-background-color: #f0f0f0;
+
+/*标签导航 tabnav*/
+$tabnav-control-btn-border-color: #e4e7ed;
+
+
+
+/***************************顶部导航激活背景颜色 Start*********************/
+$header-nav-active-background-color-theme: #285c90; //背景主题颜色默认
+$header-nav-active-background-color-theme1: #038d86; //背景主题颜色1
+$header-nav-active-background-color-theme2: #d96034; //背景主题颜色2
+$header-nav-active-background-color-theme3: #a9c8ba ; //背景主题颜色3
+$header-nav-active-background-color-theme4: #08c1ef ; //背景主题颜色4
+/***************************顶部导航激活背景颜色 End*********************/
+
+/***************************顶部导航激活底部边框颜色 Start*********************/
+$header-nav-active-border-color-theme: #a7bfd7; //背景主题颜色默认
+$header-nav-active-border-color-theme1: #e6a23c; //背景主题颜色1
+$header-nav-active-border-color-theme2: #0489d5; //背景主题颜色2
+$header-nav-active-border-color-theme3: #6e9b86 ; //背景主题颜色3
+$header-nav-active-border-color-theme4: #f1ba67 ; //背景主题颜色4
+/***************************顶部导航激活底部边框颜色 End*********************/

@@ -1,0 +1,148 @@
+//对话框
+.em-dialog {
+    > .el-dialog {
+      @include flex-column();
+      border-radius: 6px;
+      overflow: hidden;
+  
+      > .el-dialog__header {
+        padding: 0;
+        @include flex-row();
+        flex-shrink: 0;
+        @include vertical-center(50px);
+        box-sizing: border-box;
+        border-bottom: 1px solid #eee;
+  
+        .em-dialog-icon {
+          flex-shrink: 0;
+          padding: 0 10px 0 15px;
+          border-radius: 14px;
+          font-size: 16px;
+  
+          .em-icon {
+            margin-top: 11px;
+            padding: 5px;
+            border-radius: 13px;
+          }
+        }
+  
+        .em-dialog-title {
+          flex-grow: 1;
+          font-size: 14px;
+        }
+  
+        .em-dialog-toolbar {
+          position: relative;
+          padding-right: 10px;
+          flex-shrink: 0;
+  
+          .em-button {
+            padding: 0;
+            margin-left: 5px;
+            background: 0 0;
+            border: none;
+            outline: 0;
+            cursor: pointer;
+            font-size: 18px;
+  
+            &:hover {
+              color: $text-color1;
+              transform: scale(1.2);
+            }
+  
+            .em-icon {
+              transform: scale(1) !important;
+            }
+          }
+        }
+      }
+  
+      > .el-dialog__body {
+        position: relative;
+        flex-grow: 1;
+        overflow: hidden;
+        padding: 0;
+  
+        > .em-dialog-body {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          @include flex-column();
+  
+          > .em-dialog-content {
+            position: relative;
+            flex-grow: 1;
+  
+            > .em-dialog-main {
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              box-sizing: border-box;
+            }
+          }
+  
+          > .em-dialog-footer {
+            padding: 5px 10px;
+            flex-shrink: 0;
+            text-align: right;
+            z-index: 1;
+            border-top: 1px solid $border-color3;
+          }
+        }
+      }
+  
+      &.is-fullscreen {
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        margin-bottom: 0 !important;
+        margin-right: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+  
+        > .el-dialog__body {
+          > .em-dialog-body {
+            position: absolute !important;
+            height: 100% !important;
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  
+    &.draggable {
+      width: 100% !important;
+      height: 100% !important;
+  
+      .em-dialog-title {
+        cursor: move;
+        user-select: none;
+      }
+  
+      .el-dialog {
+        position: fixed;
+      }
+    }
+  
+    &.no-header {
+      > .el-dialog {
+        > .el-dialog__header {
+          display: none;
+        }
+      }
+    }
+    &-tabs {
+      .el-tabs__item {
+        .em-icon {
+          position: relative;
+          margin-right: 3px;
+          font-size: 20px;
+          top: 2px;
+        }
+      }
+    }
+  }
+  

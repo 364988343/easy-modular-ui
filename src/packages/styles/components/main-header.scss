@@ -1,0 +1,110 @@
+.em-main-header {
+  position: relative;
+  @include flex-row();
+  flex-shrink: 0;
+  height: 80px;
+  @include bg_color();
+
+  &-logo {
+    @include flex-row();
+    align-items: center;
+    flex-shrink: 0;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+    padding-left: 8px;
+
+    &-img {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+    }
+
+    &-text {
+      flex-grow: 1;
+      text-align: center;
+      @include vertical-center(80px);
+      font-size: 30px;
+      color: #fff;
+      white-space: nowrap;
+      padding-left: 8px;
+    }
+  }
+
+  &-nav {
+    display: inline-block;
+    flex-grow: 1;
+    margin-left: 24px;
+    overflow: hidden;
+
+    &-item {
+      padding: 0 3px;
+      float: left;
+
+      a {
+        position: relative;
+        padding: 10px 15px;
+        display: inline-block;
+        text-decoration: none;
+        color: #e4e7ed;
+        text-align: center;
+        height: 80px;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: background-color 0.25s ease-in-out;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 3px;
+          @include header_active_border_color();
+          transition: all 0.25s ease-in-out;
+        }
+      }
+
+      &-icon {
+        font-size: 35px;
+      }
+
+      &-text {
+        display: block;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+      &:hover,
+      &.active {
+        a {
+          color: #fff;
+          @include header_active_bg_color();
+
+          &::after {
+            left: 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-toolbar {
+    position: absolute;
+    @include flex-row();
+    top: 0;
+    right: 0;
+    height: 80px;
+    align-items: center;
+
+    button{
+        margin-right: 20px;
+    }
+    .em-icon {
+      font-size: 32px;
+      color:#e4e7ed;
+    }
+  }
+}

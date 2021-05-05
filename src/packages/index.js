@@ -117,3 +117,11 @@ export default {
     HttpInit(config)
   }
 }
+
+const mixins = Mixins.components
+// 导出混入组件、状态实例、路由实例
+export {
+  mixins,
+  store,
+  router
+}

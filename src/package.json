@@ -1,7 +1,11 @@
 {
   "name": "easy-modular-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
+  "description": "vue模块化前端UI框架",
+  "author": "陈曦",
+  "license": "cwh",
+  "main": "packages/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

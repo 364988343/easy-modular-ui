@@ -2,8 +2,9 @@
 <div align=center>
 	<img src="https://cdn.jsdelivr.net/gh/doordie1991/PicBed@main/picture/20210505112148.png" width="300" />
 </div>
+
 ## 安装
-  npm install easy-modular-ui
+    npm install easy-modular-ui
 
 ## 模块架构
 ![20210505113558](https://cdn.jsdelivr.net/gh/doordie1991/PicBed@main/picture/20210505113558.png)  

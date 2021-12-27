@@ -30,6 +30,14 @@ let componentMenus = [
     level: 1,
     show: true,
     url: 'https://github.com/doordie1991/EasyModular'
+  },
+  {
+    name: 'Gitee',
+    type: 2,
+    icon: 'gitee',
+    level: 1,
+    show: true,
+    url: 'https://github.com/doordie1991/EasyModular'
   }
 ]
 

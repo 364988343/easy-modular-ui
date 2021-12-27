@@ -1,17 +1,13 @@
 <template>
-  <em-container>
-    <div>
-      <slot />
-    </div>
-    <em-panel class="em-tmpl" page header :title="title" :icon="icon">
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="属性(Attributes)" name="attrs"> <em-attributes v-if="attrs" :data="attrs" /></el-tab-pane>
-        <el-tab-pane label="方法(Method)" name="methods"> <em-methods v-if="methods" :data="methods" /></el-tab-pane>
-        <el-tab-pane label="事件(Event)" name="events"> <em-events v-if="events" :data="events" /></el-tab-pane>
-        <el-tab-pane label="插槽(Slot)" name="slots"> <em-slots v-if="slots" :data="slots" /></el-tab-pane>
-      </el-tabs>
-    </em-panel>
-  </em-container>
+  <em-panel class="em-tmpl" page header :title="title" :icon="icon">
+    <slot />
+    <el-tabs v-model="activeName">
+      <el-tab-pane label="属性(Attributes)" name="attrs"> <em-attributes v-if="attrs" :data="attrs" /></el-tab-pane>
+      <el-tab-pane label="事件(Event)" name="events"> <em-events v-if="events" :data="events" /></el-tab-pane>
+      <el-tab-pane label="方法(Method)" name="methods"> <em-methods v-if="methods" :data="methods" /></el-tab-pane>
+      <el-tab-pane label="插槽(Slot)" name="slots"> <em-slots v-if="slots" :data="slots" /></el-tab-pane>
+    </el-tabs>
+  </em-panel>
 </template>
 <script>
 import EmAttributes from './components/attributes'

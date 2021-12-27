@@ -10,14 +10,19 @@ import UseRouter, { router, routes } from './router/'
 import UseStore, { store, storeOptions } from './store/'
 import Mixins from './mixins/'
 import Directive from './directive'
-import HttpInit from './utils/http'
+import Print from './utils/print'
+import extensions from './utils/extensions'
+
+import VideoPlayer from 'vue-video-player'
+import 'vue-video-player/src/custom-theme.css'
+import 'video.js/dist/video-js.css'
 
 import './styles/app.scss'
-import 'element-ui/lib/theme-chalk/index.css'
+import './styles/theme/element/index.css'
 
 export default {
   //安装插件
-  use: async ({ system }) => {
+  use: async (app) => {
     // 回调方法
     let callbacks = []
     // 全局组件
@@ -28,12 +33,12 @@ export default {
     // 日期格式化插件
     Vue.prototype.$dayjs = dayjs
 
-    Vue.prototype.$echarts = echarts
-
-    // 加载饿了么框架
+    //  注入饿了么框架
     Vue.use(ElementUI)
+    //使用视频
+    Vue.use(VideoPlayer)
 
-    // 加载v-charts组件
+    // 注入v-charts组件
     Vue.use(VCharts)
 
     // 加载自定义组件
@@ -45,11 +50,16 @@ export default {
     // 注册指令
     Vue.use(Directive)
 
+    //过滤器
+    Vue.filter('dateFormat', function (dateStr, pattern = 'YYYY-MM-DD') {
+      return dayjs(dateStr).format(pattern)
+    })
+
     // 全局混入
     Mixins.global(Vue)
 
     // 加载模块信息
-    system.modules.forEach((m) => {
+    app.modules.forEach((m) => {
       // 注入路由信息
       if (m.routes) {
         m.routes.forEach((r) => routes.push(r))
@@ -67,15 +77,24 @@ export default {
         m.components.forEach((c) => globalComponents.push(c))
       }
     })
-
     // 使用状态
     UseStore()
 
     // 使用路由
-    UseRouter(store, system)
+    UseRouter(store, app)
+
+    // 使用打印
+    Vue.use(Print)
 
     // 加载页面数据
-    await store.dispatch('app/system/init', system)
+    await store.dispatch('app/system/init', app, {
+      root: true
+    })
+
+    // 加载本地令牌
+    store.commit('app/token/load', null, {
+      root: true
+    })
 
     // 注册全局组件
     if (globalComponents) {
@@ -104,24 +123,14 @@ export default {
       })
     }
 
-    //设置主题
-    window.document.documentElement.setAttribute('data-theme', store.state.app.skins.theme)
     return {
       router,
       store,
       vm
     }
-  },
-  //设置接口
-  useHttp: (config) => {
-    HttpInit(config)
   }
 }
 
 const mixins = Mixins.components
 // 导出混入组件、状态实例、路由实例
-export {
-  mixins,
-  store,
-  router
-}
+export { mixins, store, router }

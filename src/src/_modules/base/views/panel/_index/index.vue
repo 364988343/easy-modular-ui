@@ -15,7 +15,7 @@ export default {
       val: '',
       tmpl: {
         title: '面板(em-panel)',
-        icon: 'card',
+        icon: 'appstore',
         attrs,
         slots,
         methods,

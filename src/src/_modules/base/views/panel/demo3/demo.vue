@@ -1,11 +1,11 @@
 <template>
   <em-panel v-bind="panel">
     <el-alert title="全屏按钮" type="success" description="通过 fullscreen 属性可以开启全屏功能" show-icon :closable="false"></el-alert>
-    <el-alert title="折叠按钮" type="success" description="通过 collapse 属性可以开启折叠功能" show-icon :closable="false" ></el-alert>
+    <el-alert title="折叠按钮" type="success" description="通过 collapse 属性可以开启折叠功能" show-icon :closable="false"></el-alert>
     <el-alert title="自定义工具栏" type="warning" description="通过 toolbar 插槽可以实现自定义工具栏" show-icon :closable="false"></el-alert>
 
     <template v-slot:toolbar>
-      <em-button icon="system" @click="onClick" />
+      <em-button icon="appstoreadd" @click="onClick" />
     </template>
   </em-panel>
 </template>

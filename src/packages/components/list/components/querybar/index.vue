@@ -1,188 +1,99 @@
 <template>
-  <!--工具栏-->
-  <section class="em-list-querybar">
-    <el-form ref="normalForm" class="em-list-querybar-normal" :model="model_" :rules="rules" :size="fontSize" :inline="true">
-      <slot />
-      <el-form-item v-if="!noSearch">
-        <em-button type="primary" @click="query" :icon="!noSearchButtonIcon ? 'search' : ''" text="查询" />
-      </el-form-item>
-      <el-form-item v-if="!noReset">
-        <em-button type="info" @click="reset" :icon="!noSearchButtonIcon ? 'refresh' : ''" text="重置" />
-      </el-form-item>
-      <el-form-item v-if="exportEnabled" v-em-has="exportBtnCode">
-        <em-button type="primary" @click="onExport" icon="export" text="导出" />
-      </el-form-item>
-      <el-form-item v-if="advanced_.enabled">
-        <em-button ref="showAdvnacedBtn" type="warning" @click="onAdvancedClick">
-          高级查询
-          <i class="el-icon--right" :class="[showAdvanced ? 'el-icon-arrow-up' : 'el-icon-arrow-down']"></i>
-        </em-button>
-      </el-form-item>
-      <!--自定义按钮插槽-->
-      <el-form-item>
-        <slot name="buttons" />
-      </el-form-item>
-    </el-form>
-
-    <!--高级查询框-->
-    <transition name="el-zoom-in-top">
-      <section ref="advancedPanel" class="em-list-querybar-advanced" v-if="advanced_.enabled" v-show="showAdvanced" :style="advancedStyle">
-        <em-panel page header footer title="高级查询" icon="search">
-          <template v-slot:toolbar>
-            <em-button icon="close" @click="showAdvanced = false" />
-          </template>
-          <!--查询条件-->
-          <em-form ref="advancedForm" :model="model_" :rules="rules" :label-width="advanced_.labelWidth" :inline="advanced_.inline">
-            <slot name="advanced" />
-          </em-form>
-          <template v-slot:footer>
-            <!--查询按钮-->
-            <em-button type="primary" @click="query" text="查询" :icon="!noSearchButtonIcon ? 'search' : ''" />
-            <!--重置按钮-->
-            <em-button type="info" @click="reset" text="重置" :icon="!noSearchButtonIcon ? 'refresh' : ''" />
-          </template>
-        </em-panel>
-        <div ref="arrow" class="advanced-arrow" />
-      </section>
-    </transition>
-  </section>
+  <!--查询栏-->
+  <div class="em-list-querybar">
+    <div class="em-list-querybar-content">
+      <el-form ref="queryForm" class="em-list-querybar-content-form" :model="model" :rules="rules" :label-width="labelWidth" :size="fontSize" inline>
+        <slot></slot>
+        <template v-if="more">
+          <slot name="query-more"> </slot>
+        </template>
+      </el-form>
+    </div>
+    <div class="em-list-querybar-btn">
+      <slot name="buttons">
+        <em-button v-if="!noSearch" type="primary" @click="query" icon="search" text="查询" />
+        <em-button v-if="!noReset" type="info" @click="reset" icon="reload" text="重置" />
+        <em-button v-if="!noCollapse" :text="more ? '收起' : '展开'" :icon="more ? 'up' : 'down'" icon-position="right" @click="more = !more"></em-button>
+      </slot>
+    </div>
+  </div>
 </template>
 <script>
-const defaultAdvanced = {
-  // 是否开启
-  enabled: false,
-  // 宽度
-  width: '400px',
-  // 高度
-  height: '',
-  // 表单标签宽度
-  labelWidth: '100px',
-  // 内联表单
-  inline: false
-}
 export default {
   data() {
     return {
-      // 是否显示高级查询
-      showAdvanced: false
+      // 是否显示更多
+      more: false
     }
   },
   props: {
-    /** 输入框的宽度 */
-    inputWidth: {
-      type: String,
-      default: '160px'
-    },
-    /** 查询模型 */
-    model: Object,
-    /** 验证规则 */
-    rules: Object,
-    /** 高级查询属性 */
-    advanced: Object,
-    /** 不显示按钮图标 */
-    noSearchButtonIcon: Boolean,
-    /** 不需要查询 */
-    noSearch: Boolean,
-    /**不显示查询按钮 */
-    noReset: Boolean,
-    /**显示导出按钮 */
-    exportEnabled: Boolean,
-    /**导出按钮权限编码 */
-    exportBtnCode: String
-  },
-  computed: {
-    model_() {
-      return this.model || {}
-    },
-    /** 高级查询设置 */
-    advanced_() {
-      const ad = this.$_.merge({}, defaultAdvanced, this.advanced)
-      ad.enabled = ad.enabled && !this.noSearch
-      return ad
-    },
-    /** 高级查询框样式 */
-    advancedStyle() {
-      return {
-        width: this.advanced_.width,
-        height: this.advanced_.height
+    //表单域标签的的宽度
+    labelWidth: String,
+    //查询模型
+    model: {
+      type: Object,
+      default() {
+        return {}
       }
-    }
+    },
+    //验证规则
+    rules: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    //不需要查询
+    noSearch: Boolean,
+    //不显示查询按钮
+    noReset: Boolean,
+    //不显示折叠按钮
+    noCollapse: Boolean
   },
   methods: {
+    /**
+     * @description:查询
+     * @param {*}
+     */
     query() {
       this.$parent.page.index = 1
       this.$parent.query()
     },
-    /** 表单重置 */
+
+    /**
+     * @description: 表单重置
+     * @param {*}
+     */
     reset() {
-      if (this.$refs.normalForm) {
-        this.$refs.normalForm.resetFields()
-      }
-      if (this.$refs.advancedForm) {
-        this.$refs.advancedForm.reset()
+      if (this.$refs.queryForm) {
+        this.$refs.queryForm.resetFields()
       }
       this.$emit('reset')
     },
+
+    /**
+     * @description: 校验
+     * @param {*} action
+     */
     validate(action) {
-      return this.$refs.normalForm.validate(action)
+      return this.$refs.queryForm.validate(action)
     },
-    /** 高级查询按钮点击事件 */
-    onAdvancedClick() {
-      this.showAdvanced = !this.showAdvanced
 
-      if (this.showAdvanced) {
-        this.$nextTick(() => {
-          debugger
-          let $panel = this.$refs.advancedPanel
-          let $arrow = this.$refs.arrow
-          const panelWidth = $panel.offsetWidth
-          const { x, y, width, height } = this.$refs.showAdvnacedBtn.$el.getBoundingClientRect()
-          let left = x + width / 2 - $panel.offsetWidth / 2
-          // 判断右侧有没有超出页面
-          if (left + panelWidth > document.body.offsetWidth) {
-            left = document.body.offsetWidth - panelWidth - 20
-            // 计算箭头的位置
-            $arrow.style.left = x - left - 10 + width / 2 + 'px'
-          } else {
-            // 计算箭头的位置
-            $arrow.style.left = $panel.offsetWidth / 2 + 'px'
-          }
-
-          $panel.style.left = left + 'px'
-          $panel.style.top = y + height + 14 + 'px'
-
-          // 设置高度
-          if (!this.advanced_.height) {
-            const panelHeader = $panel.querySelector('.em-panel-header').offsetHeight
-            const panelFooter = $panel.querySelector('.em-panel-footer').offsetHeight
-            let panelHeight = $panel.querySelector('.em-form').offsetHeight + panelHeader + panelFooter + 20
-            if (!this.advanced_.inline) {
-              panelHeight += 20
-            }
-            $panel.style.height = panelHeight + 'px'
-          }
-        })
-      }
-    },
-    onExport() {
-      this.$parent.triggerExport()
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.$refs.normalForm.$el.addEventListener('keydown', (e) => {
+    /**
+     * @description: 添加回车事件
+     * @param {*}
+     */
+    addEnterEvent() {
+      this.$refs.queryForm.$el.addEventListener('keydown', (e) => {
         if (e.keyCode === 13) {
           this.query()
         }
       })
-      if (this.inputWidth) {
-        let inputs = this.$refs.normalForm.$el.querySelectorAll('.el-input__inner')
-        if (inputs) {
-          for (let i = 0; i < inputs.length; i++) {
-            inputs[i].style.width = this.inputWidth
-          }
-        }
-      }
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.addEnterEvent()
     })
   }
 }

@@ -1,30 +1,25 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-18 16:00:45
- * @Description: 路由守卫
- */
-
 import 'nprogress/nprogress.css'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Routes from './routes'
 import NProgress from 'nprogress'
-import cache from '../utils/cache'
+import baseRoutes from './routes'
+import token from '../utils/token'
 
 // 路由实例
 let router
 // 路由集合
-let routes = Routes
+let routes = baseRoutes
 
 // 错误路由
 const errorRoutes = ['error403', 'error404']
-const originalPush = VueRouter.prototype.push
 
+Vue.use(VueRouter)
+
+//重复路由跳转
+const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err)
 }
-
-Vue.use(VueRouter)
 
 // 进度条初始值
 NProgress.configure({
@@ -42,7 +37,7 @@ export default (store, system) => {
     // 开始进度条
     NProgress.start()
     // 默认页
-    const homeRoute = system.home
+    const homeRoute = system.config.home
     // 如果访问的时 / 或者 /default，则跳转到首页
     if (homeRoute && (to.path === '/' || to.path === '/default')) {
       if (homeRoute.startsWith('http://') || homeRoute.startsWith('https://')) {
@@ -56,12 +51,14 @@ export default (store, system) => {
       } else {
         next(homeRoute)
       }
+
+      // 关闭进度条
       NProgress.done()
       return
     }
 
-    const _token = cache.get('accessToken')
-    //未登录时跳转至登录页
+    // 验证是否已登录，根据本地是否存在token判断
+    const _token = token.get()
     if (!_token && to.name !== 'login') {
       next({
         name: 'login',
@@ -69,32 +66,43 @@ export default (store, system) => {
           redirect: to.fullPath
         }
       })
-      NProgress.done()
-      return
-    }
-    //如果是登录页、刷新或者是错误页面，直接跳转
-    if (to.name === 'login' || to.name === 'refresh' || errorRoutes.includes(to.name)) {
-      next()
+    } else {
+      if (to.name === 'login' || to.name === 'refresh') {
+        next()
+        // 关闭进度条
+        NProgress.done()
+      } else {
+        // 加载账户信息，内部会做是否已加载判断
+        store
+          .dispatch('app/user/init', null, {
+            root: true
+          })
+          .then(() => {
+            // 错误页
+            if (errorRoutes.includes(to.name)) {
+              next()
+              // 关闭进度条
+              NProgress.done()
+            } else if (store.getters['app/user/routeNames'].includes(to.name) || to.path === homeRoute || to.name === 'iframe' || to.name === 'userinfo' || (to.meta && to.meta.isControl === false)) {
+              // 打开页面
+              store
+                .dispatch('app/page/open', to, {
+                  root: true
+                })
+                .then(() => {
+                  next()
 
-      NProgress.done()
-      return
+                  // 关闭进度条
+                  NProgress.done()
+                })
+            } else {
+              next({
+                name: 'error403'
+              })
+            }
+          })
+      }
     }
-    //如果用户有路由权限则打开相应的路由页面
-    if (to.path === homeRoute || store.state.app.user.routes.find((m) => m.routeName === to.name) || to.name === 'iframe') {
-      store
-        .dispatch('app/page/open', to, {
-          root: true
-        })
-        .then(() => {
-          next()
-          NProgress.done()
-        })
-      return
-    }
-    //其余情况则跳转未授权页面403
-    next({
-      name: 'error403'
-    })
   })
 }
 

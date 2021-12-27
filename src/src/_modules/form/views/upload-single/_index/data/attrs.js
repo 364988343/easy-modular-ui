@@ -54,5 +54,12 @@ export default [
     type: 'String',
     opt: '-',
     def: '-'
+  },
+  {
+    name: 'placeholder',
+    desc: '占位符',
+    type: 'String',
+    opt: '-',
+    def: '-'
   }
 ]

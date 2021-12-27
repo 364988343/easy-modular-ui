@@ -1,3 +1,8 @@
+.theme-mode {
+  @include flex-row();
+  justify-content: center;
+}
+
 .theme-list {
   @include flex-row();
   justify-content: center;
@@ -8,18 +13,23 @@
     margin-right: 16px;
     border-radius: 50%;
     border: 2px solid #DCDFE6;
+    transition: transform 0.3s;
+    cursor: pointer;
+
     &:hover,
     &.active {
-        box-shadow: 0 0 9px $background-color-theme;
-        transform: scale(1.2);
+      box-shadow: 0 0 9px $theme1-color;
+      transform: scale(1.2);
     }
+  }
+
+  .el-divider--horizontal {
+    margin: 32px 0;
   }
 }
 
 
-.fontsize-list
-{
-    @include flex-row();
-    justify-content: center;
+.fontsize-list {
+  @include flex-row();
+  justify-content: center;
 }
-

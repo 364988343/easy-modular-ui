@@ -1,48 +1,64 @@
 .em-panel-small {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100px;
+  height: 132px;
   border-radius: 5px;
   cursor: pointer;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #ffffff;
 
-  &-content {
-    position: relative;
-    padding: 15px;
-    color: #fff;
-    height: 100%;
-    box-sizing: border-box;
+  &-title {
+    display: flex;
+    align-items: center;
 
-    &-value {
-      font-size: 30px;
-      font-weight: 600;
+    &-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(220, 223, 230, 0.25);
+      transition: all 0.5s ease-in;
+      font-size: 24px;
 
-      .unit {
-        font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .em-icon {
+        color: #ffffff;
       }
     }
 
     &-label {
-      position: absolute;
-      bottom: 20px;
-      font-size: 15px;
-    }
-
-    &-icon {
-      position: absolute;
-      top: 5px;
-      right: 0;
-      color: rgba(0, 0, 0, 0.15);
-      font-size: 70px;
-      transition: all 0.8s ease-in;
-      transform: scale(0.8);
+      margin-left: 8px;
+      font-size: 16px;
     }
   }
 
-  .more {
+  &-value {
+    font-size: 32px;
+    margin-left: 6px;
+    margin-top: 12px;
+  }
+
+  &-bg-icon {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-size: 64px;
+    color: rgba(0, 0, 0, 0.15);
+    transition: all 0.5s ease-in;
+  }
+
+  &-more {
     position: absolute;
     display: none;
     bottom: 0;
-    padding: 7px 0;
+    left: 0;
+    padding: 10px 0;
     width: 100%;
     text-align: center;
     color: rgba(255, 255, 255, 0.8);
@@ -51,9 +67,6 @@
     transition: all 0.2s ease-in;
     border: 0 !important;
 
-    .em-icon {
-      font-size: 13px;
-    }
 
     &:hover {
       background: rgba(0, 0, 0, 0.25);
@@ -62,12 +75,41 @@
   }
 
   &:hover {
-    .em-panel-small-content-icon {
-      transform: scale(1);
+    .em-panel-small-bg-icon {
+      transform: scale(1.2);
     }
 
-    .more {
+    .em-panel-small-title-icon {
+      transform: rotate(-360deg)
+    }
+
+    .em-panel-small-more {
       display: block;
     }
   }
+
+  &.success {
+    background: linear-gradient(60deg, #3ef396, #07c160);
+  }
+
+  &.primary {
+    background: linear-gradient(60deg, #55a6f8, #1989fa);
+  }
+
+  &.warning {
+    background: linear-gradient(60deg, #f8bd65, #ff9900);
+  }
+
+  &.danger {
+    background: linear-gradient(60deg, #faa8a8, #f56c6c);
+  }
+
+  &.info {
+    background: linear-gradient(60deg, #d6d8db, #909399);
+  }
+
+  &.blue {
+    background: linear-gradient(60deg, #3dd5e9, #00acc1);
+  }
+
 }

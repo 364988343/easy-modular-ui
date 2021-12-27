@@ -1,6 +1,6 @@
 <template>
   <div class="em-code-preview" :class="{ show: visible }">
-    <em-button class="em-code-preview-btn" type="danger" icon="develop" @click="onCBtnlick" />
+    <em-button class="em-code-preview-btn" type="danger" icon="code" @click="onCBtnlick" />
     <em-drawer class="em-code-preview-drawer" v-bind="drawer" :visible.sync="visible">
       <template v-slot:toolbar>
         <em-button icon="transmit" @click="run" />
@@ -17,9 +17,10 @@ export default {
       drawer: {
         header: true,
         title: '代码预览',
-        icon: 'preview',
+        icon: 'search',
         width: '50%',
-        draggable: true
+        draggable: true,
+        padding: 0
       },
       timer: null
     }
@@ -61,17 +62,21 @@ export default {
     z-index: 9999;
     transition: all 0.3s ease-in-out;
   }
+
+  pre {
+    height: 100%;
+
+    code {
+      height: 100%;
+      overflow: auto;
+      box-sizing: border-box;
+    }
+  }
 }
 .em-code-preview-drawer {
   .em-drawer-modal,
   .em-drawer-dialog {
-    z-index: 9998;
-  }
-  .el-scrollbar__wrap {
-    background: #2b2b2b;
-  }
-  .el-scrollbar__view {
-    padding: 0;
+    z-index: 10086;
   }
 }
 </style>

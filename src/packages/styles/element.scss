@@ -11,6 +11,7 @@
 //解决element-ui的table表格无法对齐的问题
 body {
   .el-table {
+
     th.gutter,
     colgroup.gutter {
       display: table-cell !important;
@@ -50,11 +51,12 @@ body {
 
 @mixin input-icon($type, $top, $size, $padding) {
   .el-input#{$type} {
+
     .el-input__prefix,
     .el-input__suffix,
     .el-input-group__prepend,
     .el-input-group__append {
-     .em-icon {
+      .em-icon {
         position: relative;
         top: $top;
         font-size: $size;
@@ -87,17 +89,46 @@ body {
 
 /********************* Tabs **********************/
 .el-tabs__item {
- .em-icon {
+  .em-icon {
     position: relative;
     top: 2px;
     padding-right: 2px;
-    font-size: 1.4em;
+    font-size: 16px;
   }
 }
 
 .el-alert {
   margin-bottom: 10px !important;
 }
-.el-row {
-  margin-bottom: 20px;
+
+.em-dialog {
+  >.el-dialog {
+    >.el-dialog__header {
+      background-color: $dialog-header-background-color;
+    }
+  }
+}
+
+/********************* Form **********************/
+.el-form-item {
+  margin-bottom: 16px !important;
+}
+
+/********************* Table **********************/
+// 滚动条的宽度
+.el-table__body-wrapper::-webkit-scrollbar {
+  width: 6px; // 横向滚动条
+  height: 6px; // 纵向滚动条 必写
+}
+
+// 滚动条的滑块
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 3px;
+}
+
+
+.el-rate {
+  display: inline-block;
+  vertical-align: middle;
 }

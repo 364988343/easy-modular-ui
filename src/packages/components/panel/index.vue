@@ -4,14 +4,14 @@
     <header v-if="header" class="em-panel-header">
       <slot name="header">
         <div v-if="icon" class="em-panel-header-icon">
-          <em-icon v-if="icon" :name="icon" />
+          <em-icon v-if="icon" :name="icon" size="18px" :color="iconColor" />
         </div>
         <!--标题-->
         <div class="em-panel-header-title">
           <slot name="title">{{ title }}</slot>
         </div>
         <!--工具栏之前-->
-        <div class="em-panel-header-toobar-before">
+        <div class="em-panel-header-toolbar-before">
           <slot name="toolbar-before" />
         </div>
         <!--工具栏-->
@@ -19,29 +19,24 @@
           <!--工具栏插槽-->
           <slot name="toolbar" />
           <!--全屏按钮-->
-          <em-button v-if="fullscreen" :icon="fullscreen_ ? 'min' : 'max'" @click="onFullscreen" />
+          <em-button v-if="fullscreen" :icon="fullscreen_ ? 'fullscreen-exit' : 'fullscreen'" @click="onFullscreen" />
           <!--刷新按钮-->
-          <em-button v-if="refresh" icon="refresh" @click="onRefresh" />
+          <em-button v-if="refresh" icon="reload" @click="onRefresh" />
           <!--折叠按钮-->
-          <em-button v-if="collapse" :icon="collapse_ ? 'angle-down' : 'angle-up'" @click="onCollapse" />
+          <em-button v-if="collapse" :icon="collapse_ ? 'down-circle' : 'up-circle'" @click="onCollapse" />
         </div>
       </slot>
     </header>
+    <!--内容-->
     <el-collapse-transition>
-      <div class="em-panel-dialog" v-show="!collapse_">
-        <div class="em-panel-content">
-          <div class="em-panel-wrapper" v-if="hasScrollbar">
-            <em-scrollbar ref="scrollbar" :horizontal="horizontal">
-              <slot />
-            </em-scrollbar>
-          </div>
-          <slot v-else />
-        </div>
-        <footer v-if="footer" :class="['em-panel-footer', footerAlign]">
-          <slot name="footer"></slot>
-        </footer>
+      <div class="em-panel-content" v-show="!collapse_" :style="contentStyle">
+        <slot />
       </div>
     </el-collapse-transition>
+    <!--底部-->
+    <footer v-if="footer" :class="['em-panel-footer', footerAlign]">
+      <slot name="footer"></slot>
+    </footer>
   </div>
 </template>
 <script>
@@ -55,116 +50,111 @@ export default {
     }
   },
   props: {
-    /** 标题 */
+    //标题
     title: String,
-    /** 图标 */
+    //图标
     icon: String,
-    /** 是否显示头部 */
+    //图标颜色
+    iconColor: {
+      type: String,
+      default: '#000000'
+    },
+    //是否显示头部
     header: Boolean,
-    /** 是否显示底部 */
+    //是否显示底部
     footer: Boolean,
-    /** 底部对齐方式 */
+    //底部对齐方式(left/center/right)
     footerAlign: {
       type: String,
       default: 'right'
     },
-    /** 高度 */
-    height: String,
-    /** 是否显示顶部边框 */
-    border: Boolean,
-    /** 顶部边框的颜色 */
-    borderColor: {
-      type: String,
-      default: 'success'
-    },
-    /** 标题是否加粗 */
-    titleBold: Boolean,
-    /** 是否显示水平滚动条 */
-    horizontal: Boolean,
-    /** loading */
-    loading: Boolean,
-    /** 是否页模式 */
+    //是否页模式
     page: Boolean,
-    /** 是否显示全屏按钮 */
-    fullscreen: Boolean,
-    /** 是否显示折叠按钮 */
-    collapse: Boolean,
-    /** 自定义折叠事件 */
-    customCollapseEvent: Function,
-    /** 不显示滚动条 */
-    noScrollbar: Boolean,
-    /** 没有内边距 */
+    //高度
+    height: String,
+    //内边距（默认8px）
+    padding: {
+      type: [Number, String],
+      default: 8
+    },
+    //没有内边距
     noPadding: Boolean,
-    /** 是否显示刷新按钮 */
+    //没有边框
+    noBorder: Boolean,
+    //标题是否加粗
+    titleBold: Boolean,
+    //是否显示水平滚动条
+    horizontal: Boolean,
+    //加载动画显示
+    loading: Boolean,
+    //是否显示全屏按钮
+    fullscreen: Boolean,
+    //是否显示折叠按钮
+    collapse: Boolean,
+    //是否显示刷新按钮
     refresh: Boolean
   },
   computed: {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),
-    /** 生成class */
     class_() {
-      let classArr = [
-        'em-panel',
-        this.fontSize,
-        this.fullscreen_ ? 'fullscreen' : '',
-        this.height ? 'has-height' : '',
-        this.page ? 'page' : '',
-        this.noPadding ? 'no-padding' : '',
-        this.border ? 'border' : '',
-        this.titleBold ? 'title-bold' : ''
-      ]
+      let classArr = ['em-panel', this.fontSize]
+      if (this.fullscreen_) classArr.push('fullscreen')
+      if (!this.noBorder) classArr.push('border')
+      if (this.titleBold) classArr.push('title-bold')
 
-      if (['success', 'primary', 'info', 'warning', 'danger'].includes(this.borderColor)) {
-        classArr.push(this.borderColor)
-      }
       return classArr
     },
     style_() {
-      let style = { height: this.height }
-      if (!['success', 'primary', 'info', 'warning', 'danger'].includes(this.borderColor)) {
-        style.borderTopCoder = this.borderColor
-      }
+      let style = { height: this.page ? '100%' : this.height }
       return style
     },
-    /** 是否有滚动条 */
-    hasScrollbar() {
-      return !this.noScrollbar && (this.height || this.page)
+    contentStyle() {
+      let style = { padding: this.padding_ }
+      return style
     },
-    /** 是否可以折叠 */
-    isCollapse() {
-      return this.collapse && !this.page
+    padding_() {
+      if (this.noPadding) return 0
+      else return typeof this.padding === 'number' ? this.padding + 'px' : this.padding
     }
   },
   methods: {
-    /** 开启全屏 */
+    /**
+     * @description:开启全屏
+     * @param {*}
+     */
     openFullscreen() {
       this.fullscreen_ = true
-      // 全屏事件
       this.$emit('fullscreen-change', this.fullscreen_)
     },
-    /** 关闭全屏 */
+
+    /**
+     * @description: 关闭全屏
+     * @param {*}
+     */
     closeFullscreen() {
       this.fullscreen_ = false
-      // 全屏事件
       this.$emit('fullscreen-change', this.fullscreen_)
     },
-    /** 滚动条重置 */
-    scrollbarResize() {
-      if (this.hasScrollbar) {
-        this.$refs.scrollbar.update()
-      }
-    },
-    /** 折叠事件 */
+
+    /**
+     * @description:折叠事件
+     * @param {*}
+     */
     onCollapse() {
-      // 如果设置了自定义折叠事件，则覆盖默认的
-      if (this.customCollapseEvent) {
-        this.collapse_ = this.customCollapseEvent()
-      } else if (this.isCollapse) {
-        this.collapse_ = !this.collapse_
+      this.collapse_ = !this.collapse_
+      if (this.collapse_) {
+        this.class_.push('no-height')
+      } else {
+        const index = this.class_.findIndex((m) => m === 'no-height')
+        this.class_.splice(index, 1)
       }
-      // 折叠事件
       this.$emit('collapse-change', this.collapse_)
     },
-    /** 全屏事件 */
+
+    /**
+     * @description: 全屏事件
+     * @param {*}
+     */
     onFullscreen() {
       if (this.fullscreen_) {
         this.closeFullscreen()
@@ -172,7 +162,12 @@ export default {
         this.openFullscreen()
       }
     },
-    /** 刷新按钮事件 */
+
+    /**
+     * @description: 刷新
+     * @param {*}
+     */
+    /**  */
     onRefresh() {
       this.$emit('refresh')
     }

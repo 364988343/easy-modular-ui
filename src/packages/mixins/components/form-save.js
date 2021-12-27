@@ -3,6 +3,7 @@ export default {
   mixins: [visible],
   data() {
     return {
+      formRef: 'form',
       // 存储表单数据
       model_: {},
       form: {
@@ -11,7 +12,7 @@ export default {
         model: {
           id: null
         },
-        customResetFunction: null,
+        customReset: null,
         disabled: this.readonly,
         footerCloseButton: true,
         loading: false
@@ -50,14 +51,14 @@ export default {
       if (this.isAdd_) {
         form.title = `新增${title}`
         form.icon = 'add'
-        form.customResetFunction = null
+        form.customReset = null
         form.action = actions.add
         return
       }
       //编辑
       form.title = `${readonly ? '查看' : '编辑'}${title}`
       form.icon = readonly ? 'preview' : 'edit'
-      form.customResetFunction = this.reset
+      form.customReset = this.reset
       form.action = actions.update
     },
     reset() {
@@ -69,10 +70,10 @@ export default {
       form.loading = true
       actions
         .edit(id)
-        .then(data => {
+        .then((data) => {
           this.model_ = this.$_.merge({}, data)
           //重置
-          this.$refs.form.reset()
+          this.$refs[this.formRef].reset()
           form.loading = false
         })
         .catch(() => {
@@ -85,7 +86,6 @@ export default {
     onOpen() {
       //设置图标
       this.setInfo()
-
       if (this.isEdit_) {
         //编辑时是否总是刷新或者id不同时也刷新
         if (this.allRefresh || this.id !== this.form.model.id) {
@@ -93,7 +93,7 @@ export default {
         }
       } else {
         //如果是新增则要重置
-        this.$refs.form.reset()
+        this.$refs[this.formRef].reset()
       }
 
       //打开后执行的方法

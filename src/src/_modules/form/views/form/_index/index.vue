@@ -12,7 +12,7 @@ export default {
     return {
       tmpl: {
         title: '基础表单(em-form)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         methods,
         events

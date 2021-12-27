@@ -12,7 +12,7 @@ export default {
       val: '',
       tmpl: {
         title: '面板栅格化(em-panel-col)',
-        icon: 'card',
+        con: 'appstore',
         attrs,
         slots
       }

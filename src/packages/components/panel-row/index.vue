@@ -7,12 +7,12 @@
 export default {
   name: 'panel-row',
   props: {
-    /** 间隔 */
+    //间隔
     gutter: {
       type: Number,
       default: 5
     },
-    /** 高度 */
+    //高度
     height: {
       type: String,
       required: false

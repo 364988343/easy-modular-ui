@@ -1,9 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-18 16:18:52
- * @Description: 基于浏览器的本地存储的缓存管理
- */
-
 import store from 'store'
 const prefix = 'em-'
 

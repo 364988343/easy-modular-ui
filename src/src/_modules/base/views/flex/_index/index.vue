@@ -13,7 +13,7 @@ export default {
       val: '',
       tmpl: {
         title: '弹性布局组件(em-tabs)',
-        icon: 'card',
+        con: 'appstore',
         attrs,
         slots
       }

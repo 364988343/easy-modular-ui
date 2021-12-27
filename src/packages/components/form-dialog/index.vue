@@ -1,36 +1,6 @@
 <template>
-  <em-dialog
-    ref="dialog"
-    class="em-form-dialog"
-    :title="title"
-    :icon="icon"
-    :width="width"
-    :height="height"
-    :padding="padding"
-    :footer="footer"
-    :fullscreen="fullscreen"
-    :close-on-click-modal="closeOnClickModal"
-    :loading="showLoading"
-    :footer-close-button="footerCloseButton"
-    v-on="dialogOn"
-    :visible.sync="visible_"
-  >
-    <em-form
-      ref="form"
-      no-loading
-      :model="model"
-      :rules="rules"
-      :action="action"
-      :label-width="labelWidth"
-      :label-position="labelPosition"
-      :validate="validate"
-      :success-msg="successMsg"
-      :success-msg-text="successMsgText"
-      :disabled="disabled"
-      :inline="inline"
-      :customResetFunction="customResetFunction"
-      v-on="formOn"
-    >
+  <em-dialog ref="dialog" class="em-form-dialog" v-bind="dialog" v-on="dialogOn" :visible.sync="visible_">
+    <em-form ref="form" v-bind="form" v-on="formOn">
       <slot />
     </em-form>
 
@@ -39,10 +9,10 @@
     </template>
 
     <template v-if="footer" v-slot:footer>
-      <slot name="footer-buttons" />
       <slot name="footer">
-        <el-button v-if="btnOk && !disabled" type="success" @click="submit" :size="fontSize">{{ btnOkText }}</el-button>
-        <el-button v-if="btnReset && !disabled" type="warning" @click="reset" :size="fontSize">重置</el-button>
+        <el-button v-if="btnReset && !disabled" @click="reset" type="warning" :size="fontSize">重置</el-button>
+        <el-button v-if="btnOk && !disabled" type="primary" @click="submit" :size="fontSize">{{ btnOkText }}</el-button>
+        <slot name="footer-buttons" />
       </slot>
     </template>
   </em-dialog>
@@ -55,17 +25,77 @@ export default {
   data() {
     return {
       loading_: false,
-      formOn: {
-        success: this.onSuccess,
-        error: this.onError,
-        reset: this.onReset,
-        'validate-error': this.onValidateError
+      dialog: {
+        //标题
+        title: this.title,
+        //头部左侧图标
+        icon: this.icon,
+        //宽度
+        width: this.width,
+        //高度
+        height: this.height,
+        //内边距
+        padding: this.padding,
+        //显示底部
+        footer: this.footer,
+        //是否显示全屏按钮
+        fullscreen: this.fullscreen,
+        //是否可以通过点击 modal 关闭 Dialog
+        closeOnClickModal: this.closeOnClickModal,
+        //显示loading
+        loading: this.showLoading,
+        //是否显示底部关闭按钮
+        footerCloseButton: this.footerCloseButton
       },
       dialogOn: {
+        //窗口打开事件
         open: this.onOpen,
+        //窗口打开后事件
         opened: this.onOpened,
+        //窗口关闭事件
         close: this.onClose,
+        //窗口关闭后事件
         closed: this.onClosed
+      },
+      form: {
+        //不显示动画
+        noLoading: true,
+        //表单对象
+        model: this.model,
+        //验证规则
+        rules: this.rules,
+        //提交请求
+        action: this.action,
+        //标签的宽度
+        labelWidth: this.labelWidth,
+        //表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
+        labelPosition: this.labelPosition,
+        //是否显示成功提示消息
+        successMsg: this.successMsg,
+        //成功提示消息文本
+        successMsgText: this.successMsgText,
+        //禁用表单
+        disabled: this.disabled,
+        //行内表单模式
+        inline: this.inline,
+        //自定义校验
+        customValidate: this.customValidate,
+        //额外校验
+        extraValidate: this.extraValidate,
+        //自定义重置
+        customReset: this.customReset,
+        //额外重置
+        extraReset: this.extraReset
+      },
+      formOn: {
+        //保存成功
+        success: this.onSuccess,
+        //保存失败
+        error: this.onError,
+        //重置
+        reset: this.onReset,
+        //验证失败
+        'validate-error': this.onValidateError
       }
     }
   },
@@ -78,8 +108,11 @@ export default {
     width: String,
     //Dialog 的高度
     height: [Number, String],
-    //内边距
-    padding: { type: Number, default: 12 },
+    //内边距（默认8px）
+    padding: {
+      type: [Number, String],
+      default: 8
+    },
     //显示尾部
     footer: {
       type: Boolean,
@@ -110,8 +143,6 @@ export default {
     labelWidth: String,
     //表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
     labelPosition: String,
-    // 自定义验证
-    validate: Function,
     //是否显示成功提示消息
     successMsg: {
       type: Boolean,
@@ -135,10 +166,8 @@ export default {
     //reset按钮
     btnReset: {
       type: Boolean,
-      default: true
+      default: false
     },
-    //自定义重置操作
-    customResetFunction: Function,
     //保存成功后是否关闭对话框
     closeWhenSuccess: {
       type: Boolean,
@@ -149,17 +178,23 @@ export default {
     //显示加载动画
     loading: Boolean,
     //不显示加载动画
-    noLoading: {
-      type: Boolean,
-      default: false
-    },
-    //打开时是否清楚验证信息
+    noLoading: Boolean,
+    //打开时是否清除验证信息
     clearValidateOnOpen: {
       type: Boolean,
       default: true
     },
     //是否显示底部关闭按钮
-    footerCloseButton: Boolean
+    footerCloseButton: Boolean,
+
+    //自定义验证
+    customValidate: Function,
+    // 额外验证
+    extraValidate: Function,
+    //自定义重置操作
+    customReset: Function,
+    //额外重置（除el-form自带的重置）
+    extraReset: Function
   },
   computed: {
     showLoading() {
@@ -186,6 +221,13 @@ export default {
       this.$nextTick(() => {
         this.$refs.form.reset()
       })
+    },
+
+    /**
+     * @description: 校验
+     */
+    validate() {
+      return this.$refs.form.validate()
     },
 
     /**

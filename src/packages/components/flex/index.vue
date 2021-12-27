@@ -1,18 +1,18 @@
 <template>
   <div :class="['em-flex', direction, fixMode]" :style="{ height, width }">
     <template v-if="direction === 'column'">
-      <div class="em-flex_top" :style="{ height: fixMode === 'top' ? fix : '' }">
+      <div class="em-flex-top" :style="{ height: fixMode === 'top' ? fix : '' }">
         <slot name="top" />
       </div>
-      <div class="em-flex_bottom" :style="{ height: fixMode === 'bottom' ? fix : '', paddingTop: gutter ? gutter + 'px' : 0 }">
+      <div class="em-flex-bottom" :style="{ height: fixMode === 'bottom' ? fix : '', paddingTop: gutter ? gutter + 'px' : 0 }">
         <slot name="bottom" />
       </div>
     </template>
     <template v-else>
-      <div class="em-flex_left" :style="{ width: fixMode === 'left' ? fix : '' }">
+      <div class="em-flex-left" :style="{ width: fixMode === 'left' ? fix : '' }">
         <slot name="left" />
       </div>
-      <div class="em-flex_right" :style="{ width: fixMode === 'right' ? fix : '', paddingLeft: gutter ? gutter + 'px' : 0 }">
+      <div class="em-flex-right" :style="{ width: fixMode === 'right' ? fix : '', paddingLeft: gutter ? gutter + 'px' : 0 }">
         <slot name="right" />
       </div>
     </template>
@@ -43,15 +43,17 @@ export default {
       },
       default: 'top'
     },
+    //高度
     height: {
       type: String,
       default: '100%'
     },
+    //宽度
     width: {
       type: String,
       default: '100%'
     },
-    /** 间隔 */
+    //间隔
     gutter: Number
   }
 }

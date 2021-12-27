@@ -1,9 +1,7 @@
 export default {
-  page: {
-    title: '对话框示例',
-    name: 'panel_dialog_demo',
-    path: '/base/dialog/demo',
-    icon: 'chrome'
-  },
+  title: '基础用法',
+  name: 'panel_dialog_demo',
+  path: '/base/dialog/demo',
+  icon: 'detail',
   component: () => import('./index')
 }

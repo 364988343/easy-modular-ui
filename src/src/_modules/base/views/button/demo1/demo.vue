@@ -1,5 +1,5 @@
 <template>
-  <em-panel page>
+  <em-panel v-bind="panel" class="button-demo">
     <el-row>
       <em-button text="默认按钮"></em-button>
       <em-button type="primary" text="主要按钮"></em-button>
@@ -32,7 +32,7 @@
       <em-button type="primary" icon="edit" circle></em-button>
       <em-button type="success" icon="select" circle></em-button>
       <em-button type="info" icon="permission" circle></em-button>
-      <em-button type="warning" icon="refresh" circle></em-button>
+      <em-button type="warning" icon="reload" circle></em-button>
       <em-button type="danger" icon="delete" circle></em-button>
     </el-row>
     <el-row>
@@ -42,22 +42,19 @@
     <el-row>
       <em-button type="primary" icon="edit"></em-button>
       <em-button type="primary" icon="search" text="搜索"></em-button>
-      <em-button type="primary">
-        刷新
-        <em-icon name="refresh"></em-icon>
-      </em-button>
+      <em-button type="primary" icon="reload" icon-position="right" text="刷新"> </em-button>
     </el-row>
     <el-row>
       <el-button-group>
-        <em-button type="primary" icon="arrow-left" text="上一页"></em-button>
+        <em-button type="primary" icon="arrowleft" text="上一页"></em-button>
         <em-button type="primary">
           下一页
-          <em-icon name="arrow-right"></em-icon>
+          <em-icon name="arrowright"></em-icon>
         </em-button>
       </el-button-group>
       <el-button-group>
         <em-button type="primary" icon="edit"></em-button>
-        <em-button type="primary" icon="preview"></em-button>
+        <em-button type="primary" icon="explorer"></em-button>
         <em-button type="primary" icon="delete"></em-button>
       </el-button-group>
     </el-row>
@@ -73,4 +70,27 @@
     </el-row>
   </em-panel>
 </template>
-<style></style>
+<script>
+export default {
+  data() {
+    return {
+      panel: {
+        title: '按钮-基础用法',
+        page: true,
+        header: true,
+        icon: 'detail'
+      }
+    }
+  },
+  created() {
+    this.setTabName(this.panel.title)
+  }
+}
+</script>
+<style lang="scss">
+.button-demo {
+  .el-row {
+    margin: 24px;
+  }
+}
+</style>

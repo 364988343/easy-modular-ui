@@ -1,8 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-19 23:17:03
- * @Description: 用户
- */
 import cache from '../../utils/cache'
 
 let routeMenus = []
@@ -18,77 +13,146 @@ const resolveRouteMenus = (menus) => {
 }
 
 const state = {
-  //请求令牌
-  accessToken: cache.get('accessToken') || '',
-  //刷新令牌
-  refreshToken: cache.get('refreshToken') || '',
-  //用户信息
-  userData: cache.get('userData') || '',
+  //用户编号
+  userId: '',
+  //用户编码
+  userCode: '',
+  //用户姓名
+  userName: '',
+  //性别
+  sex: '',
+  //职位
+  jobName: '',
+  //角色编码
+  roleCodes: '',
+  //角色名称
+  roleNames: '',
+  //租户Id
+  tenantId: '',
+  //租户名称
+  tenantName: '',
+  //租户类别
+  tenantType: '',
+  //菜单列表
+  menus: [],
   //路由
-  routes: cache.get('routes') || ''
+  routes: [],
+  //权限列表
+  permissions: [],
+  //额外数据
+  extraData: ''
+}
+
+const getters = {
+  routeNames: (s) => {
+    return s.routes.map((m) => m.routeName)
+  }
 }
 
 const mutations = {
   /**
-   * @description: acessToken赋值
+   * @description: 初始化
    * @param {*} state
-   * @param {*} data
+   * @param {*} user
    */
-  setAccessToken(state, data) {
-    cache.set('accessToken', data)
-    state.accessToken = data
-  },
+  init(state, user) {
+    Object.assign(state, user)
 
-  /**
-   * @description: refreshToken赋值
-   * @param {*} state
-   * @param {*} data
-   */
-  setRefreshToken(state, data) {
-    cache.set('refreshToken', data)
-    state.refreshToken = data
-  },
-
-  /**
-   * @description: 用户赋值
-   * @param {*} state
-   * @param {*} data
-   */
-  setUserData(state, data) {
-    state.userData = data
-    resolveRouteMenus(data.menus)
+    resolveRouteMenus(user.menus)
     state.routes = routeMenus
-    
-    cache.set('userData', data)
-    cache.set('routes', routeMenus)
   },
 
   /**
-   * @description: 清空
-   * @param {*}
+   * @description: 重置
+   * @param {*} state
    */
   reset(state) {
-    state.acessToken = ''
-    state.refreshToken = ''
-    state.userData = {}
-    cache.remove('accessToken')
-    cache.remove('refreshToken')
-    cache.remove('userData')
+    state.id = ''
+    state.userCode = ''
+    state.userName = ''
   }
 }
 
 const actions = {
   /**
+   * @description 初始化
+   */
+  async init({ state, rootState, commit, dispatch }) {
+    if (state.userId) return
+
+    try {
+      const authInfo = await rootState.app.system.actions.auth.getAuthInfo()
+
+      // 设置皮肤
+      dispatch('app/skins/init', authInfo.skin, {
+        root: true
+      })
+
+      // 初始化
+      commit('init', authInfo)
+
+      const userId = await dispatch('getUserIdByCache')
+      // 如果账户变了，则需要清除原有的一些数据
+      if (authInfo.userId !== userId) {
+        dispatch('app/page/reset', null, {
+          root: true
+        })
+      }
+
+      dispatch('setUserIdByCache')
+    } catch (err) {
+      console.error(err)
+      //如果请求失败则退出
+      dispatch('app/system/logout', null, {
+        root: true
+      })
+    }
+  },
+
+  /**
+   * @description 重载用户信息
+   */
+  async reload({ state, rootState, commit, dispatch }) {
+    try {
+      const authInfo = await rootState.app.system.actions.auth.getAuthInfo()
+      commit('init', authInfo)
+    } catch (err) {
+      console.error(err)
+      //如果请求失败则退出
+      dispatch('app/system/logout', null, {
+        root: true
+      })
+    }
+  },
+
+  /**
    * @description 退出
    */
   logout({ commit }) {
     commit('reset')
+  },
+
+  /**
+   * @description: 从缓存中获取用户Id
+   * @param {*}
+   */
+  getUserIdByCache() {
+    return cache.get('userId')
+  },
+
+  /**
+   * @description: 缓存用户Id
+   * @param {*} state
+   */
+  setUserIdByCache({ state }) {
+    cache.set('userId', state.userId)
   }
 }
 
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

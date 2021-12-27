@@ -28,11 +28,16 @@
 
     &-top {
         flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+        box-sizing: border-box;
     }
 
     &-bottom {
         flex-grow: 1;
     }
+    
 
     &-tip {
         color: $color-warning;
@@ -41,6 +46,7 @@
             margin-right: 5px;
         }
     }
+
 
     .status-success {
         color: $color-success;

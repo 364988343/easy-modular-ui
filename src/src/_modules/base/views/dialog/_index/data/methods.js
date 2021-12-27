@@ -13,10 +13,5 @@ export default [
     name: 'closeFullscreen',
     desc: '关闭全屏',
     params: '-'
-  },
-  {
-    name: 'updateScrollbar',
-    desc: '重绘滚动条',
-    params: '-'
   }
 ]

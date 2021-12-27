@@ -2,28 +2,21 @@ export default [
   {
     name: 'label',
     desc: '文本',
-    type: 'string',
+    type: 'String',
     opt: '-',
     def: '-'
   },
   {
     name: 'value',
     desc: '值',
-    type: 'String, Number',
-    opt: '-',
-    def: '-'
-  },
-  {
-    name: 'unit',
-    desc: '单位',
-    type: 'string',
+    type: 'Number',
     opt: '-',
     def: '-'
   },
   {
     name: 'icon',
     desc: '图标',
-    type: 'string',
+    type: 'String',
     opt: '-',
     def: '-'
   },
@@ -35,10 +28,17 @@ export default [
     def: 'false'
   },
   {
-    name: 'bg-color',
-    desc: '背景色',
-    type: 'string',
-    opt: 'success/primary/info/warning/danger/具体色值',
+    name: 'type',
+    desc: '类型',
+    type: 'String',
+    opt: 'success/primary/info/warning/danger/blue',
     def: 'success'
+  },
+  {
+    name: 'custom-class',
+    desc: '自定义样式',
+    type: 'String',
+    opt: '-',
+    def: '-'
   }
 ]

@@ -13,7 +13,7 @@ export default {
     return {
       tmpl: {
         title: '按钮(em-button)',
-        icon: 'button',
+        icon: 'detail',
         attrs,
         slots,
         events

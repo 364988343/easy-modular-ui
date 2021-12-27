@@ -3,18 +3,8 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-
-  .el-scrollbar {
-    height: 100%;
-
-    .el-scrollbar__wrap {
-      overflow-x: hidden;
-
-      .el-scrollbar__view {
-        padding: 0 7px;
-      }
-    }
-  }
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .no-menus {
     margin: 5px 5%;
@@ -28,25 +18,13 @@
     border-radius: 5px;
     box-sizing: border-box;
 
-    > .em-icon {
+
+    >.em-icon {
       font-size: 40px !important;
     }
   }
 }
 
-#em-sidebar {
-  &.collapse {
-    #em-menus {
-      .el-scrollbar {
-        .el-scrollbar__wrap {
-          .el-scrollbar__view {
-            padding: 0 5px;
-          }
-        }
-      }
-    }
-  }
-}
 
 /**这些代码需要放在body下**/
 .el-menu,
@@ -72,8 +50,9 @@
 }
 
 .el-menu--collapse {
-  > .el-menu-item,
-  > .el-submenu > .el-submenu__title {
+
+  >.el-menu-item,
+  >.el-submenu>.el-submenu__title {
     padding: 0 15px !important;
     width: 55px;
   }

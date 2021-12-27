@@ -16,7 +16,7 @@ export default {
     return {
       tmpl: {
         title: '页表单(em-form-page)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         methods,
         events

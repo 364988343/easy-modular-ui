@@ -1,5 +1,5 @@
 <template>
-  <em-panel page>
+  <em-panel page header title="小面板示例" icon="detail">
     <em-panel-row>
       <em-panel-col :span="6">
         <em-panel-small v-bind="panel" @more="onMore" />
@@ -22,32 +22,32 @@ export default {
     return {
       panel: {
         label: '账户总览',
-        value: 51211.22,
+        value: 51211,
         unit: '元',
-        icon: 'money',
+        icon: 'moneycollect',
         more: true
       },
       panel1: {
         label: '微信转账',
-        value: 900.34,
+        value: 900,
         unit: '元',
-        icon: 'money',
+        icon: 'car',
         more: true,
-        bgColor: 'warning'
+        type: 'primary'
       },
       panel2: {
         label: '支付宝转账',
-        value: 562352.11,
+        value: 562352,
         unit: '元',
-        icon: 'money',
-        bgColor: 'primary'
+        icon: 'flag',
+        type: 'blue'
       },
       panel3: {
         label: '美团消费',
-        value: 657.33,
+        value: 657,
         unit: '元',
-        icon: 'money',
-        bgColor: 'danger'
+        icon: 'fire-fill',
+        type: 'danger'
       }
     }
   },

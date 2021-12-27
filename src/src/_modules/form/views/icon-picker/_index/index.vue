@@ -1,9 +1,5 @@
 <template>
   <em-tmpl v-bind="tmpl">
-    <el-alert title="说明" type="warning" show-icon :closable="false">
-      所有图标均使用svg格式，从
-      <a href="http://iconfont.cn" target="_blank">阿里巴巴图标库</a> 获取
-    </el-alert>
   </em-tmpl>
 </template>
 <script>
@@ -16,7 +12,7 @@ export default {
     return {
       tmpl: {
         title: '图标选择器(em-icon-picker)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events
       }

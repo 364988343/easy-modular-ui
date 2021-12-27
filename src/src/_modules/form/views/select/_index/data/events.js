@@ -28,5 +28,10 @@ export default [
     name: 'focus',
     desc: '当 input 获得焦点时触发',
     params: 'event'
+  },
+  {
+    name: 'create-item',
+    desc: '创建新条目时触发',
+    params: '目前的选中值'
   }
 ]

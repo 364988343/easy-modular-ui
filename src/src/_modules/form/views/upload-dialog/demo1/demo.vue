@@ -17,9 +17,8 @@ export default {
         visible: false,
         action: 'http://ip.com',
         limit: 1,
-        accept: '.xls',
-        tip: '测试',
-        templateBtnShow: true
+        accept: '',
+        tip: ''
       }
     }
   },

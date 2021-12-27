@@ -8,9 +8,16 @@ export default [
   },
   {
     name: 'placeholder',
-    desc: 'placeholder',
+    desc: '占位符',
     type: 'String',
     opt: '-',
     def: '-'
+  },
+  {
+    name: 'disabled',
+    desc: '禁用',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
   }
 ]

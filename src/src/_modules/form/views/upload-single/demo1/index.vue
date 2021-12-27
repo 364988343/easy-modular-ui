@@ -1,8 +1,8 @@
 <template>
-  <em-container>
+   <em-panel page noPadding noBorder>
     <demo />
     <em-code-preview :code="code" />
-  </em-container>
+  </em-panel>
 </template>
 <script>
 import page from './page.js'

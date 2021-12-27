@@ -11,13 +11,13 @@
   </el-submenu>
 
   <!--链接菜单-->
-  <el-menu-item v-else :index="menu.id + ''" :parent-index="parentIndex" @click="go(menu)">
+  <el-menu-item v-else :index="menu.id + ''" :parent-index="parentIndex" @click="onClick(menu)">
     <em-icon :name="menu.icon" class="em-menus-icon" :style="{ color: menu.iconColor }" />
     <span>{{ menu.name }}</span>
   </el-menu-item>
 </template>
 <script>
-import { open } from '../../../../utils/menu'
+import { openMenu } from '../../../../utils/menu'
 export default {
   name: 'MenuItem',
   data() {
@@ -31,8 +31,8 @@ export default {
     menu: {}
   },
   methods: {
-    go(menu) {
-      open(this.$router, menu)
+    onClick(menu) {
+      openMenu(this.$router, menu)
     }
   }
 }

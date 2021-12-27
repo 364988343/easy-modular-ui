@@ -13,10 +13,18 @@
     v-em-permission="code"
     @click="$emit('click')"
   >
-    <em-icon v-if="!loading && icon" :name="icon" />
-    <slot>
-      <span v-if="!circle && text" class="em-button-text" v-html="text" />
-    </slot>
+    <template v-if="iconPosition === 'left'">
+      <em-icon v-if="!loading && icon" :name="icon"/>
+      <slot>
+        <span v-if="!circle && text" class="em-button-text" v-html="text" />
+      </slot>
+    </template>
+    <template v-else>
+      <slot>
+        <span v-if="!circle && text" class="em-button-text" v-html="text" />
+      </slot>
+      <em-icon v-if="!loading && icon" :name="icon" />
+    </template>
   </el-button>
 </template>
 <script>
@@ -43,6 +51,11 @@ export default {
     nativeType: String,
     //图标
     icon: String,
+    //图标位置(left/right)
+    iconPosition: {
+      type: String,
+      default: 'left'
+    },
     //文本
     text: String,
     //按钮编码，用于按钮权限控制

@@ -35,6 +35,13 @@ export default [
     def: '-'
   },
   {
+    name: 'padding',
+    desc: '内边距',
+    type: 'Number / String',
+    opt: '-',
+    def: '8px'
+  },
+  {
     name: 'close-on-click-modal',
     desc: '是否可以通过点击 modal 关闭 Dialog',
     type: 'Boolean',
@@ -91,13 +98,6 @@ export default [
     def: 'right'
   },
   {
-    name: 'validate',
-    desc: '自定义验证，在表单验证通过之后，表单提交之前调用',
-    type: 'Function',
-    opt: '-',
-    def: '-'
-  },
-  {
     name: 'success-msg',
     desc: '是否显示成功提示消息',
     type: 'Boolean',
@@ -140,13 +140,6 @@ export default [
     def: 'true'
   },
   {
-    name: 'custom-reset-function',
-    desc: '自定义重置操作',
-    type: 'Function',
-    opt: '-',
-    def: '-'
-  },
-  {
     name: 'close-when-success',
     desc: '保存成功后是否关闭对话框',
     type: 'Boolean',
@@ -187,5 +180,33 @@ export default [
     type: 'Boolean',
     opt: '-',
     def: 'false'
+  },
+  {
+    name: 'customValidate',
+    desc: '自定义校验，在表单验证通过之后，表单提交之前调用',
+    type: 'Function',
+    opt: '-',
+    def: '-'
+  },
+  {
+    name: 'extraValidate',
+    desc: '额外校验（除el-form自带的校验）',
+    type: 'Function',
+    opt: '-',
+    def: '-'
+  },
+  {
+    name: 'customReset',
+    desc: '自定义重置操作',
+    type: 'Function',
+    opt: '-',
+    def: '-'
+  },
+  {
+    name: 'extraReset',
+    desc: '额外重置（除el-form自带的重置）',
+    type: 'Function',
+    opt: '-',
+    def: '-'
   }
 ]

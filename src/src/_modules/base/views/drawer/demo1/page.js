@@ -1,9 +1,7 @@
 export default {
-  page: {
-    title: '抽屉示例',
-    name: 'panel_drawer_demo',
-    path: '/base/drawer/demo',
-    icon: 'chrome'
-  },
+  title: '基础用法',
+  name: 'panel_drawer_demo',
+  path: '/base/drawer/demo',
+  icon: 'detail',
   component: () => import('./index')
 }

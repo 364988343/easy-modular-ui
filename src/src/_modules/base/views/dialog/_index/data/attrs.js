@@ -16,7 +16,7 @@ export default [
   {
     name: 'icon',
     desc: '头部左侧图标',
-    type: 'string',
+    type: 'String',
     opt: '-',
     def: '-'
   },
@@ -37,9 +37,9 @@ export default [
   {
     name: 'padding',
     desc: '内边距',
-    type: 'Number',
+    type: 'Number / String',
     opt: '-',
-    def: '0'
+    def: '8px'
   },
   {
     name: 'footer',
@@ -84,13 +84,6 @@ export default [
     def: 'false'
   },
   {
-    name: 'no-scrollbar',
-    desc: '不包含滚动条',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
     name: 'loading',
     desc: '显示loading',
     type: 'Boolean',
@@ -103,20 +96,6 @@ export default [
     type: 'Boolean',
     opt: '-',
     def: 'false'
-  },
-  {
-    name: 'drag-out-page',
-    desc: '是否可拖出页面',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
-    name: 'drag-min-width',
-    desc: '拖出页面区域后保留的最小宽度',
-    type: 'Number',
-    opt: '-',
-    def: '100'
   },
   {
     name: 'footer-close-button',

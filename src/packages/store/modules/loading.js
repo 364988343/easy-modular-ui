@@ -1,9 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-21 08:35:56
- * @Description: 加载动画
- */
-
 export default {
     namespaced: true,
     state: {

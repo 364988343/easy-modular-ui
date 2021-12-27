@@ -1,63 +1,81 @@
 .em-icon-picker {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+
+  &-input {
+    flex-grow: 1;
+
+    .el-input-group__prepend {
+      padding: 0 10px;
+    }
+  }
+
+  &-button {
+    flex-shrink: 0;
+    padding-left: 3px;
+
+    .em-button {
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .em-icon {
+        padding: 0;
+      }
+    }
+  }
+
+  &-panel {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    width: 100%;
-  
-    &-input {
-      flex-grow: 1;
-  
-      .el-input-group__prepend {
-        padding: 0 10px;
+    flex-wrap: wrap;
+
+    &-filter {
+      margin-right: 15px;
+      width: auto;
+
+      .el-input__inner {
+        height: 28px;
+        line-height: 28px;
       }
     }
-  
-    &-button {
-      flex-shrink: 0;
-      padding-left: 3px;
-  
-      .em-button {
-        padding-left: 10px;
-        padding-right: 10px;
-  
-        .em-icon {
-          padding: 0;
-        }
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 16.66%;
+      height: 110px;
+      cursor: pointer;
+      border: 1px solid $text-color4;
+      box-sizing: border-box;
+
+      &-icon {
+        width: 60px;
+        @include vertical-center(60px);
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transition: transform 0.3s;
       }
-    }
-  
-    &-panel {
-      &-filter {
-        margin-right: 15px;
-        width: auto;
-  
-        .el-input__inner {
-          height: 28px;
-          line-height: 28px;
-        }
-      }
-  
-      &-item {
-        margin: 5px;
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
+
+      &-text {
+        width: 100%;
+        @include vertical-center(30px);
         text-align: center;
-        font-size: 30px;
-        background-color: #e1e1e1;
-        border-radius: 5px;
-        box-sizing: border-box;
-        cursor: pointer;
-        color: $text-color3;
-        transition: all 0.2s ease-in;
-  
-        &:hover {
-          background-color: $color-warning;
+        color: $text-color2;
+      }
+
+      &:hover {
+        .em-icon-picker-panel-item-icon {
+          @include active_bg_color();
           color: #fff;
-          transform: scale(1.2);
+          transform: scale(1.1);
         }
       }
     }
   }
-  
+}

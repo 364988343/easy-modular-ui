@@ -7,43 +7,43 @@ export default [
     def: '-'
   },
   {
-    name: 'method',
-    desc: '接口请求方法，必须',
+    name: 'options',
+    desc: '选项（如果选项有数据则不从后台获取数据）',
+    type: 'Array',
+    opt: '-',
+    def: '-'
+  },
+  {
+    name: 'action',
+    desc: '查询方法',
     type: 'Function',
+    opt: '-',
+    def: '-'
+  },
+  {
+    name: 'valueKey',
+    desc: '选项的值的键名',
+    type: 'String',
+    opt: '-',
+    def: 'value'
+  },
+  {
+    name: 'labelKeys',
+    desc: '选项的文本的键名（可多个，英文逗号隔开）',
+    type: 'String',
+    opt: '-',
+    def: 'label'
+  },
+  {
+    name: 'size',
+    desc: '尺寸，默认按照框架的字号设置',
+    type: 'String',
     opt: '-',
     def: '-'
   },
   {
     name: 'multiple',
     desc: '多选',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
-    name: 'clearable',
-    desc: '可清空',
-    type: 'Boolean',
-    opt: '-',
-    def: 'true'
-  },
-  {
-    name: 'disabled',
-    desc: '禁用',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
-    name: 'filterable',
-    desc: '是否可搜索',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
-    name: 'show-refresh',
-    desc: '显示刷新按钮',
     type: 'Boolean',
     opt: '-',
     def: 'false'
@@ -56,24 +56,52 @@ export default [
     def: '0'
   },
   {
-    name: 'placeholder',
-    desc: '占位符',
-    type: 'String',
-    opt: '-',
-    def: '请选择...'
-  },
-  {
-    name: 'checked-first',
-    desc: '默认选中第一个',
+    name: 'clearable',
+    desc: '可清空',
     type: 'Boolean',
     opt: '-',
     def: 'false'
   },
   {
-    name: 'icon',
-    desc: '图标',
+    name: 'noLoading',
+    desc: '不显示loading',
+    type: 'Boolean',
+    opt: '-',
+    def: 'true'
+  },
+  {
+    name: 'filterable',
+    desc: '是否可搜索',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
+  },
+  {
+    name: 'autoComplete',
+    desc: '自动完成',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
+  },
+  {
+    name: 'triggerOnFocus',
+    desc: '自动完成模式下激活即获取数据',
+    type: 'Boolean',
+    opt: '-',
+    def: 'true'
+  },
+  {
+    name: 'allowCreate',
+    desc: '禁用',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
+  },
+  {
+    name: 'placeholder',
+    desc: '占位符',
     type: 'String',
     opt: '-',
-    def: '-'
+    def: '请选择...'
   }
 ]

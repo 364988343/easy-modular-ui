@@ -1,8 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-18 16:56:28
- * @Description: 状态管理器
- */
 import Vue from 'vue'
 import Vuex from 'vuex'
 

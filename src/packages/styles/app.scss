@@ -1,3 +1,6 @@
+//主题
+@import './theme.scss';
+
 //变量
 @import './variables.scss';
 //混入
@@ -19,8 +22,6 @@
 //切换皮肤
 @import './components/skin-toggle.scss';
 
-//容器
-@import './components/container.scss';
 //表单
 @import './components/form.scss';
 //抽屉
@@ -45,12 +46,12 @@
 @import './components/dialog.scss';
 //窗口分割
 @import './components/split.scss';
-//标签页
-@import './components/tabs.scss';
 //标签
-@import './components/label.scss';
+@import './components/tag.scss';
 //下拉
 @import './components/select.scss';
+//自动完成
+@import './components/autocomplete.scss';
 //图标选择器
 @import './components/icon-picker.scss';
 
@@ -61,57 +62,28 @@
 
 //列表页
 @import './components/list.scss';
-//列表面板页
-@import './components/list-panel.scss';
 
 //详情页
 @import './components/details.scss';
 
 //flex
 @import './components/flex.scss';
+
+//多文本框
+@import './components/input-mutil.scss';
+
+//颜色选择器
+@import './components/color-picker.scss';
+
+//编辑器
+@import './components/editor.scss';
+
+//工作流
+@import './components/workflow.scss';
+
+//表单设计
+@import './components/form-design.scss';
 /*********************组件 End***************************/
 
-/*********************公共 Begin***************************/
-.em-wrapper {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-}
-
-/*背景颜色*/
-.em-bg {
-  &-info {
-    background-color: $color-info !important;
-  }
-
-  &-primary {
-    background-color: $color-primary !important;
-  }
-
-  &-success {
-    background-color: $color-success !important;
-  }
-
-  &-warning {
-    background-color: $color-warning !important;
-  }
-
-  &-danger {
-    background-color: $color-danger !important;
-  }
-}
-
-/*页*/
-.page {
-  height: 100% !important;
-  box-sizing: border-box;
-}
-
-/*隐藏*/
-.hidden {
-  display: none;
-}
-
+//公共
+@import './common.scss';

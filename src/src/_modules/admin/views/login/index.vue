@@ -5,9 +5,9 @@
         <!--头部-->
         <div class="em-login-content-header">
           <div class="em-login-content-header-logo">
-            <img class="em-login-content-header-logo-img" :src="logo" />
+            <img class="em-login-content-header-logo-img" :src="config.logo" />
           </div>
-          <div class="em-login-content-header-title">{{ title }}</div>
+          <div class="em-login-content-header-title">{{ config.title }}</div>
         </div>
         <!--表单-->
         <el-form class="em-login-content-form" ref="form" :model="form" :rules="rules">
@@ -21,7 +21,7 @@
           <el-form-item prop="password">
             <el-input type="password" v-model="form.password" autocomplete="off" placeholder="密码">
               <template v-slot:prefix>
-                <em-icon name="password" />
+                <em-icon name="eye" />
               </template>
             </el-input>
           </el-form-item>
@@ -38,12 +38,12 @@
       </div>
     </div>
     <!--底部-->
-    <div class="em-login-copyright">{{ copyright }}</div>
+    <div class="em-login-copyright">{{ config.copyright }}</div>
   </div>
 </template>
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import api from '../../api/user'
+const api = $api.admin.auth
 export default {
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
         userCode: '',
         password: ''
       },
-      others: [{ img: require('../../assets/images/qywx.png') }, { img: require('../../assets/images/wechat.png') }, { img: require('../../assets/images/qq.png') }],
+      others: [{ img: require('../../assets/images/wechat.png') }, { img: require('../../assets/images/qq.png') }, { img: require('../../assets/images/qywx.png') }],
       rules: {
         userCode: [
           {
@@ -72,7 +72,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('app/system', ['title', 'logo', 'copyright'])
+    ...mapState('app/system', { config: (s) => s.config })
   },
   methods: {
     // 登录
@@ -82,18 +82,9 @@ export default {
           if (!valid) return false
           this.loading = true
           const result = await api.login(this.form)
-          if (result.code != '0') {
-            this._error(result.msg)
-            return
-          }
+          // 初始化令牌
+          this.$store.commit('app/token/init', result)
 
-          this.$store.commit('app/user/setAccessToken', result.data.accessToken)
-          this.$store.commit('app/user/setRefreshToken', result.data.refreshToken)
-
-          //初始化用户信息
-          const user = await api.get()
-          this.$store.commit('app/user/setUserData', user)
-          // 跳转
           let redirect = this.$route.query.redirect
           if (!redirect || redirect === '') {
             redirect = '/'
@@ -103,7 +94,7 @@ export default {
             path: redirect
           })
         } catch (err) {
-          console.log(err)
+          this._error(err)
         } finally {
           this.loading = false
         }
@@ -135,12 +126,11 @@ export default {
 
   &-box {
     padding: 10px 24px;
-    border: 1px solid #c5c6c7;
     border-radius: 5px;
     text-align: center;
     width: 460px;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 8px 8px 10px #4d779d;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0px 0px 12px #ccc;
   }
 
   &-content {
@@ -160,8 +150,10 @@ export default {
         height: 50px;
         line-height: 50px;
         text-align: center;
-        font-size: 38px;
-        background-image: -webkit-linear-gradient(bottom, #e50c5c, #f7920f, #fbfcfd);
+        font-size: 44px;
+        font-weight: 800;
+        margin-top: 12px;
+        background-image: -webkit-linear-gradient(bottom, #1ccef4, #f053aa, #fbfcfd);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -190,17 +182,16 @@ export default {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        border: 1px solid #b7cee6;
         margin-right: 10px;
-        box-shadow: 5px 5px 5px #888888;
+        background: #fff;
         img {
           width: 60%;
           height: 60%;
         }
-      }
-      :hover {
-        cursor: pointer;
-        background: #2969ab;
+        &:hover {
+          cursor: pointer;
+          background: rgba(41, 105, 171, 0.5);
+        }
       }
     }
   }
@@ -211,6 +202,7 @@ export default {
     width: 100%;
     text-align: center;
     font-size: 13px;
+    color: #909399;
   }
 
   .em-icon {

@@ -1,9 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-21 08:35:56
- * @Description: 页面管理
- */
-
 import cache from '../../utils/cache'
 
 /**
@@ -160,7 +154,7 @@ const actions = {
       commit('keepAliveRefresh')
     }
 
-    const defaultPage = rootState.app.system.home || '/'
+    const defaultPage = rootState.app.system.config.home || '/'
     commit('defaultSet', defaultPage)
   },
 
@@ -170,7 +164,7 @@ const actions = {
    */
   async open({ state, commit, dispatch, rootState }, route) {
     //如果是默认页直接返回
-    const defaultPage = rootState.app.system.home || '/'
+    const defaultPage = rootState.app.system.config.home || '/'
     if (defaultPage.toLowerCase() === route.path.toLowerCase()) {
       if (isCache(route)) commit('keepAlivePush', route.name)
 
@@ -210,6 +204,9 @@ const actions = {
       icon: route.meta.icon,
       tabName: route.params.tn_ || route.query.tn_ || route.meta.title
     }
+    //菜单图标赋值
+    const currentRoute = rootState.app.user.routes.find((m) => m.routeName === route.name)
+    if (currentRoute) page.icon = currentRoute.icon
 
     // 内嵌链接
     if (route.name === '_iframe') {
@@ -243,7 +240,7 @@ const actions = {
     let newPage = to
     const page = state.opened[index]
     if (index > -1) {
-      if (!to) {
+      if (!to || Object.keys(to).length === 0) {
         // 如果关闭的页面就是当前显示的页面
         if (state.current.path === page.path) {
           // 打开一个新的页面
@@ -331,6 +328,7 @@ const actions = {
       dispatch('closeAll')
     }
   },
+
   /**
    * @description 关闭所有标签
    * @param {String} path 选择的页面路径
@@ -362,15 +360,23 @@ const actions = {
   cacheClear({ state }) {
     cache.set(state.cacheKey, [])
   },
-  
+
   /**
    * @description: 设置标签名称
    * @param {*}
-   */  
+   */
   setTabName({ commit }, tabName) {
     if (tabName) {
       commit('setTabName', tabName)
     }
+  },
+
+  /**
+   * @description: 重置
+   * @param {*}
+   */
+  reset({ commit }) {
+    commit('reset')
   }
 }
 

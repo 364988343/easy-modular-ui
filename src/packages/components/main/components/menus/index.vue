@@ -4,13 +4,12 @@
       <em-icon name="form" />
       <p>没有菜单</p>
     </div>
-    <el-scrollbar v-else>
-      <el-menu ref="menus" :default-active="active" :unique-opened="uniqueOpened" :collapse="collapse" :collapse-transition="false">
-        <template v-for="item in menus">
-          <menu-item v-if="item.show" :key="item.id" :menu="item" />
-        </template>
-      </el-menu>
-    </el-scrollbar>
+
+    <el-menu v-else ref="menus" :default-active="active" :unique-opened="uniqueOpened" :collapse="collapse" :collapse-transition="false">
+      <template v-for="item in menus">
+        <menu-item v-if="item.show" :key="item.id" :menu="item" />
+      </template>
+    </el-menu>
   </div>
 </template>
 <script>
@@ -27,10 +26,14 @@ export default {
     active: {
       get() {
         if (this.current.name && this.routes) {
-          let routeMenu = this.routes.find((m) => m.routenName === this.current.name)
+          let routeMenu = this.routes.find((m) => m.routeName === this.current.name)
+
+          if (!routeMenu && this.current.meta && this.current.meta.relateRoute) {
+            routeMenu = this.routes.find((m) => m.routeName === this.current.meta.relateRoute)
+          }
 
           if (routeMenu) {
-            return routeMenu.menu.id
+            return routeMenu.id
           }
         }
         return '-1'
@@ -47,7 +50,7 @@ export default {
     }
   },
   mounted() {
-    if (this.menus && this.$refs.menus) {
+    if (this.menus && this.menus.children && this.$refs.menus) {
       this.$refs.menus.open(this.menus[0].id)
     }
   }

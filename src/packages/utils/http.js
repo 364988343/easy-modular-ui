@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import dayjs from 'dayjs'
+import token from './token'
 import { Message, MessageBox } from 'element-ui'
 import { store } from '../store'
 import { router } from '../router'
@@ -98,25 +99,25 @@ Http.prototype.crud = (root) => {
   }
   return {
     query(params) {
-      return $http.get(`${root}query`, params)
+      return $emHttp.get(`${root}query`, params)
     },
     add(params) {
-      return $http.post(`${root}add`, params)
+      return $emHttp.post(`${root}add`, params)
     },
     remove(id) {
-      return $http.delete(`${root}delete`, { id })
+      return $emHttp.delete(`${root}delete`, { id })
     },
     edit(id) {
-      return $http.get(`${root}edit`, { id })
+      return $emHttp.get(`${root}edit`, { id })
     },
     update(params) {
-      return $http.post(`${root}update`, params)
+      return $emHttp.post(`${root}update`, params)
     }
   }
 }
 
-// 设为全局属性$http
-if (!window.$http) window.$emHttp = new Http()
+// 设为全局属性$emHttp
+if (!window.$emHttp) window.$emHttp = new Http()
 
 // 消息提醒显示时长(ms)
 const messageDuration = 1500
@@ -126,22 +127,17 @@ const handleDownload = (response) => {
   //如果返回的是application/json，则表示返回的是json，没有要下载的问题，可能是逻辑处理失败
   if (response.data.type === 'application/json') {
     var reader = new FileReader()
-    reader.onload = (e) => {
-      var data = JSON.parse(e.target.result)
-      if (data.code === 1) {
-        return data.data
-      } else {
-        Message.error({
-          message: data.msg,
-          showClose: true,
-          center: true,
-          duration: messageDuration
-        })
-        return
-      }
-    }
     reader.readAsText(response.data)
-    return
+    reader.onload = (e) => {
+      Message.error({
+        message: data.msg,
+        showClose: true,
+        center: true,
+        duration: messageDuration
+      })
+    }
+
+    return Promise.reject('下载文件失败')
   }
 
   const url = window.URL.createObjectURL(response.data)
@@ -150,16 +146,20 @@ const handleDownload = (response) => {
   if (response.config.headers['preview']) return url
 
   let fileName = ''
-  // 如果响应头包含'content-disposition'属性，则从该属性中获取文件名称
-  if (response.headers['content-disposition']) {
-    fileName = decodeURI(
-      response.headers['content-disposition']
-        .split(';')
-        .find((m) => m.trim().startsWith('filename='))
-        .split('=')[1]
-    )
-      .replace('"', '')
-      .replace('"', '')
+  if (response.config.params && response.config.params.exportTitle) {
+    fileName = `${response.config.params.exportTitle}${dayjs().format('YYYYMMDD')}.xls`
+  } else {
+    // 如果响应头包含'content-disposition'属性，则从该属性中获取文件名称
+    if (response.headers['content-disposition']) {
+      fileName = decodeURI(
+        response.headers['content-disposition']
+          .split(';')
+          .find((m) => m.trim().startsWith('filename='))
+          .split('=')[1]
+      )
+        .replace('"', '')
+        .replace('"', '')
+    }
   }
 
   //如果文件名不存在，则使用时间戳
@@ -178,27 +178,24 @@ const handleDownload = (response) => {
 
 //刷新令牌
 const refreshToken = () => {
-  const refreshToken = store.state.app.user.refreshToken
-  const refreshTokenUrl = store.state.app.system.refreshTokenUrl
-  if (refreshToken && refreshTokenUrl) {
-    return $emHttp.get(refreshTokenUrl, { refreshToken })
+  let t = token.get()
+  if (t && t.refreshToken) {
+    return store.state.app.system.actions.auth.refreshToken(t.refreshToken)
   }
 
   Promise.reject('refresh token error')
 }
 
 // 初始化
-export default (config) => {
+export default () => {
   // 接口根路径
-  axios.defaults.baseURL = config.baseUrl
-  console.log(axios.defaults.baseURL)
-
+  axios.defaults.baseURL = store.state.app.system.serviceUrl
   // 拦截请求
   axios.interceptors.request.use(
     (config) => {
-      const accessToken = store.state.app.user.accessToken
-      if (accessToken) {
-        config.headers.Authorization = 'Bearer ' + accessToken
+      let t = token.get()
+      if (t && t.accessToken) {
+        config.headers.Authorization = 'Bearer ' + t.accessToken
       }
       return config
     },
@@ -216,9 +213,12 @@ export default (config) => {
         return handleDownload(response)
       }
 
+      //关闭遮罩层
+      if (window.$loading) window.$loading.close()
+
       if (response.data.code === '0') {
-        return response.data.data
-      } else {
+        return response.data.data || '0'
+      } else if (response.data.code === '-1') {
         Message.error({
           message: response.data.msg,
           showClose: true,
@@ -226,24 +226,32 @@ export default (config) => {
           duration: messageDuration
         })
         return Promise.reject(response.data.msg)
+      } else {
+        return response
       }
     },
     (error) => {
       let currentRoute = router.currentRoute
       let redirect = currentRoute.name !== 'login' ? currentRoute.fullPath : '/' // 跳转页面
 
+      //关闭遮罩层
+      if (window.$loading) window.$loading.close()
+
       if (error && error.response) {
         switch (error.response.status) {
           case 401:
+            console.log(401)
             return refreshToken()
               .then((data) => {
                 //重新初始化令牌
-                store.commit('app/user/setAccessToken', data)
+                store.commit('app/token/init', data)
                 //重新发一起一次上次的的请求
                 error.config.headers.Authorization = 'Bearer ' + data.accessToken
                 return axios.request(error.config)
               })
               .catch(() => {
+                // 如果刷新失败，需要删除token并跳转到登录页面
+                token.remove()
                 router.push({
                   name: 'login',
                   query: {
@@ -279,9 +287,11 @@ export default (config) => {
             duration: messageDuration
           })
         } else {
+          token.remove()
           router.push({ name: 'login', query: { redirect } })
         }
       }
+
       return Promise.reject(error)
     }
   )

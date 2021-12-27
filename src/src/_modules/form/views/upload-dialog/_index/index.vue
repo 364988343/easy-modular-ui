@@ -12,7 +12,7 @@ export default {
       val: '',
       tmpl: {
         title: '上传文件对话框示例',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events
       }

@@ -1,18 +1,12 @@
 <template>
   <em-list v-bind="list">
     <template v-slot:querybar>
+      <el-form-item label="账号：" prop="code">
+        <el-input v-model="list.model.code" />
+      </el-form-item>
       <el-form-item label="姓名：" prop="name">
         <el-input v-model="list.model.name" />
       </el-form-item>
-    </template>
-    <template v-slot:querybar-advanced>
-      <el-form-item label="年龄：" prop="age">
-        <el-input v-model="list.model.age" />
-      </el-form-item>
-    </template>
-    <template v-slot:col-operation>
-      <em-button type="text" text="编辑" icon="edit" />
-      <em-button-delete type="text" :action="remove" id="1" @success="onSuccess" />
     </template>
   </em-list>
 </template>
@@ -21,34 +15,39 @@ export default {
   data() {
     return {
       list: {
-        title: '简单列表',
-        icon: 'list',
+        title: '列表页-树形数据',
+        icon: 'detail',
         action: this.query,
+        noOperateCol: true,
+        noOperateBar:true,
+        rowKey: 'id',
+        treeProps: { children: 'children' },
         model: {
-          name: '',
-          age: ''
-        },
-        advanced: {
-          enabled: true
+          name: ''
         },
         cols: [
           {
             name: 'id',
-            label: '工号',
+            label: 'id',
             show: false
+          },
+          {
+            name: 'code',
+            label: '姓名'
           },
           {
             name: 'name',
             label: '姓名'
           },
           {
-            name: 'age',
-            label: '年龄'
+            name: 'phone',
+            label: '手机号码'
           },
+
           {
             name: 'entryDate',
-            label: '出生日期',
-            format: 'YYYY年MM月DD日'
+            label: '入职时间',
+            format: 'YYYY-MM-DD'
           }
         ]
       }
@@ -57,20 +56,27 @@ export default {
   methods: {
     query() {
       const rows = [
-        { id: 1, name: '张三', age: 22, entryDate: '2021-1-8' },
-        { id: 2, name: '李四', age: 26, entryDate: '2020-1-8 12:23' },
-        { id: 3, name: '王五', age: 26, entryDate: '2008-1-8' }
+        { id: 1, code: 'zanmusi', name: '詹姆斯', phone: '13662970321', entryDate: '2021-1-8 12:22:10' },
+        {
+          id: 2,
+          code: 'weide',
+          name: '韦德',
+          phone: '18762970231',
+          entryDate: '2021-1-8 10:33',
+          children: [
+            { id: 4, code: 'weide1', name: '韦德1', phone: '13662970321', entryDate: '2021-1-8 12:22:10' },
+            { id: 5, code: 'weide2', name: '韦德2', phone: '13662970321', entryDate: '2021-1-8 12:22:10' },
+            { id: 6, code: 'weide3', name: '韦德3', phone: '13662970321', entryDate: '2021-1-8 12:22:10' }
+          ]
+        },
+        { id: 3, code: 'ouwen', name: '欧文', phone: '13662970321', entryDate: '2021-1-8' }
       ]
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         resolve({
           rows,
-          total: 3
+          total: 6
         })
       })
-    },
-    remove() {},
-    onSuccess() {
-      this.query()
     }
   }
 }

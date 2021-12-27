@@ -1,11 +1,13 @@
 .em-button {
   .em-icon {
-    transform: scale(1.4);
+   transform: scale(1.3);
   }
 
-  .em-icon + &-text {
+  .em-icon+&-text {
+    margin-left: 5px;
+  }
+
+  &-text+.em-icon {
     margin-left: 5px;
   }
 }
-
-

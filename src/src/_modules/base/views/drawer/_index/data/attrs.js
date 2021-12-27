@@ -98,22 +98,15 @@ export default [
     def: 'true'
   },
   {
-    name: 'no-padding',
-    desc: '没有内边距',
-    type: 'Boolean',
+    name: 'padding',
+    desc: '内边距',
+    type: 'Number / String',
     opt: '-',
-    def: 'false'
+    def: '8px'
   },
   {
     name: 'draggable',
     desc: '是否可拖拽',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
-    name: 'no-scrollbar',
-    desc: '不显示滚动条',
     type: 'Boolean',
     opt: '-',
     def: 'false'

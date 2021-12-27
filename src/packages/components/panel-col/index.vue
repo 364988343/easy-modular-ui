@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="['em-panel-col', span ? 'em-panel-col-' + span : '', offset ? 'em-panel-col-offset-' + offset : '', push ? 'em-panel-col-push-' + push : '', pull ? 'em-panel-col-pull-' + pull : '']"
-    :style="style"
+    :class="class_"
+    :style="style_"
   >
     <slot />
   </div>
@@ -32,7 +32,15 @@ export default {
     }
   },
   computed: {
-    style() {
+    class_() {
+      let classAtrr = ['em-panel-col']
+      if (this.span) classAtrr.push(`em-panel-col-${this.span}`)
+      if (this.offset) classAtrr.push(`em-panel-col-offset-${this.offset}`)
+      if (this.push) classAtrr.push(`em-panel-col-push-${this.push}`)
+      if (this.pull) classAtrr.push(`em-panel-col-pull-${this.pull}`)
+      return classAtrr
+    },
+    style_() {
       return {
         paddingLeft: this.$parent.gutter_,
         paddingRight: this.$parent.gutter_

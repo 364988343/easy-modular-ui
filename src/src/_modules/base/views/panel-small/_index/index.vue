@@ -13,7 +13,7 @@ export default {
       val: '',
       tmpl: {
         title: '小面板(em-panel-small)',
-        icon: 'card',
+        con: 'appstore',
         attrs,
         events
       }

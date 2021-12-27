@@ -1,8 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-18 16:00:56
- * @Description: 路由
- */
 export default [
   {
     // 403
@@ -21,6 +16,16 @@ export default [
     component: () => import('../page/404'),
     meta: {
       title: 'Error 404',
+      cache: false
+    }
+  },
+  {
+    // sponsor
+    path: '/sponsor/index',
+    name: 'sponsor',
+    component: () => import('../page/sponsor'),
+    meta: {
+      title: '捐赠',
       cache: false
     }
   }

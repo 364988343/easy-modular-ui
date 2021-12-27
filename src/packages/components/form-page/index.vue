@@ -1,28 +1,10 @@
 <template>
-  <em-panel ref="page" class="em-form-page" page :title="title" :icon="icon" :header="header" :footer="!noFooter" :fullscreen="fullscreen" :loading="!noLoading && loading">
-    <section class="em-form-page-body">
-      <em-scrollbar :horizontal="false">
-        <em-form
-          class="em-form-page-main"
-          ref="form"
-          no-loading
-          :model="model"
-          :rules="rules"
-          :action="action"
-          :label-width="labelWidth"
-          :label-position="labelPosition"
-          :validate="validate"
-          :success-msg="successMsg"
-          :success-msg-text="successMsgText"
-          :disabled="disabled"
-          :inline="inline"
-          :custom-reset-function="customResetFunction"
-          v-on="formOn"
-        >
-          <slot />
-        </em-form>
-      </em-scrollbar>
-    </section>
+  <em-panel ref="page" class="em-form-page" v-bind="panel">
+    <div class="em-form-page-body">
+      <em-form v-bind="form" v-on="formOn">
+        <slot></slot>
+      </em-form>
+    </div>
 
     <!--底部-->
     <template v-slot:footer class="em-form-page-footer">
@@ -44,10 +26,62 @@ export default {
   data() {
     return {
       loading: false,
+      panel: {
+        //页模式
+        page: true,
+        //是否显示头部
+        header: this.header,
+        //标题，
+        title: this.title,
+        //头部左侧的图标
+        icon: this.icon,
+        //是否显示底部
+        footer: !this.noFooter,
+        //内边距
+        padding: this.padding,
+        //是否显示全屏按钮
+        fullscreen: this.fullscreen,
+        //是否显示loading动画
+        loading: !this.noLoading && this.loading
+      },
+      form: {
+        //不显示动画
+        noLoading: true,
+        //表单对象
+        model: this.model,
+        //验证规则
+        rules: this.rules,
+        //提交请求
+        action: this.action,
+        //标签的宽度
+        labelWidth: this.labelWidth,
+        //表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
+        labelPosition: this.labelPosition,
+        //是否显示成功提示消息
+        successMsg: this.successMsg,
+        //成功提示消息文本
+        successMsgText: this.successMsgText,
+        //禁用表单
+        disabled: this.disabled,
+        //行内表单模式
+        inline: this.inline,
+        //自定义校验
+        customValidate: this.customValidate,
+        //额外校验
+        extraValidate: this.extraValidate,
+        //自定义重置
+        customReset: this.customReset,
+        //额外重置
+        extraReset: this.extraReset
+      },
       formOn: {
+        //保存成功
         success: this.onSuccess,
+        //保存失败
         error: this.onError,
+        //重置
         reset: this.onReset,
+        //验证失败
         'validate-error': this.onValidateError
       }
     }
@@ -83,8 +117,11 @@ export default {
     labelWidth: String,
     //表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
     labelPosition: String,
-    // 自定义验证
-    validate: Function,
+    //内边距（默认8px）
+    padding: {
+      type: [Number, String],
+      default: 8
+    },
     //是否显示成功提示消息
     successMsg: {
       type: Boolean,
@@ -115,8 +152,6 @@ export default {
       type: Boolean,
       default: true
     },
-    //自定义重置操作
-    customResetFunction: Function,
     //是否显示全屏按钮
     fullscreen: {
       type: Boolean,
@@ -127,7 +162,16 @@ export default {
     //不显示底部
     noFooter: Boolean,
     //不显示加载动画
-    noLoading: Boolean
+    noLoading: Boolean,
+
+    //自定义验证
+    customValidate: Function,
+    // 额外验证
+    extraValidate: Function,
+    //自定义重置操作
+    customReset: Function,
+    //额外重置（除el-form自带的重置）
+    extraReset: Function
   },
   methods: {
     /**
@@ -158,7 +202,7 @@ export default {
      * @description: 打开loading
      * @param {*}
      * @return {*}
-     */    
+     */
     openLoading() {
       this.loading = true
       this.$refs.form.openLoading()
@@ -167,26 +211,40 @@ export default {
     /**
      * @description: 关闭loading
      */
-
     closeLoading() {
       this.loading = false
       this.$refs.form.closeLoading()
     },
 
     /**
-     * @description:成功 
-     */    
+     * @description:成功
+     */
     onSuccess(data) {
       this.loading = false
       this.$emit('success', data)
     },
+
+    /**
+     * @description: 重置
+     * @param {*}
+     */
     onReset() {
       this.$emit('reset')
     },
+
+    /**
+     * @description: 处理失败
+     * @param {*}
+     */
     onError() {
       this.loading = false
       this.$emit('error')
     },
+
+    /**
+     * @description: 校验失败
+     * @param {*}
+     */
     onValidateError() {
       this.loading = false
       this.$emit('validate-error')

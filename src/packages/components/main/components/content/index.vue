@@ -5,7 +5,7 @@
         <template v-slot:before>
           <div class="em-main-sidebar-toggle-btn">
             <a @click.prevent="sidebarToggle">
-              <em-icon :name="sidebarCollapse ? 'indent-left' : 'indent-right'"></em-icon>
+              <em-icon :name="sidebarCollapse ? 'indent' : 'outdent'"></em-icon>
             </a>
           </div>
         </template>

@@ -3,23 +3,29 @@
   @include flex-column();
   width: 220px;
   height: 100%;
-  background-color: #222d32;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  @include sidebar_bg_color();
+  [data-theme-mode='dark'] & {
+    border-top: 1px solid rgba(230,162,60,0.2);
+  }
+ 
 
   &.collapse {
     width: 65px;
 
-    /*logo*/
     .em-logo {
       &-text {
         display: none;
       }
     }
   }
+
   &-toggle-btn {
     flex-shrink: 0;
     background-color: #ebf1f6;
     box-sizing: border-box;
-    margin:0 2px;
+    margin: 0 2px;
 
     a {
       padding: 0 6px;
@@ -41,43 +47,78 @@
     }
   }
 
-  .el-scrollbar__view {
-    padding: 0 !important;
+  &-bottom {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    border-top: 1px solid #f7920f;
+    color: #f7920f;
+    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    //  box-shadow: 0 5px 10px #f7920f inset;
   }
+
   .el-menu {
-    background-color: #222d32;
+    width: 100%;
+    height: 100%;
+    @include sidebar_bg_color();
+
   }
+
+  ul.el-menu--inline {
+    width: 100%;
+    @include sidebar_menu_bg_color();
+  }
+
   .el-submenu {
     border-radius: 0 !important;
-   
   }
+
   .el-menu--inline {
-    background: #293338 !important;
+    background: #101117 !important;
   }
+
   .el-submenu__title {
-    color: #fff !important;
+    @include sidebar_title_color();
+
     border-radius: 2px !important;
+
     &:hover {
-      background: #1d2529 !important;
+      @include active_color();
+      @include active_bg_color();
+    }
+
+    span {
+      font-size: 13px;
     }
   }
+
   .el-menu-item {
-    color: #fff !important;
+    @include sidebar_title_color();
     border-radius: 0 !important;
+
     &:hover {
-      color: #2969ab !important;
-      background: none  !important;
+      @include active_color();
+      @include active_bg_color();
+    }
+
+    span {
+      font-size: 13px;
     }
   }
+
   .el-menu-item.is-active {
-    background: none  !important;
-    @include color_important();
-    border-right: 10px solid #2299dd;
+    @include active_color();
+    @include active_bg_color();
     font-weight: 700;
   }
+
   .em-icon {
-    font-size: 20px !important;
+    font-size: 18px !important;
     margin-right: 4px;
-    margin-bottom: 2px;
   }
 }

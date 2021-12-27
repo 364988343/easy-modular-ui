@@ -2,14 +2,14 @@ export default [
   {
     name: 'title',
     desc: '标题',
-    type: 'string',
+    type: 'String',
     opt: '-',
     def: '-'
   },
   {
     name: 'icon',
     desc: '头部左侧的图标',
-    type: 'string',
+    type: 'String',
     opt: '-',
     def: '-'
   },
@@ -21,8 +21,15 @@ export default [
     def: '-'
   },
   {
-    name: 'input-width',
-    desc: '查询表单输入框宽度',
+    name: 'no-querybar',
+    desc: '不显示查询栏',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
+  },
+  {
+    name: 'querybar-label-width',
+    desc: '查询栏表单标签宽度',
     type: 'String',
     opt: '-',
     def: '-'
@@ -40,13 +47,6 @@ export default [
     type: 'Object',
     opt: '-',
     def: '-'
-  },
-  {
-    name: 'advanced',
-    desc: '高级查询',
-    type: 'Object',
-    opt: '-',
-    def: '数据结构在页面底部'
   },
   {
     name: 'cols',
@@ -91,13 +91,6 @@ export default [
     def: 'false'
   },
   {
-    name: 'no-querybar',
-    desc: '不显示查询栏',
-    type: 'Boolean',
-    opt: '-',
-    def: 'false'
-  },
-  {
     name: 'no-fullscreen',
     desc: '不显示全屏按钮',
     type: 'Boolean',
@@ -133,15 +126,15 @@ export default [
     def: 'false'
   },
   {
-    name: 'no-search-button-icon',
-    desc: '不显示查询按钮图标',
+    name: 'no-operateBar',
+    desc: '不显示操作栏',
     type: 'Boolean',
     opt: '-',
     def: 'false'
   },
   {
-    name: 'footer-reverse',
-    desc: '底部反转',
+    name: 'no-search-button-icon',
+    desc: '不显示查询按钮图标',
     type: 'Boolean',
     opt: '-',
     def: 'false'
@@ -150,6 +143,13 @@ export default [
     name: 'span-method',
     desc: '合并行列的方法',
     type: 'Function',
+    opt: '-',
+    def: '通用合并行方法'
+  },
+  {
+    name: '合并行的列',
+    desc: '合并行的列',
+    type: 'merge-row-cols',
     opt: '-',
     def: '-'
   },
@@ -173,5 +173,19 @@ export default [
     type: 'Boolean',
     opt: '-',
     def: 'true'
+  },
+  {
+    name: 'tenant-col',
+    desc: '租户字段',
+    type: 'String',
+    opt: '-',
+    def: 'tenantName'
+  },
+  {
+    name: 'tenant-show',
+    desc: '租户栏位显示',
+    type: 'Boolean',
+    opt: '-',
+    def: 'false'
   }
 ]

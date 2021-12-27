@@ -6,23 +6,24 @@
 
 /**
  * @description: 单个页面配置信息转为路由信息
- * @param {Object} config 页面配置对象
+ * @param {Object} page 页面配置对象
  */
-const loadPage = (config) => {
-  const { page, component } = config
+const loadPage = (page) => {
   return {
     path: page.path,
     name: page.name.toLowerCase(),
-    component: component,
+    component: page.component,
     props: page.props || true,
+
     meta: {
       title: page.title,
       icon: page.icon,
       frameIn: page.frameIn,
       cache: page.cache,
       buttons: page.buttons,
-      permissions: page.permissions,
-    },
+      isControl: page.isControl === undefined || page.isControl === null ? true : page.isControl,
+      relateRoute: page.relateRoute
+    }
   }
 }
 
@@ -32,11 +33,11 @@ const loadPage = (config) => {
  * @param {Object} pages 页面数组
  */
 export default (pages) => {
-
   let routes = []
   pages.forEach((item) => {
     if (item) {
-      routes.push(loadPage(item))
+      const route = loadPage(item)
+      routes.push(route)
     }
   })
   return routes

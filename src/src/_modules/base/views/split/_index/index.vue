@@ -13,7 +13,7 @@ export default {
       val: '',
       tmpl: {
         title: '面板分割(em-split)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events
       }

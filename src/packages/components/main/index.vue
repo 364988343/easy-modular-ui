@@ -1,5 +1,5 @@
 <template>
-  <div class="em-wrapper">
+  <div class="em-container">
     <em-main-header />
     <div class="em-main">
       <em-main-sidebar />

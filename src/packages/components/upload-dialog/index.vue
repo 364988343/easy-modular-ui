@@ -1,17 +1,5 @@
 <template>
-  <em-dialog
-    ref="form"
-    class="em-upload-dialog"
-    :title="title"
-    :icon="icon"
-    :width="width"
-    :height="height"
-    :loading="loading"
-    footer
-    no-scrollbar
-    :visible.sync="visible_"
-    @close="onClose"
-  >
+  <em-dialog ref="form" class="em-upload-dialog" :title="title" :icon="icon" :width="width" :height="height" :loading="loading" footer :visible.sync="visible_" @close="onClose">
     <div class="em-upload-dialog-top">
       <el-upload
         ref="upload"
@@ -48,19 +36,7 @@
       </el-upload>
     </div>
     <div class="em-upload-dialog-bottom">
-      <el-table :data="fileList" border size="mini" height="100%" style="width: 100%;">
-        <el-table-column align="center" type="index" width="50"></el-table-column>
-        <el-table-column align="center" prop="name" label="名称"></el-table-column>
-        <el-table-column align="center" prop="size" label="大小" width="180"></el-table-column>
-        <el-table-column align="center" prop="ext" label="扩展" width="180"></el-table-column>
-        <el-table-column align="center" label="操作">
-          <template v-slot:default="{ row }">
-            <em-icon class="status-success" v-if="row.status === 1" name="select" />
-            <em-icon class="status-error" v-else-if="row.status === 2" name="close" />
-            <em-button type="text" icon="delete" text="删除" @click="onRemove(row)" />
-          </template>
-        </el-table-column>
-      </el-table>
+      <file-list :data="fileList" @file-delete="onRemove"></file-list>
     </div>
     <template v-slot:footer>
       <em-button v-if="templateBtnShow" type="warning" text="下载模板" @click="downloadTemplate" />
@@ -70,11 +46,13 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import visible from '../../mixins/components/visible.js'
+import visible from '../../mixins/components/visible'
+import fileList from './file-list'
 
 export default {
   name: 'upload-dialog',
   mixins: [visible],
+  components: { fileList },
   data() {
     return {
       fileList: [],
@@ -82,52 +60,52 @@ export default {
     }
   },
   props: {
-    /** 标题 */
+    //标题
     title: {
       type: String,
       default: '文件上传'
     },
-    /** 图标 */
+    //图标
     icon: {
       type: String,
       default: 'upload'
     },
-    /** 宽度 */
+    //宽度
     width: {
       type: String,
       default: '50%'
     },
-    /** 高度 */
+    //高度
     height: {
       type: String,
       default: '80%'
     },
-    /** 必选参数，上传的地址 */
+    //上传的地址
     action: {
       type: String,
       required: true
     },
-    /** 上传时附带的额外参数 */
+    //上传时附带的额外参数
     data: Object,
-    /** 接受上传的文件类型 */
+    //接受上传的文件类型
     accept: String,
-    /** 底部提示语 */
+    //底部提示语
     tip: String,
-    /** 最大允许上传个数 */
+    //最大允许上传个数
     limit: Number,
-    /** 文件最大大小 */
+    //文件最大大小
     maxSize: String,
-    /** 是否可拖拽上传 */
+    //是否可拖拽上传
     drag: {
       type: Boolean,
       default: true
     },
-    /** 关闭对话框时进行重置 */
+    //关闭对话框时进行重置
     resetOnClose: {
       type: Boolean,
       default: true
     },
-    /** 是否显示下载模板按钮 */
+    //是否显示下载模板按钮
     templateBtnShow: {
       type: Boolean,
       default: false
@@ -156,16 +134,10 @@ export default {
     }
   },
   methods: {
-    clearFiles() {
-      this.$refs.upload.clearFiles()
-    },
-    onClose() {
-      if (this.resetOnClose) {
-        this.$nextTick(() => {
-          this.clearFiles()
-        })
-      }
-    },
+    /**
+     * @description: 提交
+     * @param {*}
+     */
     onSubmit() {
       // 验证是否超出最大上传数
       if (this.limit && this.fileList.length > this.limit) {
@@ -183,12 +155,18 @@ export default {
       }
       this.$refs.upload.submit()
     },
+
+    /**
+     * @description: 文件状态改变时触发的事件
+     * @param {*} file
+     * @param {*} fileList
+     */
     onChange(file, fileList) {
       if (this.fileList.length > 0 && fileList.length === this.fileList.length) {
         return
       }
       this.fileList = []
-      fileList.map(m => {
+      fileList.map((m) => {
         this.fileList.push({
           name: m.name,
           ext: this.getFileExt(m.name),
@@ -198,9 +176,20 @@ export default {
         })
       })
     },
+
+    /**
+     * @description: 上传前触发事件
+     * @param {*}
+     */
     onBeforeUpload() {
       this.loading = true
     },
+
+    /**
+     * @description: 上传成功触发事件
+     * @param {*} response
+     * @param {*} file
+     */
     onSuccess(response, file) {
       for (let i = 0; i < this.fileList.length; i++) {
         let $file = this.fileList[i]
@@ -217,9 +206,20 @@ export default {
         }
       }
     },
+
+    /**
+     * @description: 上传失败触发事件
+     * @param {*}
+     */
     onError() {
+      this.loading = false
       this._error('上传失败')
     },
+
+    /**
+     * @description: 移除文件
+     * @param {*} file
+     */
     onRemove(file) {
       if (file.localFile) {
         this.$refs.upload.handleRemove(file.localFile)
@@ -227,11 +227,19 @@ export default {
       let fileList = this.fileList
       fileList.splice(fileList.indexOf(file), 1)
     },
-    /** 文件超出 */
+
+    /**
+     * @description:文件超出最大允许上传数量触发事件
+     * @param {*}
+     */
     onExceed() {
       this._warning(`最多允许上传${this.limit}个`)
     },
-    /** 获取文件后缀名 */
+
+    /**
+     * @description: 获取文件后缀名
+     * @param {*} name
+     */
     getFileExt(name) {
       let ext = ''
       const arr = name.split('.')
@@ -240,7 +248,11 @@ export default {
       }
       return ext
     },
-    /** 转换文件大小单位 */
+
+    /**
+     * @description: 转换文件大小单位
+     * @param {*} size
+     */
     getSizeUnit(size) {
       if (size === null || size === '') {
         return '0 B'
@@ -253,9 +265,33 @@ export default {
       s = s.toFixed(2)
       return s + unitArr[index]
     },
-    /**下载模板 */
+
+    /**
+     * @description:下载模板
+     * @param {*}
+     */
     downloadTemplate() {
       this.$emit('downloadTemplate')
+    },
+
+    /**
+     * @description:关闭
+     * @param {*}
+     */
+    onClose() {
+      if (this.resetOnClose) {
+        this.$nextTick(() => {
+          this.clearFiles()
+        })
+      }
+    },
+
+    /**
+     * @description: 清空文件列表
+     * @param {*}
+     */
+    clearFiles() {
+      this.$refs.upload.clearFiles()
     }
   }
 }

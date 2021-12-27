@@ -21,7 +21,7 @@ export default {
       form: {
         header: true,
         title: '页表单示例',
-        icon: 'add',
+        icon: 'detail',
         model: {
           name: '',
           age: 0

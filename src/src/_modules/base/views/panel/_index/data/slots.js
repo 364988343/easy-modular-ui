@@ -1,7 +1,7 @@
 export default [
   {
     name: '-',
-    desc: '盒子里内容'
+    desc: '面板里内容'
   },
   {
     name: 'header',

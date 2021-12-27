@@ -12,7 +12,7 @@ export default {
     return {
       tmpl: {
         title: '对话框表单(em-form-dialog)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         methods,
         events

@@ -49,7 +49,8 @@ export default {
       dialogAdd: {
         header: true,
         title: '新增',
-        icon: 'add',
+        icon: 'detail',
+        height: '240px',
         model: {
           name: '',
           age: 0
@@ -66,7 +67,8 @@ export default {
       dialogEdit: {
         header: true,
         title: '编辑',
-        icon: 'edit',
+        icon: 'detail',
+        height: '240px',
         model: {
           name: '',
           age: 0

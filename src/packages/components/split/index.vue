@@ -1,10 +1,11 @@
 <template>
   <div ref="outerWrapper" :class="wrapperClasses" v-loading="loading" :element-loading-text="loadingText" :element-loading-background="loadingBackground" :element-loading-spinner="loadingSpinner">
-    <div v-if="isHorizontal" :class="`${prefix}-horizontal`">
+    <!--水平割分-->
+    <div v-if="isHorizontal" class="em-split-horizontal">
       <div :style="{ right: `${anotherOffset}%` }" class="left-panel" :class="panelClasses">
         <slot name="left" />
       </div>
-      <div :class="`${prefix}-trigger-con`" :style="{ left: `${offset}%` }" @mousedown="handleMousedown">
+      <div class="em-split-trigger-con" :style="{ left: `${offset}%` }" @mousedown="handleMousedown">
         <slot name="trigger">
           <trigger mode="vertical" />
         </slot>
@@ -13,11 +14,12 @@
         <slot name="right" />
       </div>
     </div>
-    <div v-else :class="`${prefix}-vertical`">
+    <!--垂直割分-->
+    <div v-else class="em-split-vertical">
       <div :style="{ bottom: `${anotherOffset}%` }" class="top-panel" :class="panelClasses">
         <slot name="top" />
       </div>
-      <div :class="`${prefix}-trigger-con`" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
+      <div class="em-split-trigger-con" :style="{ top: `${offset}%` }" @mousedown="handleMousedown">
         <slot name="trigger">
           <trigger mode="horizontal" />
         </slot>
@@ -32,58 +34,53 @@
 <script>
 // 从iView迁移
 import { mapState } from 'vuex'
-import Trigger from './trigger.vue'
+import trigger from './trigger.vue'
 export default {
-  name: 'Split',
-  components: {
-    Trigger
+  name: 'split',
+  components: { trigger },
+  data() {
+    return {
+      offset: 0,
+      oldOffset: 0,
+      isMoving: false
+    }
   },
   props: {
+    //分割比例
     value: {
       type: [Number, String],
       default: 0.5
     },
+    //分割模式，水平/垂直
     mode: {
       validator(value) {
         return value === 'horizontal' || value === 'vertical'
       },
       default: 'horizontal'
     },
+    //最小值
     min: {
       type: [Number, String],
       default: '40px'
     },
+    //最大值
     max: {
       type: [Number, String],
       default: '40px'
     },
-    /** loading */
+    //显示加载动画
     loading: Boolean
-  },
-  /**
-   * Events
-   * @on-move-start
-   * @on-moving 返回值：事件对象，但是在事件对象中加入了两个参数：atMin(当前是否在最小值处), atMax(当前是否在最大值处)
-   * @on-move-end
-   */
-  data() {
-    return {
-      prefix: 'em-split',
-      offset: 0,
-      oldOffset: 0,
-      isMoving: false
-    }
   },
   computed: {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),
     wrapperClasses() {
-      return [`${this.prefix}-wrapper`, this.isMoving ? 'no-select' : '']
+      return ['em-split-wrapper', this.isMoving ? 'no-select' : '']
     },
     panelClasses() {
       return [
-        `${this.prefix}-panel`,
+        'em-split-panel',
         {
-          [`${this.prefix}-panel-moving`]: this.isMoving
+          ['em-split-panel-moving']: this.isMoving
         }
       ]
     },
@@ -107,28 +104,60 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description: px转化百分比
+     * @param {*} numerator 分子
+     * @param {*} denominator 分母
+     */
     px2percent(numerator, denominator) {
       return parseFloat(numerator) / parseFloat(denominator)
     },
+
+    /**
+     * @description: 获取分割的阈值
+     * @param {*} type
+     */
     getComputedThresholdValue(type) {
       let size = this.$refs.outerWrapper[this.offsetSize]
       if (this.valueIsPx) return typeof this[type] === 'string' ? this[type] : size * this[type]
       else return typeof this[type] === 'string' ? this.px2percent(this[type], size) : this[type]
     },
+
+    /**
+     * @description: 获取最小值
+     * @param {*} value1
+     * @param {*} value2
+     */
     getMin(value1, value2) {
       if (this.valueIsPx) return `${Math.min(parseFloat(value1), parseFloat(value2))}px`
       else return Math.min(value1, value2)
     },
+
+    /**
+     * @description: 获取最大值
+     * @param {*} value1
+     * @param {*} value2
+     */
     getMax(value1, value2) {
       if (this.valueIsPx) return `${Math.max(parseFloat(value1), parseFloat(value2))}px`
       else return Math.max(value1, value2)
     },
+
+    /**
+     * @description: 获取剩余大小
+     * @param {*} value
+     */
     getAnotherOffset(value) {
       let res = 0
       if (this.valueIsPx) res = `${this.$refs.outerWrapper[this.offsetSize] - parseFloat(value)}px`
       else res = 1 - value
       return res
     },
+
+    /**
+     * @description: 处理拖动事件
+     * @param {*} e
+     */
     handleMove(e) {
       let pageOffset = this.isHorizontal ? e.pageX : e.pageY
       let offset = pageOffset - this.initOffset
@@ -142,12 +171,22 @@ export default {
       this.$emit('input', value)
       this.$emit('on-moving', e)
     },
+
+    /**
+     * @description: 鼠标释放触发的事件
+     * @param {*}
+     */
     handleUp() {
       this.isMoving = false
       document.removeEventListener('mousemove', this.handleMove, false)
       document.removeEventListener('mouseup', this.handleUp, false)
       this.$emit('on-move-end')
     },
+
+    /**
+     * @description: 按下鼠标键时触发的事件
+     * @param {*} e
+     */
     handleMousedown(e) {
       this.initOffset = this.isHorizontal ? e.pageX : e.pageY
       this.oldOffset = this.value

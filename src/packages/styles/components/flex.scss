@@ -6,11 +6,11 @@
         flex-direction: column;
 
         &.top {
-            .em-flex_top {
+            .em-flex-top {
                 flex-shrink: 0;
             }
 
-            .em-flex_bottom {
+            .em-flex-bottom {
                 flex-grow: 1;
                 overflow: hidden;
                 box-sizing: border-box;
@@ -18,13 +18,13 @@
         }
 
         &.bottom {
-            .em-flex_top {
+            .em-flex-top {
                 flex-grow: 1;
                 overflow: hidden;
                 box-sizing: border-box;
             }
 
-            .em-flex_bottom {
+            .em-flex-bottom {
                 flex-shrink: 0;
             }
         }
@@ -34,11 +34,11 @@
         flex-direction: row;
 
         &.left {
-            .em-flex_left {
+            .em-flex-left {
                 flex-shrink: 0;
             }
 
-            .em-flex_right {
+            .em-flex-right {
                 flex-grow: 1;
                 overflow: hidden;
                 box-sizing: border-box;
@@ -46,13 +46,13 @@
         }
 
         &.right {
-            .em-flex_left {
+            .em-flex-left {
                 flex-grow: 1;
                 overflow: hidden;
                 box-sizing: border-box;
             }
 
-            .em-flex_right {
+            .em-flex-right {
                 flex-shrink: 0;
             }
         }

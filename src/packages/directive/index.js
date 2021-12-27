@@ -1,11 +1,7 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-27 00:22:53
- * @Description: 指令注入
- */
 import permission from './permission'
+import dialogDrag from './dialog-drag'
 
-const directives = [permission]
+const directives = [permission,dialogDrag]
 
 const install = {
   install: Vue => {

@@ -15,7 +15,7 @@ export default {
       val: '',
       tmpl: {
         title: '列表页(em-list)',
-        icon: 'card',
+        icon: 'appstore',
         attrs,
         slots,
         methods,

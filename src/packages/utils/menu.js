@@ -1,9 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-19 22:44:35
- * @Description: 菜单管理
- */
-
 import { store } from '../store'
 
 /**
@@ -45,10 +39,10 @@ const openLink = (router, menu) => {
  * @param {Array} router 路由
  * @param {Object} menu 菜单
  */
-const open = (router, menu) => {
+const openMenu = (router, menu) => {
   // 1、站内路由 2、站外链接
   if (menu.type === 1) openRoute(router, menu)
   else openLink(router, menu)
 }
 
-export { open }
+export { openMenu }

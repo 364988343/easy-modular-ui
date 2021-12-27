@@ -13,7 +13,7 @@ const permission = {
 
     var permissions = store.state.app.user.permissions
     const code = binding.value
-    if (!permissions.find((m) => m.toLowerCase() === code.toLowerCase())) {
+    if (!permissions.find((m) => m.permissionCode.toLowerCase() === code.toLowerCase())) {
       el.parentNode.removeChild(el)
     }
   }

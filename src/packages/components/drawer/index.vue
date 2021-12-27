@@ -1,5 +1,5 @@
 <template>
-  <div :class="class_">
+  <div ref="drawer" :class="class_">
     <transition name="fade">
       <div class="em-drawer-modal" @click="onModalClick" v-if="modal" v-show="visible"></div>
     </transition>
@@ -28,18 +28,16 @@
               <slot name="toolbar" />
 
               <!--全屏按钮-->
-              <em-button v-if="fullscreen" :icon="fullscreen_ ? 'min' : 'max'" @click="triggerFullscreen" />
+              <em-button v-if="fullscreen" :icon="fullscreen_ ? 'fullscreen-exit' : 'fullscreen'" @click="triggerFullscreen" />
               <!--关闭按钮-->
               <em-button icon="close" @click="close" />
             </div>
           </slot>
         </header>
+        <!--body-->
         <div class="em-drawer-body">
           <div class="em-drawer-body-wrapper">
-            <em-scrollbar v-if="!noScrollbar" ref="scrollbar" :horizontal="horizontal">
-              <slot />
-            </em-scrollbar>
-            <slot v-else />
+             <slot />
           </div>
         </div>
         <footer v-if="footer" class="em-drawer-footer">
@@ -49,15 +47,7 @@
         <!--拖拽按钮-->
         <div v-if="draggable" class="em-drawer-drag" :class="{ 'em-drawer-drag-left': placement === 'left' }" @mousedown="onTriggerMousedown">
           <slot name="trigger">
-            <div class="em-drawer-drag-move-trigger">
-              <div class="em-drawer-drag-move-trigger-point">
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-              </div>
-            </div>
+            <trigger />
           </slot>
         </div>
       </div>
@@ -68,8 +58,11 @@
 import { mapState } from 'vuex'
 import { oneOf } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
+
+import trigger from './trigger'
 export default {
   name: 'Drawer',
+  components: { trigger },
   data() {
     return {
       canMove: false,
@@ -79,17 +72,17 @@ export default {
     }
   },
   props: {
-    /** 是否显示 */
+    //是否显示
     visible: Boolean,
-    /** 是否显示头部 */
+    //是否显示头部
     header: Boolean,
-    /** 是否显示底部 */
+    //是否显示底部
     footer: Boolean,
-    /** 标题 */
+    //标题
     title: String,
-    /** 图标 */
+    //图标
     icon: String,
-    /** 位置 */
+    //位置
     placement: {
       type: String,
       default: 'right',
@@ -97,87 +90,121 @@ export default {
         return oneOf(value, ['left', 'right'])
       }
     },
-    /** 宽度 */
+    //宽度
     width: {
       type: String,
       default: '30%'
     },
-    /** 是否显示水平滚动条 */
+    //内边距（默认8px）
+    padding: {
+      type: [Number, String],
+      default: 8
+    },
+    //是否显示水平滚动条
     horizontal: Boolean,
-    /** loading */
+    //加载动画
     loading: Boolean,
-    /** 是否附加到Body */
+    //是否附加到Body
     appendToBody: Boolean,
-    /** 是否显示模态框 */
+    //是否显示模态框
     modal: {
       type: Boolean,
       default: true
     },
-    /** 是否点击模态框关闭抽屉 */
+    //是否点击模态框关闭抽屉
     modalClickClose: {
       type: Boolean,
       default: true
     },
-    /** 自定义class */
+    //自定义class
     customClass: String,
-    /** 是否显示全屏按钮 */
+    //是否显示全屏按钮
     fullscreen: {
       type: Boolean,
       default: true
     },
-    /** 没有内边距 */
-    noPadding: Boolean,
-    /** 可拖拽 */
+    //可拖拽
     draggable: {
       type: Boolean,
       default: false
-    },
-    /** 不显示滚动条 */
-    noScrollbar: Boolean
+    }
   },
   computed: {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),
     class_() {
-      return ['em-drawer', this.placement, this.fullscreen_ ? 'fullscreen' : '', this.draggable ? 'draggable' : '', this.customClass, this.noPadding ? 'no-padding' : '', this.fontSize]
+      let classArr = ['em-drawer', this.placement, this.customClass, this.fontSize]
+      if (this.fullscreen_) classArr.push('fullscreen')
+      if (this.draggable) classArr.push('draggable')
+      return classArr
+    },
+    padding_() {
+      return typeof this.padding === 'number' ? this.padding + 'px' : this.padding
     }
   },
   methods: {
+    /**
+     * @description: 附加
+     * @param {*}
+     */
     append() {
       if (this.appendToBody) {
-        // 附加到body下面
         document.body.appendChild(this.$el)
       }
-
-      window.addEventListener('resize', this.resize)
+      // 设置内边距
+      if (this.padding) {
+        this.$refs.drawer.querySelector('.em-drawer-body-wrapper').style.padding = this.padding_
+      }
     },
+
+    /**
+     * @description: 关闭
+     * @param {*}
+     */
     close() {
       this.$emit('update:visible', false)
     },
-    resize() {
-      this.$refs.scrollbar.update()
-    },
-    /** 开启全屏 */
+
+    /**
+     * @description: 开启全屏
+     * @param {*}
+     */
     openFullscreen() {
       this.fullscreen_ = true
-      // 全屏事件
       this.$emit('fullscreen-change', this.fullscreen_)
     },
-    /** 关闭全屏 */
+
+    /**
+     * @description: 关闭全屏
+     * @param {*}
+     */
+    /**  */
     closeFullscreen() {
       this.fullscreen_ = false
-      // 全屏事件
       this.$emit('fullscreen-change', this.fullscreen_)
     },
-    /** 全屏事件 */
+
+    /**
+     * @description: 全屏事件
+     * @param {*}
+     */
     triggerFullscreen() {
       this.fullscreen_ ? this.closeFullscreen() : this.openFullscreen()
     },
+
+    /**
+     * @description: 点击模态窗口
+     * @param {*}
+     */
     onModalClick() {
       if (this.modal && this.modalClickClose) {
         this.close()
       }
     },
-    /** 拖拽按钮鼠标按下事件 */
+
+    /**
+     * @description:拖拽按钮鼠标按下事件
+     * @param {*}
+     */
     onTriggerMousedown() {
       if (!this.draggable) return
       this.canMove = true
@@ -186,6 +213,11 @@ export default {
       on(document, 'mousemove', this.onMousemove)
       on(document, 'mouseup', this.onMouseup)
     },
+
+    /**
+     * @description: 鼠标离开事件
+     * @param {*} event
+     */
     onMousemove(event) {
       if (!this.canMove || !this.draggable) return
       const { width, x } = this.$el.getBoundingClientRect()
@@ -199,6 +231,11 @@ export default {
         this.wrapperWidth = wrapperWidth + 'px'
       }
     },
+
+    /**
+     * @description: 松开鼠标按钮事件
+     * @param {*}
+     */
     onMouseup() {
       if (!this.draggable) return
       this.canMove = false
@@ -214,7 +251,6 @@ export default {
     off(document, 'mouseup', this.onMouseup)
     if (this.$el && this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el)
-      window.removeEventListener('resize', this.resize)
     }
   },
   watch: {

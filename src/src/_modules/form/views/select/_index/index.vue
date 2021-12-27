@@ -13,7 +13,7 @@ export default {
       val: '',
       tmpl: {
         title: '下拉列表(em-select)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events,
         methods

@@ -1,15 +1,15 @@
 <template>
   <em-split v-model="split">
     <template v-slot:left>
-      <em-panel page>左侧面板</em-panel>
+       <em-panel page noPadding noBorder>左侧面板</em-panel>
     </template>
     <template v-slot:right>
       <em-split v-model="split1" mode="vertical">
         <template v-slot:top>
-          <em-panel page>上方面板</em-panel>
+           <em-panel page noPadding noBorder>上方面板</em-panel>
         </template>
         <template v-slot:bottom>
-          <em-panel page>下方面板</em-panel>
+           <em-panel page noPadding noBorder>下方面板</em-panel>
         </template>
       </em-split>
     </template>

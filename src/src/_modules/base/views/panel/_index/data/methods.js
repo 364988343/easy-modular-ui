@@ -8,10 +8,5 @@ export default [
     name: 'closeFullscreen',
     desc: '关闭全屏',
     params: '-'
-  },
-  {
-    name: 'scrollbarResize',
-    desc: '滚动条重置',
-    params: '-'
   }
 ]

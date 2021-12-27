@@ -49,7 +49,7 @@ export default {
       type: String,
       default: '保存成功'
     },
-   //标签的宽度
+    //标签的宽度
     labelWidth: {
       type: String,
       default: '100px'
@@ -59,16 +59,21 @@ export default {
       type: String,
       default: 'right'
     },
-    //自定义验证
-    validate: Function,
     //禁用表单
     disabled: Boolean,
     //显示加载动画
     loading: Boolean,
     //不显示加载动画
     noLoading: Boolean,
+    
+    //自定义验证
+    customValidate: Function,
+    //额外验证
+    extraValidate: Function,
     //自定义重置操作
-    customResetFunction: Function
+    customReset: Function,
+    //额外重置（除el-form自带的重置）
+    extraReset: Function
   },
   computed: {
     showLoading() {
@@ -76,62 +81,69 @@ export default {
     }
   },
   methods: {
-     /**
+    /**
      * @description: 提交表单
-     */    
-    submit() {
-      this.$refs.form.validate(async valid => {
-        // 自定义验证
-        if (valid && (!this.validate || this.validate() === true)) {
-          this.openLoading()
-          this.action(this.model)
-            .then(data => {
-              if (this.successMsg === true) {
-                this._success(this.successMsgText)
-              }
+     */
+    async submit() {
+      const valid = this.validate()
+      if (!valid) {
+        this.$emit('validate-error')
+        return
+      }
 
-              this.$emit('success', data)
+      this.openLoading()
+      this.action(this.model)
+        .then((data) => {
+          if (this.successMsg === true) {
+            this._success(this.successMsgText)
+          }
 
-              this.closeLoading()
-            })
-            .catch(() => {
-              this.$emit('error')
-              this.closeLoading()
-            })
-        } else {
-          // 验证失败
-          this.$emit('validate-error')
-        }
-      })
+          this.$emit('success', data)
+
+          this.closeLoading()
+        })
+        .catch(() => {
+          this.$emit('error')
+          this.closeLoading()
+        })
+    },
+
+    /**
+     * @description: 校验
+     * @param {*}
+     */
+    validate() {
+      let result = false
+      if (this.customValidate) {
+        result = this.customValidate()
+      } else {
+        this.$refs.form.validate((valid) => {
+          result = valid
+        })
+      }
+
+      if (!result) return result
+
+      if (this.extraValidate && this.extraValidate() === false) return false
+
+      return true
     },
 
     /**
      * @description: 重置表单
-     */    
+     */
     reset() {
-      if (this.customResetFunction) {
-        this.customResetFunction()
+      if (this.customReset) {
+        this.customReset()
       } else {
-        this.resetChildren(this.$refs.form)
         this.$refs.form.resetFields()
+        if (this.extraReset) {
+          this.extraReset()
+        }
       }
       this.$emit('reset')
     },
 
-    /**
-     * @description: 重置子组件
-     */
-    resetChildren(vnode) {
-      if (vnode.$children && vnode.$children.length > 0) {
-        vnode.$children.forEach(item => {
-          if (item && item.reset && typeof item.reset === 'function') {
-            item.reset()
-          }
-          this.resetChildren(item)
-        })
-      }
-    },
-    
     /**
      * @description: 清除验证结果
      */
@@ -147,7 +159,7 @@ export default {
         this.loading_ = true
       }
     },
-   
+
     /**
      * @description: 关闭加载中
      */
@@ -155,16 +167,6 @@ export default {
       if (!this.noLoading) {
         this.loading_ = false
       }
-    },
-    /**
-     * @description: 校验表单
-     */
-    validateForm() {
-      let result = false
-      this.$refs.form.validate(v => {
-        result = v
-      })
-      return result
     }
   }
 }

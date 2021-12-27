@@ -1,57 +1,69 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-04-26 23:45:09
- * @Description: 皮肤
- */
-
-import cache from '../../utils/cache'
 const state = {
-  //当前主题
-  theme: cache.get('theme') || '',
-  //字体大小
-  fontSize: cache.get('fontSize') || '',
+  //主题模式
+  themeMode: 'light',
+  //主题颜色
+  themeColor: 'theme1',
+  //字号
+  fontSize: 'small',
+  //祭奠模式
+  memorial: false,
   //最大窗口数量
-  maxOpenCount: cache.get('maxOpenCount') || 20,
+  maxOpenCount: 20,
   //是否只保持一个子菜单的展开
-  uniqueOpened: cache.get('uniqueOpened') || true
+  uniqueOpened: true
+}
+
+const getters = {
+  fontSize(state) {
+    return state.current.fontSize
+  }
 }
 
 const mutations = {
   /**
-   * @description: 主题赋值
+   * @description 初始化
+   * @param {Object} state 状态
+   * @param {Object} skin 皮肤
+   */
+  init(state, skin) {
+    Object.assign(state, skin)
+    //设置主题模式
+    window.document.documentElement.setAttribute('data-theme-mode', skin.themeMode)
+    //设置主题颜色
+    window.document.documentElement.setAttribute('data-theme-color', skin.themeColor)
+    //祭奠模式
+    if (skin.memorial) {
+      const html = document.getElementsByTagName('html')[0]
+      html.style.filter = 'grayscale(100%)'
+    }
+  },
+
+  /**
+   * @description: 设置主题
+   * @param {*} state
+   * @param {*} data
    */
   setTheme(state, data) {
-    cache.set('theme', data)
-    state.theme = data
-  },
+    state.themeColor = data
+  }
+}
 
+const actions = {
   /**
-   * @description: 字号赋值
+   * @description 初始化皮肤信息
+   * @param {*} skin
    */
-  setFontSize(state, data) {
-    cache.set('fontSize', data)
-    state.fontSize = data
-  },
-
-  /**
-   * @description: 最大窗口数量赋值
-   */
-  setMaxOpenCount(state, data) {
-    cache.set('maxOpenCount', data)
-    state.maxOpenCount = data
-  },
-
-  /**
-   * @description: 是否只保持一个子菜单的展开赋值
-   */
-  setUniqueOpened(state, data) {
-    cache.set('uniqueOpened', data)
-    state.uniqueOpened = data
+  init({ commit }, skin) {
+    if (skin) {
+      commit('init', skin)
+    }
   }
 }
 
 export default {
   namespaced: true,
   state,
-  mutations
+  getters,
+  mutations,
+  actions
 }

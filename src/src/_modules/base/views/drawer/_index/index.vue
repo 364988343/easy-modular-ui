@@ -13,7 +13,7 @@ export default {
     return {
       tmpl: {
         title: '抽屉(em-drawer)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events,
         slots

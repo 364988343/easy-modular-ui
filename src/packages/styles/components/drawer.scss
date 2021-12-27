@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 .em-drawer {
-  & > .em-drawer-modal {
+  &>.em-drawer-modal {
     position: fixed;
     left: 0;
     top: 0;
@@ -12,7 +12,7 @@
     z-index: $z-index-drawer-modal;
   }
 
-  > .em-drawer-dialog {
+  >.em-drawer-dialog {
     position: fixed;
     @include flex-column();
     top: 0;
@@ -21,14 +21,14 @@
     z-index: $z-index-drawer-dialog;
     box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2), 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12);
 
-    > .em-drawer-header {
+    >.em-drawer-header {
       @include flex-row();
       padding: 0 10px;
       @include vertical-center(40px);
       border-bottom: 1px solid $border-color1;
       box-sizing: border-box;
 
-      > .em-drawer-header-icon {
+      >.em-drawer-header-icon {
         padding: 0 5px 0 0;
         width: 30px;
         font-size: 1.5rem;
@@ -36,13 +36,13 @@
         flex-shrink: 0;
       }
 
-      > .em-drawer-header-title {
+      >.em-drawer-header-title {
         flex-grow: 1;
         font-size: 16px;
         font-weight: 400;
       }
 
-      > .em-drawer-header-toolbar {
+      >.em-drawer-header-toolbar {
         position: relative;
         flex-shrink: 0;
 
@@ -73,23 +73,19 @@
       }
     }
 
-    > .em-drawer-body {
+    >.em-drawer-body {
       position: relative;
       padding: 0;
       flex-grow: 1;
 
-      & > .em-drawer-body-wrapper {
+      &>.em-drawer-body-wrapper {
         position: absolute;
         width: 100%;
         height: 100%;
-
-        .el-scrollbar__view {
-          padding: 10px;
-        }
       }
     }
 
-    > .em-drawer-footer {
+    >.em-drawer-footer {
       padding: 0 10px;
       flex-shrink: 0;
       @include vertical-center(50px);
@@ -140,10 +136,10 @@
     width: 100%;
     z-index: $z-index-panel-fullscreen;
 
-    > .em-drawer-dialog {
+    >.em-drawer-dialog {
       width: 100% !important;
 
-      > .em-drawer-drag {
+      >.em-drawer-drag {
         display: none;
       }
     }
@@ -152,12 +148,6 @@
   &.draggable {
     .em-drawer-header-title {
       user-select: none;
-    }
-  }
-
-  &.no-padding {
-    .el-scrollbar__view {
-      padding: 0 !important;
     }
   }
 
@@ -195,5 +185,37 @@
         }
       }
     }
+  }
+
+  //过渡动画
+  .move-right-enter-active,
+  .moveR-leave-active {
+    transition: all 0.3s linear;
+    transform: translateX(0);
+  }
+
+  .move-right-enter,
+  .move-right-leave {
+    transform: translateX(100%);
+  }
+
+  .move-right-leave-to {
+    transform: translateX(100%);
+  }
+
+
+  .move-left-enter-active,
+  .move-left-leave-active {
+    transition: all 0.3s linear;
+    transform: translateX(0%);
+  }
+
+  .move-left-enter,
+  .move-left-leave {
+    transform: translateX(-100%);
+  }
+
+  .move-left-leave-to {
+    transform: translateX(-100%);
   }
 }

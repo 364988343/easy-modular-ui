@@ -12,6 +12,11 @@ export default {
         total: 0
       }
     },
+    computed: {
+      tenantShow() {
+        return this.user.tenantType != this.$tenantType.normal
+      }
+    },
     methods: {
       refresh() {
         this.$refs.list.refresh()

@@ -17,9 +17,9 @@
   </em-form-dialog>
 </template>
 <script>
-import visible from '../../../../../packages/mixins/components/visible'
+import visible from '@packages/mixins/components/visible'
 import { mapState, mapActions } from 'vuex'
-import userApi from '../../api/user'
+import authApi from '../../api/service/auth'
 
 export default {
   name: 'PasswordUpdate',
@@ -36,7 +36,7 @@ export default {
       }
     }
     return {
-      action: userApi.updatePassword,
+      action: authApi.updatePassword,
       model: {
         oldPassword: '',
         newPassword: '',

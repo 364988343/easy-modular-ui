@@ -12,7 +12,7 @@ export default {
       val: '',
       tmpl: {
         title: '单文件上传(em-upload-single)',
-        icon: 'list',
+        icon: 'detail',
         attrs,
         events
       }

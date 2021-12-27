@@ -1,6 +1,6 @@
 ## easy-modular-ui是一个基于vue2.0模块化前端框架，简单易用、架构清晰，降低程序的耦合性，框架同时基于element-ui封装了多个实用的组件，大大提高开发效率。
 <div align=center>
-	<img src="https://cdn.jsdelivr.net/gh/doordie1991/PicBed@main/picture/20210505112148.png" width="300" />
+	<img src="http://qiniu.90doordie.com/logo.png" width="300" />
 </div>
 
 ## 安装

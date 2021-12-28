@@ -4,6 +4,6 @@ export default {
   path: '/form/select/index',
   icon: 'detail',
   group: 1,
-  sort: 5,
+  sort: 4,
   component: () => import('./index')
 }

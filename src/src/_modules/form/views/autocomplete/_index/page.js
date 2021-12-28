@@ -4,6 +4,6 @@ export default {
   path: '/form/autocomplete/index',
   icon: 'detail',
   group: 1,
-  sort: 6,
+  sort: 5,
   component: () => import('./index')
 }

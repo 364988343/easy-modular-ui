@@ -15,6 +15,6 @@ export default {
 
 <style lang="scss" scoped>
 .em-admin-home-body-right {
- flex-grow: 1;
+  width: 40%;
 }
 </style>

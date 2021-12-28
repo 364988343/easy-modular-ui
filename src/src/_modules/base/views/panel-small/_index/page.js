@@ -4,7 +4,7 @@ export default {
   path: '/base/panel-small/index',
   icon: 'detail',
   group: 0,
-  sort: 2,
+  sort: 4,
   component: () => import('./index')
 }
 

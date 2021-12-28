@@ -4,7 +4,7 @@ export default {
   path: '/form/color_picker/index',
   icon: 'detail',
   group: 1,
-  sort: 10,
+  sort: 11,
   component: () => import('./index')
 }
 

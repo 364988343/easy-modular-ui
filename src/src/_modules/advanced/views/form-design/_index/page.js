@@ -5,7 +5,7 @@ export default {
   path: '/advanced/form/design',
   icon: 'detail',
   group: 2,
-  sort: 8,
+  sort: 4,
   component: () => import('./index')
 }
 

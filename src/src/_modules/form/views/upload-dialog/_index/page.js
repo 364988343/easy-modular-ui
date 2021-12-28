@@ -4,6 +4,6 @@ export default {
   path: '/form/upload_dialog/index',
   icon: 'detail',
   group: 1,
-  sort: 9,
+  sort: 8,
   component: () => import('./index')
 }

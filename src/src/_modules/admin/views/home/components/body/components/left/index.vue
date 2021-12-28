@@ -13,10 +13,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .em-admin-home-body-left {
-  width: 60%;
+  flex-grow: 1;
   margin-right: 20px;
-  height: 500px;
 }
 </style>

@@ -4,6 +4,6 @@ export default {
   path: '/form/inputMulti/index',
   icon: 'detail',
   group: 1,
-  sort: 10,
+  sort: 9,
   component: () => import('./index')
 }

@@ -38,12 +38,14 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   border: 1px solid #ebeef5;
   margin-right: 16px;
   margin-bottom: 16px;
   border-radius: 8px;
+  padding: 8px;
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
@@ -53,7 +55,7 @@ export default {
   &-icon {
     display: flex;
     justify-content: center;
-    font-size: 30px;
+    font-size: 26px;
   }
 
   &-label {

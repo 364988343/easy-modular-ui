@@ -4,6 +4,6 @@ export default {
   path: '/base/panel/index',
   icon: 'detail',
   group: 0,
-  sort: 2,
+  sort: 3,
   component: () => import('./index')
 }

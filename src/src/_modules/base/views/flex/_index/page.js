@@ -4,6 +4,6 @@ export default {
   path: '/base/flex/index',
   icon: 'detail',
   group: 0,
-  sort: 15,
+  sort: 11,
   component: () => import('./index')
 }

@@ -5,7 +5,7 @@ export default {
   path: '/advanced/count/index',
   icon: 'detail',
   group: 2,
-  sort: 9,
+  sort: 7,
   component: () => import('./index')
 }
 

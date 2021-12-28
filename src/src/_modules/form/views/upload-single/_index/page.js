@@ -4,6 +4,6 @@ export default {
   path: '/form/upload_single/index',
   icon: 'detail',
   group: 1,
-  sort: 8,
+  sort: 7,
   component: () => import('./index')
 }

@@ -4,7 +4,7 @@ export default {
   path: '/form/date_picker/index',
   icon: 'detail',
   group: 1,
-  sort: 11,
+  sort: 6,
   component: () => import('./index')
 }
 

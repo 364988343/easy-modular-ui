@@ -1,7 +1,7 @@
 <template>
   <div class="em-menus">
     <div class="no-menus" v-if="!menus || menus.length < 1">
-      <em-icon name="form" />
+      <em-icon name="app" />
       <p>没有菜单</p>
     </div>
 

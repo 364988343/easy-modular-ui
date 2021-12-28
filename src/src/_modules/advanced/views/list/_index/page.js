@@ -4,6 +4,6 @@ export default {
   path: '/advanced/list/index',
   icon: 'detail',
   group: 2,
-  sort: 0,
+  sort: 1,
   component: () => import('./index')
 }

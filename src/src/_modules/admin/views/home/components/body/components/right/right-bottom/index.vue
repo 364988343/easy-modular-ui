@@ -20,7 +20,7 @@ export default {
         title: '消息 News',
         icon: 'message',
         iconColor: '#07c160',
-        height: '440px',
+        height: '370px',
         header: true,
         noPadding: true
       },

@@ -4,6 +4,6 @@ export default {
   path: '/base/drawer/index',
   icon: 'detail',
   group: 0,
-  sort: 6,
+  sort: 8,
   component: () => import('./index')
 }

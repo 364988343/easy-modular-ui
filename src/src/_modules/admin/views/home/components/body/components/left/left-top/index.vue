@@ -30,7 +30,7 @@ export default {
         title: '事件快报',
         icon: 'alert-fill',
         iconColor: '#00acc1',
-        height: '380px',
+        height: '320px',
         header: true
       },
       date: [],

@@ -21,7 +21,7 @@ export default {
         title: '快捷应用',
         icon: 'appstore',
         iconColor: '#1989fa',
-        height: '250px',
+        height: '236px',
         header: true,
         noPadding: true
       },
@@ -33,8 +33,6 @@ export default {
         { label: '人员管理', icon: 'user', url: '', target: '', color: '#00acc1' },
         { label: '车辆违规', icon: 'appstore', url: '', target: '', color: '#07c160' },
         { label: '消防演习', icon: 'tags', url: '', target: '', color: '#1989fa' },
-        { label: '危险作业', icon: 'dashboard', url: '', target: '', color: '#ff9900' },
-        { label: '事件快报', icon: 'gift', url: '', target: '', color: '#f56c6c' },
         { label: '人员管理', icon: 'transaction', url: '', target: '', color: '#00acc1' }
       ],
       itemActive: false

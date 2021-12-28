@@ -5,7 +5,7 @@ export default {
   path: '/advanced/editor/index',
   icon: 'detail',
   group: 2,
-  sort: 8,
+  sort: 6,
   component: () => import('./index')
 }
 

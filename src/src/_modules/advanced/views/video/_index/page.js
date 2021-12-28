@@ -5,7 +5,7 @@ export default {
   path: '/advanced/video/index',
   icon: 'detail',
   group: 2,
-  sort: 10,
+  sort: 8,
   component: () => import('./index')
 }
 

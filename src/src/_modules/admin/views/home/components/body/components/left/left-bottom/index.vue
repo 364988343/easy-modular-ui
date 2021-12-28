@@ -37,7 +37,7 @@ export default {
         title: '隐患统计',
         icon: 'fire-fill',
         iconColor: '#f56c6c',
-        height: '310px',
+        height: '286px',
         header: true
       },
       date: [],

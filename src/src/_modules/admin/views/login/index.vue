@@ -28,6 +28,7 @@
           <el-form-item style="text-align: right">
             <el-button :loading="loading" class="btn-login" type="primary" @click="tryLogin">登录</el-button>
           </el-form-item>
+          <div class="em-login-content-form-tip">账号:admin 密码:123</div>
         </el-form>
         <!--第三方-->
         <div class="em-login-content-other">
@@ -162,6 +163,12 @@ export default {
     &-form {
       box-sizing: border-box;
       padding: 30px;
+
+      &-tip {
+        text-align: left;
+        color: #606266;
+        font-size: 13px;
+      }
     }
 
     .btn-login {

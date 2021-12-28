@@ -29,7 +29,7 @@ let componentMenus = [
     icon: 'github-fill',
     level: 1,
     show: true,
-    url: 'https://github.com/doordie1991/EasyModular'
+    url: 'https://github.com/doordie1991/easy-modular-ui'
   },
   {
     name: 'Gitee',
@@ -37,7 +37,7 @@ let componentMenus = [
     icon: 'gitee',
     level: 1,
     show: true,
-    url: 'https://github.com/doordie1991/EasyModular'
+    url: 'https://gitee.com/doordie1991/easy-modular-ui'
   }
 ]
 

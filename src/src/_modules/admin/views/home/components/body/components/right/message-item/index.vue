@@ -75,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .message-item {
   width: 100%;
-  height: 80px;
+  height: 76px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,8 +111,8 @@ export default {
 
   &-time {
     width: 140px;
-    height: 80px;
-    line-height: 80px;
+    height: 76px;
+    line-height: 76px;
     text-align: center;
     color: #c0c4cc;
   }

@@ -37,7 +37,10 @@
         <!--body-->
         <div class="em-drawer-body">
           <div class="em-drawer-body-wrapper">
-             <slot />
+            <em-scrollbar v-if="!noScrollbar" ref="scrollbar" :horizontal="horizontal">
+              <slot />
+            </em-scrollbar>
+            <slot v-else />
           </div>
         </div>
         <footer v-if="footer" class="em-drawer-footer">
@@ -127,7 +130,11 @@ export default {
     draggable: {
       type: Boolean,
       default: false
-    }
+    },
+    //不显示滚动条
+    noScrollbar: Boolean,
+    //是否显示水平滚动条
+    horizontal: Boolean
   },
   computed: {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),

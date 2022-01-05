@@ -1,8 +1,8 @@
 <template>
-  <div class="em-admin-home">
+  <em-container class="home" scrollbar>
     <home-header></home-header>
     <home-body></home-body>
-  </div>
+  </em-container>
 </template>
 <script>
 import homeHeader from './components/header'
@@ -18,14 +18,9 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.em-admin-home {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 16px;
+<style lang="scss" scoped>
+.home {
+  padding: 12px !important;
   box-sizing: border-box;
-  overflow: auto;
 }
 </style>

@@ -33,8 +33,11 @@
 
     <!--Body-->
     <div ref="dialogBody" class="em-dialog-body" v-loading="loading" :element-loading-text="loadingText" :element-loading-background="loadingBackground" :element-loading-spinner="loadingSpinner">
-      <div ref="dialogContent" :class="['em-dialog-content', this.height ? 'scroll' : '']">
-        <slot />
+      <div ref="dialogContent" class="em-dialog-content">
+        <slot v-if="noScrollbar" />
+        <em-scrollbar v-else ref="scrollbar" class="em-dialog-body-scrollbar" :horizontal="horizontal">
+          <slot />
+        </em-scrollbar>
       </div>
       <div v-if="footer" class="em-dialog-footer">
         <div class="em-dialog-footer-left">
@@ -132,7 +135,11 @@ export default {
       default: 100
     },
     //是否显示底部关闭按钮
-    footerCloseButton: Boolean
+    footerCloseButton: Boolean,
+    //不显示滚动条
+    noScrollbar: Boolean,
+    //是否显示水平滚动条
+    horizontal: Boolean
   },
   computed: {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),
@@ -216,7 +223,7 @@ export default {
 
       // 设置内边距
       if (this.padding) {
-        this.$refs.dialogContent.style.padding = this.padding_
+        this.dialogEl.querySelector(this.noScrollbar ? '.em-dialog-content' : '.el-scrollbar__view').style.padding = this.padding + 'px'
       }
     },
 
@@ -239,7 +246,6 @@ export default {
           }
         }
       }
-
       return headerH + contentH + footerH
     },
 
@@ -256,14 +262,14 @@ export default {
      * @description: 获取对话框的body高度
      */
     getDialogContentHeight() {
-      const conetntEl = this.dialogEl.querySelector('.em-dialog-content')
+      const conetntEl = this.dialogEl.querySelector(this.noScrollbar ? '.em-dialog-content' : '.el-scrollbar__view')
       const conetntH = conetntEl ? conetntEl.offsetHeight : 0
 
-      let otherH = 0
+      let otherH = this.noScrollbar ? 0 : 17
       if (typeof this.padding === 'number' && this.padding > 0) {
-        otherH = this.padding * 2
+        otherH += this.padding * 2
       } else if (this.padding && this.padding.endsWith('px')) {
-        otherH = parseFloat(this.padding.replace('px', '')) * 2
+        otherH += parseFloat(this.padding.replace('px', '')) * 2
       }
 
       return conetntH + otherH

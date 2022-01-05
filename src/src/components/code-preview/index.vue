@@ -62,15 +62,9 @@ export default {
     z-index: 9999;
     transition: all 0.3s ease-in-out;
   }
-
-  pre {
+  .el-scrollbar__view {
     height: 100%;
-
-    code {
-      height: 100%;
-      overflow: auto;
-      box-sizing: border-box;
-    }
+    background: #2b2b2b;
   }
 }
 .em-code-preview-drawer {

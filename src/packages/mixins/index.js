@@ -10,6 +10,7 @@ import formReadonly from './components/form-readonly'
 import formSave from './components/form-save'
 import list from './components/list'
 import page from './components/page'
+import select from './components/select'
 
 export default {
   global(Vue) {
@@ -30,6 +31,7 @@ export default {
     formReadonly,
     formSave,
     list,
-    page
+    page,
+    select
   }
 }

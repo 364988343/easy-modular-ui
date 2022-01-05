@@ -29,14 +29,20 @@
     </header>
     <!--内容-->
     <el-collapse-transition>
-      <div class="em-panel-content" v-show="!collapse_" :style="contentStyle">
-        <slot />
+      <div class="em-panel-body" v-show="!collapse_">
+        <div class="em-panel-content">
+          <div class="em-panel-wrapper" v-if="hasScrollbar">
+            <em-scrollbar ref="scrollbar" :horizontal="horizontal">
+              <slot />
+            </em-scrollbar>
+          </div>
+          <slot v-else />
+        </div>
+        <footer v-if="footer" :class="['em-panel-footer', footerAlign]">
+          <slot name="footer"></slot>
+        </footer>
       </div>
     </el-collapse-transition>
-    <!--底部-->
-    <footer v-if="footer" :class="['em-panel-footer', footerAlign]">
-      <slot name="footer"></slot>
-    </footer>
   </div>
 </template>
 <script>
@@ -72,17 +78,14 @@ export default {
     page: Boolean,
     //高度
     height: String,
-    //内边距（默认8px）
-    padding: {
-      type: [Number, String],
-      default: 8
-    },
     //没有内边距
     noPadding: Boolean,
     //没有边框
     noBorder: Boolean,
     //标题是否加粗
     titleBold: Boolean,
+    //不显示滚动条
+    noScrollbar: Boolean,
     //是否显示水平滚动条
     horizontal: Boolean,
     //加载动画显示
@@ -98,23 +101,21 @@ export default {
     ...mapState('app/loading', { loadingText: 'text', loadingBackground: 'background', loadingSpinner: 'spinner' }),
     class_() {
       let classArr = ['em-panel', this.fontSize]
+      if (this.height) classArr.push('has-height')
+      if (this.page) classArr.push('page')
       if (this.fullscreen_) classArr.push('fullscreen')
+      if (this.noPadding) classArr.push('no-padding')
       if (!this.noBorder) classArr.push('border')
       if (this.titleBold) classArr.push('title-bold')
 
       return classArr
     },
     style_() {
-      let style = { height: this.page ? '100%' : this.height }
+      let style = { height: this.height }
       return style
     },
-    contentStyle() {
-      let style = { padding: this.padding_ }
-      return style
-    },
-    padding_() {
-      if (this.noPadding) return 0
-      else return typeof this.padding === 'number' ? this.padding + 'px' : this.padding
+    hasScrollbar() {
+      return !this.noScrollbar && (this.height || this.page)
     }
   },
   methods: {

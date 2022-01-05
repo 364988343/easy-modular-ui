@@ -13,7 +13,7 @@ export default {
     return {
       tmpl: {
         title: '对话框(em-dialog)',
-        icon: 'dialog',
+        icon: 'detail',
         attrs,
         events,
         slots,

@@ -18,7 +18,7 @@
         end-placeholder="结束日期"
       ></el-date-picker>
     </template>
-    <ve-line :data="chartData" :settings="chartSettings" :extend="chartExtend"   height="100%"> </ve-line>
+    <ve-line :data="chartData" :settings="chartSettings" :extend="chartExtend" height="100%"> </ve-line>
   </em-panel>
 </template>
 
@@ -31,7 +31,8 @@ export default {
         icon: 'alert-fill',
         iconColor: '#00acc1',
         height: '320px',
-        header: true
+        header: true,
+        noScrollbar: true
       },
       date: [],
       chartData: {
@@ -47,7 +48,7 @@ export default {
           normal: {
             color: '#3dd5e9',
             borderColor: '#ebeef5', //拐点边框颜色
-            borderWidth: 10 //拐点边框大小
+            borderWidth: 8 //拐点边框大小
           },
           emphasis: {
             color: '#3dd5e9' //hover拐点颜色定义
@@ -80,6 +81,7 @@ export default {
         },
 
         grid: {
+          top:24,
           bottom: 12
         },
         xAxis: {

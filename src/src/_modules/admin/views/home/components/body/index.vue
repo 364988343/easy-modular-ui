@@ -16,6 +16,6 @@ export default {
 .em-admin-home-body {
   display: flex;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 </style>

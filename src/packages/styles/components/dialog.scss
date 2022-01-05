@@ -80,12 +80,12 @@
           width: 100%;
           flex-grow: 1;
           box-sizing: border-box;
-        }
 
-        .em-dialog-content.scroll {
-          overflow: auto;
+          .el-scrollbar__view {
+            box-sizing: border-box;
+          }
         }
-
+        
         >.em-dialog-footer {
           display: flex;
           padding: 5px 10px;

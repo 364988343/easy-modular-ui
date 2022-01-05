@@ -37,8 +37,9 @@ export default {
         title: '隐患统计',
         icon: 'fire-fill',
         iconColor: '#f56c6c',
-        height: '286px',
-        header: true
+        height: '300px',
+        header: true,
+        noScrollbar: true
       },
       date: [],
       questionType: ['仓库安全', '公共区域管理', '化学品安全', '环境保护'],
@@ -200,7 +201,7 @@ export default {
 .em-home-body-left-bottom {
   width: 100%;
   height: 100%;
-  margin-top: 20px;
+  margin-top: 16px;
   &-chart {
     display: flex;
     width: 100%;

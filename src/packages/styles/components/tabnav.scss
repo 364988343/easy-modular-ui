@@ -1,53 +1,52 @@
 .em-tabnav {
   width: 100%;
   @include flex-row();
-  padding: 5px 0;
   box-sizing: border-box;
 
   &-tabs {
     overflow-y: hidden;
     overflow-x: auto;
     flex-grow: 1;
-    background: #f5f7f9;
+    background: #f7f7f7;
+
     &-txt {
       font-size: 12px;
     }
+
+    .el-tabs__header {
+      border: none !important;
+    }
+
     .el-tabs__nav {
       border: none !important;
-      height: 30px;
+      height: 32px;
+      box-sizing: border-box
     }
+
     .el-tabs__item {
-      @include vertical-center(30px);
+      @include vertical-center(32px);
       padding: 0 12px !important;
       background-color: #fff;
-      border-radius: 4px;
+      border-radius: 2px;
       color: $text-color3;
-      margin-right: 2px;
+      margin-right: 4px;
       border: 1px solid $border-color1 !important;
+      box-sizing: border-box;
+      font-size: 12px;
 
       &:first-child .el-icon-close {
         display: none !important;
       }
+
       &.is-active {
-        padding-left: 25px !important;
-        @include color();
+        color: #e6a23c !important;
         label {
           font-weight: bold;
         }
 
-        &::before {
-          content: ' ';
-          position: absolute;
-          top: 9px;
-          left: 9px;
-          display: inline-block;
-          width: 10px;
-          height: 10px;
-          border-radius: 5px;
-          @include bg_color();
-        }
       }
     }
+
     .el-tabs__header {
       margin: 0 !important;
     }
@@ -58,9 +57,9 @@
 
     &-btn {
       display: inline-block;
-      width: 30px;
+      width: 32px;
       text-align: center;
-      @include vertical-center(30px);
+      @include vertical-center(32px);
       cursor: pointer;
       border: 1px solid $border-color1;
       font-size: 16px;
@@ -116,7 +115,5 @@
     background-color: #fff;
     border: 1px solid #dcdfe6;
   }
-  .el-tabs__item.is-active {
-    @include color();
-  }
+
 }

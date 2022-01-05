@@ -1,6 +1,6 @@
 {
   "name": "easy-modular-ui",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "private": false,
   "description": "vue模块化前端UI框架",
   "author": "陈曦",
@@ -17,7 +17,7 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.10.4",
     "echarts": "^4.6.0",
-    "element-ui": "^2.15.1",
+    "element-ui": "^2.15.6",
     "highlight.js": "^11.2.0",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",

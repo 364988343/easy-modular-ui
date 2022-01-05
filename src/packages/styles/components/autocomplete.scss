@@ -1,0 +1,10 @@
+.em-autocomplete {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+  
+    &-item {
+      margin-right: 20px;
+    }
+  }

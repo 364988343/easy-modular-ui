@@ -20,6 +20,8 @@ import 'video.js/dist/video-js.css'
 import './styles/app.scss'
 import './styles/theme/element/index.css'
 
+import './utils/http'
+
 export default {
   //安装插件
   use: async (app) => {

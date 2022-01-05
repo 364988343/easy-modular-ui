@@ -1,7 +1,7 @@
 <template>
   <em-panel class="em-tmpl" page header :title="title" :icon="icon">
     <slot />
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" type="card" tab-position="left">
       <el-tab-pane label="属性(Attributes)" name="attrs"> <em-attributes v-if="attrs" :data="attrs" /></el-tab-pane>
       <el-tab-pane label="事件(Event)" name="events"> <em-events v-if="events" :data="events" /></el-tab-pane>
       <el-tab-pane label="方法(Method)" name="methods"> <em-methods v-if="methods" :data="methods" /></el-tab-pane>
@@ -44,3 +44,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.em-tmpl {
+  .el-tabs__item.is-active {
+    background-color: #909399;
+    color: #fff;
+  }
+}
+</style>

@@ -5,11 +5,13 @@
       <p>没有菜单</p>
     </div>
 
-    <el-menu v-else ref="menus" :default-active="active" :unique-opened="uniqueOpened" :collapse="collapse" :collapse-transition="false">
-      <template v-for="item in menus">
-        <menu-item v-if="item.show" :key="item.id" :menu="item" />
-      </template>
-    </el-menu>
+    <em-scrollbar v-else>
+      <el-menu ref="menus" :default-active="active" :unique-opened="uniqueOpened" :collapse="collapse" :collapse-transition="false">
+        <template v-for="item in menus">
+          <menu-item v-if="item.show" :key="item.id" :menu="item" />
+        </template>
+      </el-menu>
+    </em-scrollbar>
   </div>
 </template>
 <script>

@@ -103,5 +103,20 @@ export default [
     type: 'Boolean',
     opt: '-',
     def: 'false'
+  },
+  ,
+  {
+    name: 'no-scrollbar',
+    desc: '不显示滚动条',
+    type: 'boolean',
+    opt: '-',
+    def: 'false'
+  },
+  {
+    name: 'horizontal',
+    desc: '是否显示水平滚动条',
+    type: 'boolean',
+    opt: '-',
+    def: 'false'
   }
 ]

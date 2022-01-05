@@ -27,7 +27,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 140px;
+  height: 120px;
 
   &-item {
     width: 20%;

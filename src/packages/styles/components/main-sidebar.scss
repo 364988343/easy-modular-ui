@@ -30,8 +30,8 @@
     a {
       padding: 0 6px;
       display: inline-block;
-      height: 30px;
-      line-height: 30px;
+      height: 32px;
+      line-height: 32px;
       font-size: 22px;
       text-align: center;
       background-color: #fff;
@@ -59,7 +59,6 @@
     font-size: 12px;
     font-weight: bold;
     text-align: center;
-    //  box-shadow: 0 5px 10px #f7920f inset;
   }
 
   .el-menu {
@@ -115,6 +114,8 @@
     @include active_color();
     @include active_bg_color();
     font-weight: 700;
+    border-left: 2px solid;
+  
   }
 
   .em-icon {

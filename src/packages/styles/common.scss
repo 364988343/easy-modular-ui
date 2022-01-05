@@ -1,0 +1,41 @@
+// .em-container {
+//     margin: 0;
+//     padding: 0;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+// }
+
+.page {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+//背景颜色
+.em-bg {
+    &-info {
+        background-color: $color-info !important;
+    }
+
+    &-primary {
+        background-color: $color-primary !important;
+    }
+
+    &-success {
+        background-color: $color-success !important;
+    }
+
+    &-warning {
+        background-color: $color-warning !important;
+    }
+
+    &-danger {
+        background-color: $color-danger !important;
+    }
+}
+
+//隐藏
+.hidden {
+    display: none;
+}

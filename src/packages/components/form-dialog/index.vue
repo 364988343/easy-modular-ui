@@ -1,6 +1,37 @@
 <template>
-  <em-dialog ref="dialog" class="em-form-dialog" v-bind="dialog" v-on="dialogOn" :visible.sync="visible_">
-    <em-form ref="form" v-bind="form" v-on="formOn">
+  <em-dialog
+    ref="dialog"
+    class="em-form-dialog"
+    :title="title"
+    :icon="icon"
+    :width="width"
+    :height="height"
+    :padding="padding"
+    :footer="footer"
+    :fullscreen="fullscreen"
+    :close-on-click-modal="closeOnClickModal"
+    :loading="showLoading"
+    :footer-close-button="footerCloseButton"
+    :visible.sync="visible_"
+    v-on="dialogOn"
+  >
+    <em-form
+      ref="form"
+      no-loading
+      :model="model"
+      :rules="rules"
+      :action="action"
+      :label-width="labelWidth"
+      :label-position="labelPosition"
+      :extraValidate="extraValidate"
+      :success-msg="successMsg"
+      :success-msg-text="successMsgText"
+      :disabled="disabled"
+      :inline="inline"
+      :customReset="customReset"
+      :extraReset="extraReset"
+      v-on="formOn"
+    >
       <slot />
     </em-form>
 
@@ -25,28 +56,6 @@ export default {
   data() {
     return {
       loading_: false,
-      dialog: {
-        //标题
-        title: this.title,
-        //头部左侧图标
-        icon: this.icon,
-        //宽度
-        width: this.width,
-        //高度
-        height: this.height,
-        //内边距
-        padding: this.padding,
-        //显示底部
-        footer: this.footer,
-        //是否显示全屏按钮
-        fullscreen: this.fullscreen,
-        //是否可以通过点击 modal 关闭 Dialog
-        closeOnClickModal: this.closeOnClickModal,
-        //显示loading
-        loading: this.showLoading,
-        //是否显示底部关闭按钮
-        footerCloseButton: this.footerCloseButton
-      },
       dialogOn: {
         //窗口打开事件
         open: this.onOpen,
@@ -56,36 +65,6 @@ export default {
         close: this.onClose,
         //窗口关闭后事件
         closed: this.onClosed
-      },
-      form: {
-        //不显示动画
-        noLoading: true,
-        //表单对象
-        model: this.model,
-        //验证规则
-        rules: this.rules,
-        //提交请求
-        action: this.action,
-        //标签的宽度
-        labelWidth: this.labelWidth,
-        //表单域标签的位置，如果值为 left 或者 right 时，则需要设置 label-width
-        labelPosition: this.labelPosition,
-        //是否显示成功提示消息
-        successMsg: this.successMsg,
-        //成功提示消息文本
-        successMsgText: this.successMsgText,
-        //禁用表单
-        disabled: this.disabled,
-        //行内表单模式
-        inline: this.inline,
-        //自定义校验
-        customValidate: this.customValidate,
-        //额外校验
-        extraValidate: this.extraValidate,
-        //自定义重置
-        customReset: this.customReset,
-        //额外重置
-        extraReset: this.extraReset
       },
       formOn: {
         //保存成功

@@ -5,8 +5,6 @@ import fontSize from './global/fontSize'
 import userInfo from './global/userInfo'
 
 import visible from './components/visible'
-import formDialogEdit from './components/form-dialog-edit'
-import formReadonly from './components/form-readonly'
 import formSave from './components/form-save'
 import list from './components/list'
 import page from './components/page'
@@ -27,8 +25,6 @@ export default {
   },
   components: {
     visible,
-    formDialogEdit,
-    formReadonly,
     formSave,
     list,
     page,

@@ -1,7 +1,7 @@
 <template>
   <header class="em-list-header">
     <div class="em-list-icon">
-      <em-icon :name="icon || 'profile'" />
+      <em-icon :name="icon || 'detail'" />
     </div>
     <div class="em-list-title">{{ title }}</div>
     <div class="em-list-header-toolbar">

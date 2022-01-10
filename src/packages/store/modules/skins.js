@@ -1,6 +1,6 @@
 const state = {
   //主题模式
-  themeMode: 'light',
+  themeMode: 'dark',
   //主题颜色
   themeColor: 'theme1',
   //字号
@@ -26,13 +26,20 @@ const mutations = {
    * @param {Object} skin 皮肤
    */
   init(state, skin) {
+    if (!skin) {
+      skin = {
+        themeMode: 'dark',
+        themeColor: 'theme1'
+      }
+    }
+
     Object.assign(state, skin)
     //设置主题模式
     window.document.documentElement.setAttribute('data-theme-mode', skin.themeMode)
     //设置主题颜色
     window.document.documentElement.setAttribute('data-theme-color', skin.themeColor)
     //祭奠模式
-    if (skin.memorial) {
+    if (skin && skin.memorial) {
       const html = document.getElementsByTagName('html')[0]
       html.style.filter = 'grayscale(100%)'
     }
@@ -54,9 +61,7 @@ const actions = {
    * @param {*} skin
    */
   init({ commit }, skin) {
-    if (skin) {
-      commit('init', skin)
-    }
+    commit('init', skin)
   }
 }
 

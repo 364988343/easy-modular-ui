@@ -45,8 +45,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 16.66%;
-      height: 110px;
+      width: 12.5%;
+      height: 100px;
       cursor: pointer;
       border: 1px solid $text-color4;
       box-sizing: border-box;
@@ -54,7 +54,7 @@
       &-icon {
         width: 60px;
         @include vertical-center(60px);
-        font-size: 40px;
+        font-size: 32px;
         display: flex;
         justify-content: center;
         align-items: center;

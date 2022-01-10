@@ -126,6 +126,11 @@ export default {
     model: Object,
     //模型验证规则
     rules: Object,
+    //表格高度
+    height: {
+      type: String,
+      default: '100%'
+    },
     // 列数组
     cols: {
       type: Array,

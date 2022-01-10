@@ -67,7 +67,7 @@ const mutations = {
    * @param {*} state
    */
   reset(state) {
-    state.id = ''
+    state.userId = ''
     state.userCode = ''
     state.userName = ''
   }

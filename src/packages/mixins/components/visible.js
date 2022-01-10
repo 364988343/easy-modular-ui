@@ -13,9 +13,18 @@ export default {
     visible: Boolean
   },
   methods: {
+    /**
+     * @description:显示 
+     * @param {*}
+     */
     show() {
       this.visible_ = true
     },
+
+    /**
+     * @description: 隐藏
+     * @param {*}
+     */
     hide() {
       this.visible_ = false
     }

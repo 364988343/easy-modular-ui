@@ -4,7 +4,6 @@ export default {
   data() {
     return {
       formRef: 'form',
-      // 存储表单数据
       model_: {},
       form: {
         icon: '',
@@ -17,8 +16,6 @@ export default {
         footerCloseButton: true,
         loading: false
       },
-      //编辑时，是否总是刷新
-      allRefresh: true,
       on: {
         success: this.onSuccess,
         open: this.onOpen
@@ -28,9 +25,9 @@ export default {
   props: {
     //id不为空，标识编辑或预览，反之为新增
     id: [String, Number],
-    /**是否只读 */
+    //是否只读
     readonly: Boolean,
-    /**总数，用于有排序需求的默认值 */
+    //总数，用于有排序需求的默认值
     total: Number
   },
   computed: {
@@ -44,13 +41,16 @@ export default {
     }
   },
   methods: {
-    /**设置信息 */
-    setInfo() {
+    /**
+     * @description: 初始化
+     * @param {*}
+     */
+    init() {
       const { form, title, readonly, actions } = this
       //添加
       if (this.isAdd_) {
         form.title = `新增${title}`
-        form.icon = 'add'
+        form.icon = 'plus'
         form.customReset = null
         form.action = actions.add
         return
@@ -61,18 +61,26 @@ export default {
       form.customReset = this.reset
       form.action = actions.update
     },
+
+    /**
+     * @description: 重置
+     * @param {*}
+     */
     reset() {
       this.form.model = this.$_.merge({}, this.model_)
     },
-    //获取编辑信息
-    edit() {
+
+    /**
+     * @description: 获取数据
+     * @param {*}
+     */
+    getData() {
       const { id, form, actions } = this
       form.loading = true
       actions
         .edit(id)
         .then((data) => {
           this.model_ = this.$_.merge({}, data)
-          //重置
           this.$refs[this.formRef].reset()
           form.loading = false
         })
@@ -80,26 +88,23 @@ export default {
           form.loading = false
         })
     },
+
+    /**
+     * @description: 保存成功回调事件
+     * @param {*} data
+     */
     onSuccess(data) {
       this.$emit('success', this.form.model, data, this.isAdd_)
     },
-    onOpen() {
-      //设置图标
-      this.setInfo()
-      if (this.isEdit_) {
-        //编辑时是否总是刷新或者id不同时也刷新
-        if (this.allRefresh || this.id !== this.form.model.id) {
-          this.edit()
-        }
-      } else {
-        //如果是新增则要重置
-        this.$refs[this.formRef].reset()
-      }
 
-      //打开后执行的方法
-      if (this.afterOpen) {
-        this.afterOpen()
-      }
+    /**
+     * @description: 窗口打开事件
+     * @param {*}
+     */
+    onOpen() {
+      this.init()
+      if (this.isEdit_) this.getData()
+      else this.$refs[this.formRef].reset()
     }
   },
   watch: {

@@ -1,9 +1,3 @@
-/*
- * @Author: 陈曦
- * @Date: 2021-05-01 16:12:32
- * @Description: 加载动画
- */
-
 import { mapState } from 'vuex'
 export default {
   computed: {

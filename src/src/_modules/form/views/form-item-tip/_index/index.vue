@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       tmpl: {
-        title: '表单栏位提示(em-form-item-tip)',
+        title: '基础表单(em-form)',
         icon: 'detail',
         attrs,
         methods,

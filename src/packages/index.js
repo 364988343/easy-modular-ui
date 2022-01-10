@@ -20,7 +20,7 @@ import 'video.js/dist/video-js.css'
 import './styles/app.scss'
 import './styles/theme/element/index.css'
 
-import './utils/http'
+import http from './utils/http'
 
 export default {
   //安装插件
@@ -87,6 +87,9 @@ export default {
 
     // 使用打印
     Vue.use(Print)
+
+    //初始化接口服务
+    http(app.serviceUrl)
 
     // 加载页面数据
     await store.dispatch('app/system/init', app, {

@@ -56,6 +56,13 @@ export default [
     def: '数据结构在页面底部'
   },
   {
+    name: 'height',
+    desc: '表格高度',
+    type: 'String',
+    opt: '-',
+    def: '100%'
+  },
+  {
     name: 'multiple',
     desc: '是否可多选',
     type: 'Boolean',

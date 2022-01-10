@@ -1,0 +1,9 @@
+.em-form-item-tip {
+    float: right;
+    display: flex;
+   
+    &-icon {
+        margin-left: 4px;
+        cursor: pointer;
+    }
+}

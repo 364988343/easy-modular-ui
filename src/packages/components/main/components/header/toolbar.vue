@@ -25,7 +25,7 @@
           <em-button type="text" text="个人信息" icon="user" @click="userDialogShow = true" />
         </el-dropdown-item>
         <el-dropdown-item>
-          <em-button type="text" text="修改密码" icon="password" @click="passwordDialogShow = true" />
+          <em-button type="text" text="修改密码" icon="lock" @click="passwordDialogShow = true" />
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

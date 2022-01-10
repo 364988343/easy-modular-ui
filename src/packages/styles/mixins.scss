@@ -31,27 +31,27 @@
 @mixin color() {
   color: $theme1-color !important;
 
-  [data-theme-color='theme1'] & {
+  [data-theme-color='theme1'] &  {
     color: $theme1-color !important;
   }
 
-  [data-theme-color='theme2'] & {
+  [data-theme-color='theme2'] &  {
     color: $theme2-color !important;
   }
 
-  [data-theme-color='theme3'] & {
+  [data-theme-color='theme3'] &  {
     color: $theme3-color !important;
   }
 
-  [data-theme-color='theme4'] & {
+  [data-theme-color='theme4'] &  {
     color: $theme4-color !important;
   }
 
-  [data-theme-color='theme5'] & {
+  [data-theme-color='theme5'] &  {
     color: $theme5-color !important;
   }
 
-  [data-theme-color='theme6'] & {
+  [data-theme-color='theme6'] &  {
     color: $theme6-color !important;
   }
 }
@@ -59,27 +59,27 @@
 @mixin bg_color() {
   background-color: $theme1-color !important;
 
-  [data-theme-color='theme1'] & {
+  [data-theme-color='theme1'] &  {
     background-color: $theme1-color !important;
   }
 
-  [data-theme-color='theme2'] & {
+  [data-theme-color='theme2'] &  {
     background-color: $theme2-color !important;
   }
 
-  [data-theme-color='theme3'] & {
+  [data-theme-color='theme3'] &  {
     background-color: $theme3-color !important;
   }
 
-  [data-theme-color='theme4'] & {
+  [data-theme-color='theme4'] &  {
     background-color: $theme4-color !important;
   }
 
-  [data-theme-color='theme5'] & {
+  [data-theme-color='theme5'] &  {
     background-color: $theme5-color !important;
   }
 
-  [data-theme-color='theme6'] & {
+  [data-theme-color='theme6'] &  {
     background-color: $theme6-color !important;
   }
 }
@@ -87,27 +87,27 @@
 @mixin active_color() {
   color: $theme1-active-color !important;
 
-  [data-theme-color='theme1'] & {
+  [data-theme-color='theme1'] &  {
     color: $theme1-active-color !important;
   }
 
-  [data-theme-color='theme2'] & {
+  [data-theme-color='theme2'] &  {
     color: $theme2-active-color !important;
   }
 
-  [data-theme-color='theme3'] & {
+  [data-theme-color='theme3'] &  {
     color: $theme3-active-color !important;
   }
 
-  [data-theme-color='theme4'] & {
+  [data-theme-color='theme4'] &  {
     color: $theme4-active-color !important;
   }
 
-  [data-theme-color='theme5'] & {
+  [data-theme-color='theme5'] &  {
     color: $theme5-active-color !important;
   }
 
-  [data-theme-color='theme6'] & {
+  [data-theme-color='theme6'] &  {
     color: $theme6-active-color !important;
   }
 }
@@ -115,27 +115,27 @@
 @mixin active_bg_color() {
   background-color: $theme1-active-background-color !important;
 
-  [data-theme-color='theme1'] & {
+  [data-theme-color='theme1'] &  {
     background-color: $theme1-active-background-color !important;
   }
 
-  [data-theme-color='theme2'] & {
+  [data-theme-color='theme2'] &  {
     background-color: $theme2-active-background-color !important;
   }
 
-  [data-theme-color='theme3'] & {
+  [data-theme-color='theme3'] &  {
     background-color: $theme3-active-background-color !important;
   }
 
-  [data-theme-color='theme4'] & {
+  [data-theme-color='theme4'] &  {
     background-color: $theme4-active-background-color !important;
   }
 
-  [data-theme-color='theme5'] & {
+  [data-theme-color='theme5'] &  {
     background-color: $theme5-active-background-color !important;
   }
 
-  [data-theme-color='theme6'] & {
+  [data-theme-color='theme6'] &  {
     background-color: $theme6-active-background-color !important;
   }
 }
@@ -143,27 +143,27 @@
 @mixin active_border_color() {
   border-color: $theme1-active-color !important;
 
-  [data-theme-color='theme1'] & {
+  [data-theme-color='theme1'] &  {
     border-color: $theme1-active-color !important;
   }
 
-  [data-theme-color='theme2'] & {
+  [data-theme-color='theme2'] &  {
     border-color: $theme2-active-color !important;
   }
 
-  [data-theme-color='theme3'] & {
+  [data-theme-color='theme3'] &  {
     border-color: $theme3-active-color !important;
   }
 
-  [data-theme-color='theme4'] & {
+  [data-theme-color='theme4'] &  {
     border-color: $theme4-active-color !important;
   }
 
-  [data-theme-color='theme5'] & {
+  [data-theme-color='theme5'] &  {
     border-color: $theme5-active-color !important;
   }
 
-  [data-theme-color='theme6'] & {
+  [data-theme-color='theme6'] &  {
     border-color: $theme6-active-color !important;
   }
 }
@@ -173,7 +173,7 @@
 @mixin sidebar_bg_color() {
   background: $theme-dark !important;
 
-  [data-theme-mode='dark'] & {
+  [data-theme-mode='dark'] &  {
     background: $theme-dark !important;
   }
 
@@ -183,13 +183,13 @@
 }
 
 @mixin sidebar_menu_bg_color() {
-  background:#101117 !important;
+  background: #101117 !important;
 
-  [data-theme-mode='dark'] & {
+  [data-theme-mode='dark'] &  {
     background: #101117 !important;
   }
 
-  [data-theme-mode='light'] & {
+  [data-theme-mode='light'] &  {
     background: #f2f6fc !important;
   }
 }
@@ -197,11 +197,11 @@
 @mixin sidebar_title_color() {
   color: #ffffff !important;
 
-  [data-theme-mode='dark'] & {
+  [data-theme-mode='dark'] &  {
     color: #ffffff !important;
   }
 
-  [data-theme-mode='light'] & {
+  [data-theme-mode='light'] &  {
     color: #191a23 !important;
   }
 }

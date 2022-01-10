@@ -187,9 +187,9 @@ const refreshToken = () => {
 }
 
 // 初始化
-export default () => {
+export default baseUrl => {
   // 接口根路径
-  axios.defaults.baseURL = store.state.app.system.serviceUrl
+  axios.defaults.baseURL = baseUrl
   // 拦截请求
   axios.interceptors.request.use(
     (config) => {

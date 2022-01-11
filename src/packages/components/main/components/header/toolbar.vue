@@ -90,8 +90,7 @@ export default {
      */
     getMenus(queryString) {
       return new Promise((resolve) => {
-        let data = []
-        if (!queryString) data = this.menus.slice(0, 10)
+        const data = this.menus.filter((m) => m.name.indexOf(queryString) >= 0).slice(0, 10)
         resolve(data)
       })
     },

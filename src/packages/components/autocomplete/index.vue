@@ -88,7 +88,6 @@ export default {
         debounce: this.debounce,
         placeholder: this.placeholder,
         placement: this.placement,
-        placeholder: this.placeholder,
         hideLoading: false,
         fetchSuggestions: this.query
       }
@@ -140,7 +139,7 @@ export default {
      * @param {*}
      */
     onChange(data) {
-      console.log(data)
+     this.$emit('change', data)
     }
   }
 }

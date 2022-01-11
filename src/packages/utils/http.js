@@ -182,8 +182,12 @@ const refreshToken = () => {
   if (t && t.refreshToken) {
     return store.state.app.system.actions.auth.refreshToken(t.refreshToken)
   }
+  
+  return new Promise((resolve,reject)=>{
+    reject('refresh token error')
+  })
 
-  Promise.reject('refresh token error')
+ 
 }
 
 // 初始化
@@ -240,7 +244,6 @@ export default baseUrl => {
       if (error && error.response) {
         switch (error.response.status) {
           case 401:
-            console.log(401)
             return refreshToken()
               .then((data) => {
                 //重新初始化令牌

@@ -37,29 +37,33 @@ export default {
     ...mapState('app/system', { actions: (s) => s.actions, version: (s) => s.config.version })
   },
   methods: {
+    async init() {
+      const result = await this.actions.getReleaseLog()
+      if(!result) return
+      const data = result.map((m) => {
+        return {
+          version: m.version,
+          content: m.content,
+          releaseTime: this.$dayjs(m.releaseTime).format('YYYY-MM-DD'),
+          icon: 'el-icon-more',
+          color: '#E4E7ED'
+        }
+      })
+      if (data && data.length > 0) {
+        data[0].icon = 'el-icon-loading'
+        data[0].color = '#00a29a'
+      }
+
+      this.list = data
+    },
     onClose() {
       const key = `view-release-${this.user.id}`
       cache.remove(key)
       cache.set(key, this.version)
     }
   },
-  async created() {
-    const result = await this.actions.getreleaseLog()
-    const data = result.map((m) => {
-      return {
-        version: m.version,
-        content: m.content,
-        releaseTime: this.$dayjs(m.releaseTime).format('YYYY-MM-DD'),
-        icon: 'el-icon-more',
-        color: '#E4E7ED'
-      }
-    })
-    if (data && data.length > 0) {
-      data[0].icon = 'el-icon-loading'
-      data[0].color = '#00a29a'
-    }
-
-    this.list = data
+  mounted() {
+    this.init()
   }
 }
 </script>

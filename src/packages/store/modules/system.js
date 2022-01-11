@@ -33,7 +33,7 @@ const state = {
     //保存皮肤配置信息
     saveSkin: null,
     //获取发布记录
-    getreleaseLog: null
+    getReleaseLog: null
   },
   //服务地址
   serviceUrl: ''

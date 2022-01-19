@@ -4,6 +4,7 @@
 ## 预览地址
 - http://90doordie.com/ui
 - 账号/密码:admin/123
+- 基于easy-modular-ui 的权限管理系统 http://90doordie.com
 
 ## 安装
     npm install easy-modular-ui

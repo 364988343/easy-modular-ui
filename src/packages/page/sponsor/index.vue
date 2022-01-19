@@ -1,8 +1,8 @@
 <template>
-  <div class="em-container">
-    <div class="em-container-title">开源不易，如果项目对您有所帮助，欢迎star和赞助！</div>
-    <div class="em-container-subtitle">大龄单身落魄coder需要您的支持</div>
-    <div class="em-container-pay"><img src="images/wxzf.jpg" /><img src="images/zfbzf.jpg" /></div>
+  <div class="em-page">
+    <div class="em-page-title">开源不易，如果项目对您有所帮助，欢迎star和赞助！</div>
+    <div class="em-page-subtitle">大龄单身落魄coder需要您的支持</div>
+    <div class="em-page-pay"><img src="images/pay.jpg" /></div>
   </div>
 </template>
 
@@ -11,7 +11,11 @@ export default {}
 </script>
 
 <style lang="scss" scoped>
-.em-container {
+.em-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   &-title {
     font-size: 32px;
@@ -33,8 +37,7 @@ export default {}
     margin: 12px auto;
     display: flex;
     img {
-      width: 300px;
-      margin-right: 20px;
+      width: 100%;
     }
   }
 }

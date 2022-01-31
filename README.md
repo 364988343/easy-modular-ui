@@ -2,9 +2,9 @@
 **easy-modular-ui** 是一个基于vue2.0模块化前端框架，简单易用、架构清晰，降低程序的耦合性，框架同时基于element-ui封装了多个实用的组件，大大提高开发效率。
 
 ## 预览地址
-- http://90doordie.com/ui
+- http://101.35.245.48/ui
 - 账号/密码:admin/123
-- 基于easy-modular-ui 的权限管理系统 http://90doordie.com
+- 基于easy-modular-ui 的权限管理系统 http://101.35.245.48
 
 ## 安装
     npm install easy-modular-ui

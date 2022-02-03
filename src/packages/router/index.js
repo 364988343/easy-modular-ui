@@ -26,8 +26,8 @@ NProgress.configure({
   minimum: 0.2
 })
 
-/** 初始化路由 */
-export default (store, system) => {
+//初始化
+const init = (store, system) => {
   router = new VueRouter({
     routes
   })
@@ -104,6 +104,10 @@ export default (store, system) => {
       }
     }
   })
+}
+
+export default (store, system) => {
+  init(store, system)
 }
 
 export { router, routes }

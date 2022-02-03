@@ -9,118 +9,115 @@ import { router } from '../router'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.headers.put['Content-Type'] = 'application/json'
 
-function Http() {
-  this.axios = axios
-}
+//消息提醒显示时长(ms)
+const MESSAGE_DURATION = 1500
 
-// 序列化参数为Url形式
-Http.prototype.stringify = (params) => {
-  return qs.stringify(params, {
-    allowDots: true
-  })
-}
-
-Http.prototype.post = (url, params, config) => {
-  return axios.post(url, params, config)
-}
-
-Http.prototype.get = (url, params, config) => {
-  const config_ = Object.assign({}, config, {
-    // 参数
-    params,
-    // 修改参数序列化方法
-    paramsSerializer: (p) => {
-      // 使用逗号分隔参数
-      return qs.stringify(p, {
-        allowDots: true
-      })
-    }
-  })
-  return axios.get(url, config_)
-}
-
-Http.prototype.delete = (url, params, config) => {
-  const config_ = Object.assign({}, config, {
-    // 参数
-    params,
-    // 修改参数序列化方法
-    paramsSerializer: (p) => {
-      // 使用逗号分隔参数
-      return qs.stringify(p, {
-        allowDots: true
-      })
-    }
-  })
-  return axios.delete(url, config_)
-}
-
-Http.prototype.put = (url, params, config) => {
-  return axios.put(url, params, config)
-}
-
-Http.prototype.download = (url, params, config) => {
-  const config_ = Object.assign({ responseType: 'blob' }, config, {
-    // 参数
-    params,
-    // 修改参数序列化方法
-    paramsSerializer: (p) => {
-      // 使用逗号分隔参数
-      return qs.stringify(p, {
-        allowDots: true
-      })
-    }
-  })
-  return axios.get(url, config_)
-}
-
-Http.prototype.preview = (url, params, config) => {
-  const config_ = Object.assign({ responseType: 'blob', headers: { preview: true } }, config, {
-    // 参数
-    params,
-    // 修改参数序列化方法
-    paramsSerializer: (p) => {
-      // 使用逗号分隔参数
-      return qs.stringify(p, {
-        allowDots: true
-      })
-    }
-  })
-  return axios.get(url, config_)
-}
-
-Http.prototype.export = (url, params, config) => {
-  return axios.post(url, params, Object.assign({ responseType: 'blob' }, config))
-}
-
-// 通用CRUD接口地址
-Http.prototype.crud = (root) => {
-  if (!root.endsWith('/')) {
-    root += '/'
+class Http {
+  constructor() {
+    this.axios = axios
   }
-  return {
-    query(params) {
-      return $emHttp.get(`${root}query`, params)
-    },
-    add(params) {
-      return $emHttp.post(`${root}add`, params)
-    },
-    remove(id) {
-      return $emHttp.delete(`${root}delete`, { id })
-    },
-    edit(id) {
-      return $emHttp.get(`${root}edit`, { id })
-    },
-    update(params) {
-      return $emHttp.post(`${root}update`, params)
+
+  get(url, params, config) {
+    const config_ = Object.assign({}, config, {
+      // 参数
+      params,
+      // 修改参数序列化方法
+      paramsSerializer: (p) => {
+        // 使用逗号分隔参数
+        return qs.stringify(p, {
+          allowDots: true
+        })
+      }
+    })
+    return axios.get(url, config_)
+  }
+
+  post(url, params, config) {
+    return axios.post(url, params, config)
+  }
+
+  delete(url, params, config) {
+    const config_ = Object.assign({}, config, {
+      // 参数
+      params,
+      // 修改参数序列化方法
+      paramsSerializer: (p) => {
+        // 使用逗号分隔参数
+        return qs.stringify(p, {
+          allowDots: true
+        })
+      }
+    })
+    return axios.delete(url, config_)
+  }
+
+  put(url, params, config) {
+    return axios.put(url, params, config)
+  }
+
+  download(url, params, config) {
+    const config_ = Object.assign({ responseType: 'blob' }, config, {
+      // 参数
+      params,
+      // 修改参数序列化方法
+      paramsSerializer: (p) => {
+        // 使用逗号分隔参数
+        return qs.stringify(p, {
+          allowDots: true
+        })
+      }
+    })
+    return axios.get(url, config_)
+  }
+
+  preview(url, params, config) {
+    const config_ = Object.assign({ responseType: 'blob', headers: { preview: true } }, config, {
+      // 参数
+      params,
+      // 修改参数序列化方法
+      paramsSerializer: (p) => {
+        // 使用逗号分隔参数
+        return qs.stringify(p, {
+          allowDots: true
+        })
+      }
+    })
+    return axios.get(url, config_)
+  }
+
+  export(url, params, config) {
+    return axios.post(url, params, Object.assign({ responseType: 'blob' }, config))
+  }
+
+  //通过crud
+  crud(root) {
+    if (!root.endsWith('/')) {
+      root += '/'
+    }
+    return {
+      query(params) {
+        return $emHttp.get(`${root}query`, params)
+      },
+      add(params) {
+        return $emHttp.post(`${root}add`, params)
+      },
+      remove(id) {
+        return $emHttp.delete(`${root}delete`, { id })
+      },
+      edit(id) {
+        return $emHttp.get(`${root}edit`, { id })
+      },
+      update(params) {
+        return $emHttp.post(`${root}update`, params)
+      }
     }
   }
 }
 
-// 设为全局属性$emHttp
-if (!window.$emHttp) window.$emHttp = new Http()
-
-// 消息提醒显示时长(ms)
-const messageDuration = 1500
+//初始化
+const init = (baseUrl) => {
+  axios.defaults.baseURL = baseUrl
+}
 
 //处理文件下载请求
 const handleDownload = (response) => {
@@ -133,7 +130,7 @@ const handleDownload = (response) => {
         message: data.msg,
         showClose: true,
         center: true,
-        duration: messageDuration
+        duration: MESSAGE_DURATION
       })
     }
 
@@ -182,120 +179,120 @@ const refreshToken = () => {
   if (t && t.refreshToken) {
     return store.state.app.system.actions.auth.refreshToken(t.refreshToken)
   }
-  
-  return new Promise((resolve,reject)=>{
+
+  return new Promise((resolve, reject) => {
     reject('refresh token error')
   })
-
- 
 }
 
-// 初始化
-export default baseUrl => {
-  // 接口根路径
-  axios.defaults.baseURL = baseUrl
-  // 拦截请求
-  axios.interceptors.request.use(
-    (config) => {
-      let t = token.get()
-      if (t && t.accessToken) {
-        config.headers.Authorization = 'Bearer ' + t.accessToken
-      }
-      return config
-    },
-    function (error) {
-      return Promise.reject(error)
+//拦截请求
+axios.interceptors.request.use(
+  (config) => {
+    let t = token.get()
+    if (t && t.accessToken) {
+      config.headers.Authorization = 'Bearer ' + t.accessToken
     }
-  )
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  }
+)
 
-  // 响应前拦截器
-  axios.interceptors.response.use(
-    (response) => {
-      const { config } = response
-      // 文件下载/预览
-      if (config.responseType && config.responseType === 'blob') {
-        return handleDownload(response)
-      }
+//响应前拦截器
+axios.interceptors.response.use(
+  (response) => {
+    const { config } = response
+    // 文件下载/预览
+    if (config.responseType && config.responseType === 'blob') {
+      return handleDownload(response)
+    }
 
-      //关闭遮罩层
-      if (window.$loading) window.$loading.close()
+    //关闭遮罩层
+    if (window.$loading) window.$loading.close()
 
-      if (response.data.code === '0') {
-        return response.data.data || '0'
-      } else if (response.data.code === '-1') {
-        Message.error({
-          message: response.data.msg,
-          showClose: true,
-          center: true,
-          duration: messageDuration
-        })
-        return Promise.reject(response.data.msg)
-      } else {
-        return response
-      }
-    },
-    (error) => {
-      let currentRoute = router.currentRoute
-      let redirect = currentRoute.name !== 'login' ? currentRoute.fullPath : '/' // 跳转页面
+    if (response.data.code === '0') {
+      return response.data.data || '0'
+    } else if (response.data.code === '-1') {
+      Message.error({
+        message: response.data.msg,
+        showClose: true,
+        center: true,
+        duration: MESSAGE_DURATION
+      })
+      return Promise.reject(response.data.msg)
+    } else {
+      return response
+    }
+  },
+  (error) => {
+    let currentRoute = router.currentRoute
+    let redirect = currentRoute.name !== 'login' ? currentRoute.fullPath : '/' // 跳转页面
 
-      //关闭遮罩层
-      if (window.$loading) window.$loading.close()
+    //关闭遮罩层
+    if (window.$loading) window.$loading.close()
 
-      if (error && error.response) {
-        switch (error.response.status) {
-          case 401:
-            return refreshToken()
-              .then((data) => {
-                //重新初始化令牌
-                store.commit('app/token/init', data)
-                //重新发一起一次上次的的请求
-                error.config.headers.Authorization = 'Bearer ' + data.accessToken
-                return axios.request(error.config)
-              })
-              .catch(() => {
-                // 如果刷新失败，需要删除token并跳转到登录页面
-                token.remove()
-                router.push({
-                  name: 'login',
-                  query: {
-                    redirect
-                  }
-                })
-              })
-          case 403:
-            store.dispatch(
-              'app/page/close',
-              {
-                fullPath: currentRoute.path,
-                router: router,
-                to: {
-                  name: 'error403'
-                }
-              },
-              { root: true }
-            )
-            break
-          default:
-            console.error(error.response.data.msg)
-            Message.error({
-              message: '系统异常，请联系管理员~',
-              duration: messageDuration
+    if (error && error.response) {
+      switch (error.response.status) {
+        case 401:
+          return refreshToken()
+            .then((data) => {
+              //重新初始化令牌
+              store.commit('app/token/init', data)
+              //重新发一起一次上次的的请求
+              error.config.headers.Authorization = 'Bearer ' + data.accessToken
+              return axios.request(error.config)
             })
-            break
-        }
-      } else {
-        if (currentRoute.name === 'login') {
+            .catch(() => {
+              // 如果刷新失败，需要删除token并跳转到登录页面
+              token.remove()
+              router.push({
+                name: 'login',
+                query: {
+                  redirect
+                }
+              })
+            })
+        case 403:
+          store.dispatch(
+            'app/page/close',
+            {
+              fullPath: currentRoute.path,
+              router: router,
+              to: {
+                name: 'error403'
+              }
+            },
+            { root: true }
+          )
+          break
+        default:
+          console.error(error.response.data.msg)
           Message.error({
-            message: '无法连接网络~',
-            duration: messageDuration
+            message: '系统异常，请联系管理员~',
+            duration: MESSAGE_DURATION
           })
-        } else {
-          token.remove()
-          router.push({ name: 'login', query: { redirect } })
-        }
+          break
       }
-
-      return Promise.reject(error)
+    } else {
+      if (currentRoute.name === 'login') {
+        Message.error({
+          message: '无法连接网络~',
+          duration: MESSAGE_DURATION
+        })
+      } else {
+        token.remove()
+        router.push({ name: 'login', query: { redirect } })
+      }
     }
-  )
+
+    return Promise.reject(error)
+  }
+)
+
+//通过window设置全局实例
+if (!window.$emHttp) window.$emHttp = new Http()
+
+export default (baseUrl) => {
+  init(baseUrl)
 }

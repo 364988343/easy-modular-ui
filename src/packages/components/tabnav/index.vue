@@ -47,6 +47,7 @@ import { mapState, mapActions } from 'vuex'
 import { on, off, hasClass } from '../../utils/dom'
 export default {
   name: 'tabnav',
+  inject: ['reload'],
   data() {
     return {
       contextmenu: {
@@ -75,7 +76,6 @@ export default {
       }
       this.closeParams.index = parseInt(event.target.parentNode.getAttribute('index'))
     },
-
 
     /**
      * @description: 隐藏页签控制栏
@@ -135,7 +135,7 @@ export default {
      * @param {*}
      */
     onRefresh() {
-      this.reload(this.current.name)
+      this.reload()
     }
   },
   watch: {

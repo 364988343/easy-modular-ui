@@ -61,7 +61,7 @@
           </template>
 
           <!-- 操作列 -->
-          <el-table-column v-if="!noOperateCol" :width="operationWidth" fixed="right" align="center" label="操作">
+          <el-table-column v-if="!noOperateColumn" :width="operationWidth" fixed="right" align="center" label="操作">
             <template v-slot:header>
               <slot name="col-operation-header">操作</slot>
             </template>
@@ -146,7 +146,7 @@ export default {
       default: true
     },
     //不显示操作列
-    noOperateCol: Boolean,
+    noOperateColumn: Boolean,
     //操作列宽度
     operationWidth: [String, Number],
     //不显示选择列按钮

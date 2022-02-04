@@ -20,7 +20,7 @@ export default {
         lazy: true,
         load: this.load,
         action: this.query,
-        noOperateCol: true,
+        noOperateColumn: true,
         noOperateBar: true,
         rowKey: 'id',
         treeProps: { children: 'children', hasChildren: 'hasChildren' },

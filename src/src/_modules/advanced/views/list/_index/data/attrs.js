@@ -77,7 +77,7 @@ export default [
     def: 'true'
   },
   {
-    name: 'no-operation',
+    name: 'no-operation-column',
     desc: '不显示操作列',
     type: 'Boolean',
     opt: '-',

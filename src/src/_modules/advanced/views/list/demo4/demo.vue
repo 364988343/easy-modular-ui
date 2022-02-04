@@ -25,7 +25,7 @@ export default {
       list: {
         title: '列表页-复杂表头',
         icon: 'detail',
-        noOperateCol: true,
+        noOperateColumn: true,
         noOperateBar: true,
         action: this.query,
         model: {

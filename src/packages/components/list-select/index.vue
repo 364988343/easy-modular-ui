@@ -4,7 +4,7 @@
       <em-button type="primary" :text="btnText" @click="visible = true"></em-button>
     </slot>
     <em-dialog v-bind="dialog" v-on="on" :visible.sync="visible">
-      <em-list ref="list" v-bind="list" :multiple="multiple" noHeader noOperateBar noOperateCol @select="onSelect" @select-all="onSelect" @row-click="onRowClick" @row-dblclick="onRowDbClick">
+      <em-list ref="list" v-bind="list" :multiple="multiple" noHeader noOperateBar noOperateColumn @select="onSelect" @select-all="onSelect" @row-click="onRowClick" @row-dblclick="onRowDbClick">
         <template v-slot:querybar>
           <slot name="querybar"></slot>
         </template>

@@ -18,7 +18,7 @@ export default {
         title: '列表页-树形数据',
         icon: 'detail',
         action: this.query,
-        noOperateCol: true,
+        noOperateColumn: true,
         noOperateBar:true,
         rowKey: 'id',
         treeProps: { children: 'children' },
